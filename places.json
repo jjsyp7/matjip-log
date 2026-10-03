@@ -99,7 +99,9 @@
   "poisonChecked": null,
   "old": false,
   "raw": false,
-  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영",
+  "cuisine": "한식",
+  "menu": "닭요리"
  },
  {
   "id": "geumgogitjip-magok",
@@ -217,7 +219,9 @@
   "poisonChecked": null,
   "old": false,
   "raw": false,
-  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영",
+  "cuisine": "한식",
+  "menu": "고기구이"
  },
  {
   "id": "hayanjip-naju",
@@ -348,7 +352,9 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영",
+  "cuisine": "한식",
+  "menu": "국밥·곰탕"
  },
  {
   "id": "yaksan-heukyeomso",
@@ -460,7 +466,9 @@
   "poisonChecked": null,
   "old": false,
   "raw": false,
-  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영",
+  "cuisine": "한식",
+  "menu": "흑염소"
  },
  {
   "id": "sinsikdang",
@@ -585,7 +593,9 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영",
+  "cuisine": "한식",
+  "menu": "떡갈비"
  },
  {
   "id": "wooraeok",
@@ -703,7 +713,9 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영",
+  "cuisine": "한식",
+  "menu": "냉면"
  },
  {
   "id": "myeongdong-gyoja",
@@ -824,7 +836,9 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영",
+  "cuisine": "한식",
+  "menu": "칼국수"
  },
  {
   "id": "mutan-apgujeong",
@@ -938,7 +952,9 @@
   "poisonChecked": null,
   "old": false,
   "raw": false,
-  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영",
+  "cuisine": "중식",
+  "menu": "중식 요리"
  },
  {
   "id": "samcheongdong-sujebi",
@@ -1050,7 +1066,9 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영",
+  "cuisine": "한식",
+  "menu": "수제비"
  },
  {
   "id": "gwanghwamun-mijin",
@@ -1162,7 +1180,9 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영",
+  "cuisine": "한식",
+  "menu": "메밀국수"
  },
  {
   "id": "jinju-hoegwan",
@@ -1268,7 +1288,9 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영",
+  "cuisine": "한식",
+  "menu": "콩국수"
  },
  {
   "id": "manjok-ohyang-jokbal",
@@ -1373,7 +1395,9 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영",
+  "cuisine": "한식",
+  "menu": "족발"
  },
  {
   "id": "jinmi-pyeongyang",
@@ -1484,7 +1508,9 @@
   "poisonChecked": null,
   "old": false,
   "raw": false,
-  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영",
+  "cuisine": "한식",
+  "menu": "냉면"
  },
  {
   "id": "imbyeongju-sandong",
@@ -1589,7 +1615,9 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영",
+  "cuisine": "한식",
+  "menu": "칼국수"
  },
  {
   "id": "geumdwaeji-sikdang",
@@ -1696,7 +1724,9 @@
   "poisonChecked": null,
   "old": false,
   "raw": false,
-  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영",
+  "cuisine": "한식",
+  "menu": "고기구이"
  },
  {
   "id": "hwangsaengga",
@@ -1804,7 +1834,9 @@
   "poisonChecked": null,
   "old": false,
   "raw": false,
-  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영",
+  "cuisine": "한식",
+  "menu": "칼국수"
  },
  {
   "id": "jeongin-myeonok",
@@ -1912,7 +1944,9 @@
   "poisonChecked": null,
   "old": false,
   "raw": false,
-  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영",
+  "cuisine": "한식",
+  "menu": "냉면"
  },
  {
   "id": "applehouse-isu",
@@ -2012,7 +2046,9 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영 · 이전한 가게라 이전 이후 후기만 봐야 함(재조사 예정)"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영 · 이전한 가게라 이전 이후 후기만 봐야 함(재조사 예정)",
+  "cuisine": "한식",
+  "menu": "분식·떡볶이"
  },
  {
   "id": "persian-palace",
@@ -2135,7 +2171,9 @@
   "poisonChecked": null,
   "old": false,
   "raw": false,
-  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영",
+  "cuisine": "아시아·기타",
+  "menu": "커리"
  },
  {
   "id": "nampo-myeonok",
@@ -2243,7 +2281,9 @@
   "healthNote": "배탈·설사 주장 3건(1년 전, 2년 전, 7년 전)이 있으나 시기가 흩어져 있어 제외하지 않고 참고로만 표시. '음식이 변질돼 있었고 다음 날 배탈이 나 종일 고생'(1년 전), '복통과 구토를 했다'(2년 전), '같이 간 지인과 둘 다 설사'(7년 전).",
   "old": true,
   "raw": false,
-  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영",
+  "cuisine": "한식",
+  "menu": "냉면"
  },
  {
   "id": "jaha-sonmandu",
@@ -2345,7 +2385,9 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영",
+  "cuisine": "한식",
+  "menu": "만두"
  },
  {
   "id": "buchon-yukhoe",
@@ -2445,7 +2487,9 @@
   "poisonChecked": "구글 약 400건",
   "old": true,
   "raw": true,
-  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영",
+  "cuisine": "한식",
+  "menu": "육회"
  },
  {
   "id": "gubok-mandu",
@@ -2551,7 +2595,9 @@
   "poisonChecked": null,
   "old": false,
   "raw": false,
-  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영 · 이전한 가게라 이전 이후 후기만 봐야 함(재조사 예정)"
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영 · 이전한 가게라 이전 이후 후기만 봐야 함(재조사 예정)",
+  "cuisine": "중식",
+  "menu": "만두"
  },
  {
   "id": "oreno-ramen",
@@ -2646,7 +2692,9 @@
   "poisonChecked": null,
   "old": false,
   "raw": false,
-  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영",
+  "cuisine": "일식",
+  "menu": "라멘"
  },
  {
   "id": "yeokjeon-hoegwan",
@@ -2748,6 +2796,8 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영",
+  "cuisine": "한식",
+  "menu": "불고기"
  }
 ]
