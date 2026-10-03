@@ -169,7 +169,7 @@ function detail(p){
   else l2.append(el("p",{class:"note",text:"이 가게를 다룬 영상을 아직 찾지 않았습니다."}));
   d.append(l2);
   const l3=el("div",{class:"layer"},el("h3",{text:"3층 · 방문자가 반복해서 말한 불만"}));
-  if(Array.isArray(p.complaints)&&p.complaints.length){ const ul=el("ul",{class:"plain"}); for(const c of p.complaints){ ul.append(el("li",null,el("b",{text:(AXN[c.axis]||"기타")+" "}),c.text||""," ",el("span",{class:"cnt",text:[c.n?`약 ${c.n}건`:null,c.when].filter(Boolean).join(" · ")}))); } l3.append(ul); }
+  if(Array.isArray(p.complaints)&&p.complaints.length){ const ul=el("ul",{class:"plain"}); for(const c of p.complaints){ ul.append(el("li",null,el("b",{text:(AXN[c.axis]||"기타")+" "}),c.text||""," ",el("span",{class:"cnt",text:[c.n?`약 ${c.n}건${c.approx?"(기간 밖 포함)":""}`:null,c.when].filter(Boolean).join(" · ")}))); } l3.append(ul); }
   else l3.append(el("p",{class:"note",text:"저평점 리뷰를 아직 읽지 않았습니다."}));
   if(Array.isArray(p.praise)&&p.praise.length){ l3.append(el("h3",{text:"방문자가 반복해서 칭찬한 것",style:"margin-top:12px"})); const ul=el("ul",{class:"plain"}); p.praise.forEach(t=>ul.append(el("li",{text:t}))); l3.append(ul); }
   if(p.kr){ l3.append(el("h3",{text:"한국인 입맛 기준",style:"margin-top:12px"})); l3.append(el("p",{class:"note",text:p.kr})); }
@@ -177,7 +177,7 @@ function detail(p){
   d.append(l3);
   if(Array.isArray(p.tips)&&p.tips.length){ const t=el("div",{class:"layer"},el("h3",{text:"가기 전에"})); const ul=el("ul",{class:"plain"}); p.tips.forEach(x=>ul.append(el("li",{text:x}))); t.append(ul); d.append(t); }
   const foot=el("div",{class:"layer"}); const gm=safeUrl(p.gmaps); if(gm) foot.append(el("a",{class:"go",href:gm,target:"_blank",rel:"noopener",text:"구글 지도에서 열기"}));
-  foot.append(el("p",{class:"evid",text:`근거: ${p.evidence||"미기재"}${p.checked?` · 확인일 ${p.checked}`:""}`}));
+  foot.append(el("p",{class:"evid",text:`근거: ${p.evidence||"미기재"}${p.checked?` · 확인일 ${p.checked}`:""}`})); if(p.window) foot.append(el("p",{class:"evid",style:"margin-top:2px",text:p.window}));
   d.append(foot);
   return d;
 }
@@ -195,7 +195,7 @@ function render(){
     if(p.summary) mid.append(el("p",{class:"sum",text:p.summary}));
     const flags=el("div");
     if(sc.ban) flags.append(el("span",{class:"flag f-bad",text:"✕ 가지 않음 · 식중독 주장 반복"}));
-    if(p.healthNote&&!sc.ban) flags.append(el("span",{class:"flag f-warn",text:"배탈 주장 있음 (참고)"}));
+    if(p.healthNote&&!sc.ban) flags.append(el("span",{class:"flag f-warn",text:"배탈 언급 있음 (참고)"}));
     if(sc.hid) flags.append(el("span",{class:"flag f-bad",text:"예외 · 카카오 후기 비공개 (순위 제외)"}));
     if(p.caution) flags.append(el("span",{class:"flag f-bad",text:"⚠ "+p.caution}));
     sc.weak.forEach(k=>flags.append(el("span",{class:"flag f-bad",text:`${AXN[k]} 약함`})));

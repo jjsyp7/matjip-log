@@ -96,7 +96,10 @@
     "note": "후기 17건 전부 읽음(글 있는 9건). 전부 4~5점. 2026년 10월 2일 후기도 '먹어본 닭 중 최고, 친절하고 위생 좋음'."
    }
   ],
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": false,
+  "raw": false,
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
  },
  {
   "id": "geumgogitjip-magok",
@@ -211,7 +214,10 @@
     "hidden": true
    }
   ],
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": false,
+  "raw": false,
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
  },
  {
   "id": "hayanjip-naju",
@@ -339,7 +345,10 @@
     "note": "최근 1년 후기 21건만 읽음(나머지는 창이 가려져 못 불러옴). 21건 중 2~3점이 11건."
    }
   ],
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": true,
+  "raw": false,
+  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "yaksan-heukyeomso",
@@ -448,7 +457,10 @@
     "note": "후기 31건 중 최근 21건 읽음. 1~2점 8건, 4~5점 11건."
    }
   ],
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": false,
+  "raw": false,
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
  },
  {
   "id": "sinsikdang",
@@ -570,7 +582,10 @@
     "note": "후기 82건 전부 읽음. 5점 29 · 4점 11 · 3점 12 · 2점 7 · 1점 23으로 극단적으로 갈림."
    }
   ],
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": true,
+  "raw": false,
+  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "wooraeok",
@@ -685,7 +700,10 @@
   "lng": 126.99869,
   "country": "한국",
   "youtubers": [],
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": true,
+  "raw": false,
+  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "myeongdong-gyoja",
@@ -803,7 +821,10 @@
   "country": "한국",
   "youtubers": [],
   "caution": "구글·카카오 평점 차 1.6",
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": true,
+  "raw": false,
+  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "mutan-apgujeong",
@@ -914,7 +935,10 @@
   "country": "한국",
   "youtubers": [],
   "caution": "구글 평점은 리뷰 이벤트 의심 → 구체적인 맛 후기 기준으로 판단",
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": false,
+  "raw": false,
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
  },
  {
   "id": "samcheongdong-sujebi",
@@ -1023,7 +1047,10 @@
   "lng": 126.98194,
   "country": "한국",
   "youtubers": [],
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": true,
+  "raw": false,
+  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "gwanghwamun-mijin",
@@ -1132,7 +1159,10 @@
   "lng": 126.97994,
   "country": "한국",
   "youtubers": [],
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": true,
+  "raw": false,
+  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "jinju-hoegwan",
@@ -1235,7 +1265,10 @@
   "lng": 126.97456,
   "country": "한국",
   "youtubers": [],
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": true,
+  "raw": false,
+  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "manjok-ohyang-jokbal",
@@ -1337,7 +1370,10 @@
   "lng": 126.97606,
   "country": "한국",
   "youtubers": [],
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": true,
+  "raw": false,
+  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "jinmi-pyeongyang",
@@ -1445,7 +1481,10 @@
   "lng": 127.03631,
   "country": "한국",
   "youtubers": [],
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": false,
+  "raw": false,
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
  },
  {
   "id": "imbyeongju-sandong",
@@ -1547,7 +1586,10 @@
   "lng": 127.03006,
   "country": "한국",
   "youtubers": [],
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": true,
+  "raw": false,
+  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "geumdwaeji-sikdang",
@@ -1651,7 +1693,10 @@
   "lng": 127.01169,
   "country": "한국",
   "youtubers": [],
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": false,
+  "raw": false,
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
  },
  {
   "id": "hwangsaengga",
@@ -1708,13 +1753,15 @@
     "axis": "taste",
     "text": "칼국수가 평범하다. 면이 우동처럼 힘이 없거나 퍼져 있고, 동네 칼국수집과 차이를 모르겠다. '왜 미쉐린인지 모르겠다'는 표현이 반복됨.",
     "n": 20,
-    "when": "2019~2026"
+    "when": "2021~2026",
+    "approx": true
    },
    {
     "axis": "service",
     "text": "서빙 직원이 퉁명스럽고 언성을 높임. 주문 순서가 뒤바뀌어 30분 넘게 기다리거나, 잘못 나온 메뉴를 두고 손님 탓을 함. 벨을 눌러도 오지 않음.",
     "n": 15,
-    "when": "2018~2026.9"
+    "when": "2021~2026.9",
+    "approx": true
    },
    {
     "axis": "wait",
@@ -1726,13 +1773,15 @@
     "axis": "mood",
     "text": "방석·수저통·앞접시가 더럽고 테이블에서 사골 쉰내가 난다. 칼국수에서 물티슈 같은 천이 나왔는데 직원이 방어적으로 응대(2026.9).",
     "n": 8,
-    "when": "2019~2026.9"
+    "when": "2021~2026.9",
+    "approx": true
    },
    {
     "axis": "taste",
     "text": "만두·만둣국이 식거나 불어서 나옴. 보쌈은 퍽퍽하고 양이 적음.",
     "n": 6,
-    "when": "2020~2026.8"
+    "when": "2021~2026.8",
+    "approx": true
    }
   ],
   "praise": [
@@ -1752,7 +1801,10 @@
   "lat": 37.58006,
   "lng": 126.98069,
   "country": "한국",
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": true,
+  "raw": false,
+  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "jeongin-myeonok",
@@ -1809,25 +1861,29 @@
     "axis": "taste",
     "text": "평양냉면이 밍밍해서 무슨 맛인지 모르겠다(평냉 자체에 대한 호불호). 평냉 애호가 쪽에서는 '1티어는 아니다, 육향이 약하다'.",
     "n": 18,
-    "when": "2017~2026"
+    "when": "2023~2026",
+    "approx": true
    },
    {
     "axis": "service",
     "text": "서빙 직원이 퉁명스럽고 벨을 눌러도 오지 않음, 주문 누락. 키오스크 대기 후 인원 정정이 안 되고 호출 5분 지나면 취소.",
     "n": 14,
-    "when": "2017~2026.4"
+    "when": "2023~2026.4",
+    "approx": true
    },
    {
     "axis": "taste",
     "text": "만두는 두부가 많아 퍽퍽하고 평범, 제육은 잡내, 비빔냉면은 양념이 텁텁하다.",
     "n": 12,
-    "when": "2021~2026.8"
+    "when": "2023~2026.8",
+    "approx": true
    },
    {
     "axis": "value",
     "text": "냉면 15,000원에 고기 고명 1~2점, 만두 3개 8,000원, 제육 반 접시 양이 적다.",
     "n": 8,
-    "when": "2022~2026"
+    "when": "2023~2026",
+    "approx": true
    },
    {
     "axis": "mood",
@@ -1853,7 +1909,10 @@
   "lat": 37.53069,
   "lng": 126.92156,
   "country": "한국",
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": false,
+  "raw": false,
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
  },
  {
   "id": "applehouse-isu",
@@ -1910,19 +1969,22 @@
     "axis": "taste",
     "text": "떡볶이가 설탕 맛이 강하고 간이 세서 물린다. '3대 떡볶이'라는 명성에 비해 평범한 즉석떡볶이라는 평.",
     "n": 22,
-    "when": "2018~2026.9"
+    "when": "2021~2026.9",
+    "approx": true
    },
    {
     "axis": "service",
     "text": "직원·아르바이트 불친절, 혼자 가면 즉석떡볶이 주문 불가(2인분부터). 대부분 반포 시절 리뷰.",
     "n": 9,
-    "when": "2018~2022"
+    "when": "2021~2022",
+    "approx": true
    },
    {
     "axis": "taste",
     "text": "무침만두가 딱딱하거나 너무 달고 짜다, 예전 맛에서 변했다.",
     "n": 6,
-    "when": "2019~2023"
+    "when": "2021~2023",
+    "approx": true
    },
    {
     "axis": "mood",
@@ -1947,7 +2009,10 @@
   "lat": 37.48619,
   "lng": 126.98069,
   "country": "한국",
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": true,
+  "raw": false,
+  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "persian-palace",
@@ -2026,19 +2091,22 @@
     "axis": "taste",
     "text": "인도·이란 커리가 아니라 오뚜기 매운 카레 맛이다. 향신료가 거의 느껴지지 않는다.",
     "n": 22,
-    "when": "2018~2026.10"
+    "when": "2021~2026.10",
+    "approx": true
    },
    {
     "axis": "value",
     "text": "맛에 비해 비싸고 양이 적다. 3만 원대 커리에 치즈 한두 조각, 야채수프가 인스턴트 양송이 스프였다.",
     "n": 14,
-    "when": "2018~2026.9"
+    "when": "2021~2026.9",
+    "approx": true
    },
    {
     "axis": "service",
     "text": "서빙 직원이 말없이 음식만 놓고 감, 바쁠 때 주문을 잊음. 외국인 리뷰에 사장 태도가 거만했다는 글도 있음.",
     "n": 6,
-    "when": "2018~2025"
+    "when": "2021~2025",
+    "approx": true
    },
    {
     "axis": "taste",
@@ -2064,7 +2132,10 @@
   "lat": 37.58481,
   "lng": 126.99731,
   "country": "한국",
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": true,
+  "raw": false,
+  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "nampo-myeonok",
@@ -2121,7 +2192,8 @@
     "axis": "taste",
     "text": "냉면 육수가 설탕물처럼 달고 동치미·오이 향이 강해 육향이 없다. 밍밍하다는 평과 달다는 평이 같이 나옴.",
     "n": 18,
-    "when": "2018~2026"
+    "when": "2021~2026",
+    "approx": true
    },
    {
     "axis": "taste",
@@ -2133,13 +2205,15 @@
     "axis": "service",
     "text": "앉아서 손을 들어도 주문을 받지 않음, 주문 누락, 사장 할머니가 계산대에서 소리를 지름.",
     "n": 12,
-    "when": "2018~2026.8"
+    "when": "2021~2026.8",
+    "approx": true
    },
    {
     "axis": "value",
     "text": "냉면·온면 15,000원에 고기 2점, 물만두 크기 만두 12개 12,000원, 수육이 비싸고 양이 적다.",
     "n": 9,
-    "when": "2018~2026"
+    "when": "2021~2026",
+    "approx": true
    },
    {
     "axis": "mood",
@@ -2166,7 +2240,10 @@
   "lng": 126.98156,
   "country": "한국",
   "poisonChecked": "구글 약 400건",
-  "healthNote": "배탈·설사 주장 3건(1년 전, 2년 전, 7년 전)이 있으나 시기가 흩어져 있어 제외하지 않고 참고로만 표시. '음식이 변질돼 있었고 다음 날 배탈이 나 종일 고생'(1년 전), '복통과 구토를 했다'(2년 전), '같이 간 지인과 둘 다 설사'(7년 전)."
+  "healthNote": "배탈·설사 주장 3건(1년 전, 2년 전, 7년 전)이 있으나 시기가 흩어져 있어 제외하지 않고 참고로만 표시. '음식이 변질돼 있었고 다음 날 배탈이 나 종일 고생'(1년 전), '복통과 구토를 했다'(2년 전), '같이 간 지인과 둘 다 설사'(7년 전).",
+  "old": true,
+  "raw": false,
+  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "jaha-sonmandu",
@@ -2224,25 +2301,29 @@
     "axis": "value",
     "text": "만둣국 한 그릇 2만 원에 만두 7개. 몇 년 사이 14,000원→17,000원→20,000원으로 올랐다. 발렛비 3,000원을 무조건 받음.",
     "n": 24,
-    "when": "2019~2026"
+    "when": "2021~2026",
+    "approx": true
    },
    {
     "axis": "taste",
     "text": "국물이 맹물처럼 간이 없다, 만두도 싱겁다. 떡만둣국은 시판 조랭이떡, 빈대떡은 얇고 작다.",
     "n": 20,
-    "when": "2018~2026.4"
+    "when": "2021~2026.4",
+    "approx": true
    },
    {
     "axis": "service",
     "text": "직원이 귀찮은 듯 응대, 주문 후 30분 뒤에 재료가 떨어졌다고 함, 발렛 직원이 비용을 두 번 요구.",
     "n": 10,
-    "when": "2019~2026.5"
+    "when": "2021~2026.5",
+    "approx": true
    },
    {
     "axis": "mood",
     "text": "간장 종지와 앞접시에 먼지, 컵에 립스틱 자국, 수저받침에 고춧가루.",
     "n": 4,
-    "when": "2019~2025"
+    "when": "2021~2025",
+    "approx": true
    }
   ],
   "praise": [
@@ -2261,7 +2342,10 @@
   "lat": 37.59306,
   "lng": 126.96606,
   "country": "한국",
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": true,
+  "raw": false,
+  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "buchon-yukhoe",
@@ -2324,7 +2408,8 @@
     "axis": "taste",
     "text": "1시간 기다릴 맛은 아니다. 인공적으로 달고 인근 육회집과 차이를 모르겠다. 비빔밥이 미리 세팅돼 있고 밥이 떡졌다.",
     "n": 12,
-    "when": "2020~2026"
+    "when": "2021~2026",
+    "approx": true
    },
    {
     "axis": "mood",
@@ -2357,7 +2442,10 @@
   "lng": 126.99994,
   "country": "한국",
   "poison": "구글 리뷰 약 400건을 훑어 식중독·장염 주장 10건을 확인: 'O157로 친구 입원'(2주 전), '식중독에 걸렸다'(2주 전), '귀국 후 식중독으로 입원'(2개월 전), '식중독이 됐다' 2건(11개월 전), '산낙지 먹고 39도 고열과 구토 13회'(1년 전), '생간 먹고 위장염' 2건(1년 전), '캄필로박터 위장염'(3년 전). 대부분 일본인 여행객이 생간·육회·산낙지를 먹은 경우. 최근 1년 안에만 7건으로 반복적이어서 제외.",
-  "poisonChecked": "구글 약 400건"
+  "poisonChecked": "구글 약 400건",
+  "old": true,
+  "raw": true,
+  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "gubok-mandu",
@@ -2414,7 +2502,8 @@
     "axis": "taste",
     "text": "만두피가 두껍고 밀가루 맛이 난다. 뜨겁지 않고 미지근하게 나와 맛이 반감된다. 딘타이펑 같은 샤오룽바오를 기대하면 실망.",
     "n": 18,
-    "when": "2018~2026.4"
+    "when": "2023~2026.4",
+    "approx": true
    },
    {
     "axis": "taste",
@@ -2426,7 +2515,8 @@
     "axis": "taste",
     "text": "동네 만두집·냉동만두와 차이를 모르겠다, 간이 밍밍하다, 미쉐린 받을 맛은 아니다.",
     "n": 14,
-    "when": "2018~2026.9"
+    "when": "2023~2026.9",
+    "approx": true
    },
    {
     "axis": "service",
@@ -2458,7 +2548,10 @@
   "lat": 37.54544,
   "lng": 126.97294,
   "country": "한국",
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": false,
+  "raw": false,
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
  },
  {
   "id": "oreno-ramen",
@@ -2515,25 +2608,22 @@
     "axis": "taste",
     "text": "국물이 짜다, 느끼하다. 어느 날은 평소의 세 배로 짜고 뼈 비린 맛이 났다(1년 전).",
     "n": 10,
-    "when": "2018~2025"
-   },
-   {
-    "axis": "taste",
-    "text": "매장 확장·리모델링 이후 기름이 떠다니고 담백함이 사라졌다는 단골 평. 일본 현지 토리파이탄보다 깊이가 얕고 삼계탕 같다는 평.",
-    "n": 6,
-    "when": "2020~2022"
+    "when": "2023~2025",
+    "approx": true
    },
    {
     "axis": "service",
     "text": "혼자 온 손님에게 반찬·리필 안내를 하지 않음, 자리 비운 사이 그릇을 치움, 자리 안내를 되묻자 짜증 섞인 대답.",
     "n": 5,
-    "when": "2021~2026.8"
+    "when": "2023~2026.8",
+    "approx": true
    },
    {
     "axis": "wait",
     "text": "1인 1메뉴 규칙과 밖에서 주문해야 한다는 것을 미리 알려주지 않음. 줄 서서 먹을 정도는 아니라는 평.",
     "n": 4,
-    "when": "2022~2026.8"
+    "when": "2023~2026.8",
+    "approx": true
    }
   ],
   "praise": [
@@ -2553,7 +2643,11 @@
   "lat": 37.54731,
   "lng": 126.91781,
   "country": "한국",
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": false,
+  "raw": false,
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영",
+  "healthNote": "카카오 5점 후기 1건(2026.8): '인생 라멘집인데 여기만 다녀오면 설사를 한다, 간혹 그런 후기를 보긴 했다'. 식중독 주장은 아니고 진한 닭 육수가 몸에 안 맞는다는 내용이라 참고로만 표시."
  },
  {
   "id": "yeokjeon-hoegwan",
@@ -2610,25 +2704,29 @@
     "axis": "service",
     "text": "영업 종료 40분~1시간 전부터 마무리해 달라며 계산서를 먼저 가져옴. 예약 시 자리 지정 불가, 문의에 훈계하는 말투, 반찬 남기지 말라는 말까지 들음.",
     "n": 16,
-    "when": "2018~2026.2"
+    "when": "2021~2026.2",
+    "approx": true
    },
    {
     "axis": "value",
     "text": "가격에 비해 양이 적고 맛이 평범하다. 바싹불고기가 식으면 그저 그렇고 달다.",
     "n": 14,
-    "when": "2018~2026"
+    "when": "2021~2026",
+    "approx": true
    },
    {
     "axis": "taste",
     "text": "낙지볶음이 질기고 캡사이신처럼 맵기만 하다. 용산역 앞 시절보다 불고기·선짓국 맛이 변했다.",
     "n": 7,
-    "when": "2019~2025"
+    "when": "2021~2025",
+    "approx": true
    },
    {
     "axis": "access",
     "text": "주차가 안 되고 과거 발렛비 추가 요구가 있었다.",
     "n": 4,
-    "when": "2018~2024"
+    "when": "2021~2024",
+    "approx": true
    }
   ],
   "praise": [
@@ -2648,6 +2746,9 @@
   "lat": 37.54294,
   "lng": 126.94706,
   "country": "한국",
-  "poisonChecked": null
+  "poisonChecked": null,
+  "old": true,
+  "raw": false,
+  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
  }
 ]
