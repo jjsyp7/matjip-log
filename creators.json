@@ -1,0 +1,31 @@
+[
+ {
+  "who": "육식맨",
+  "platform": "YouTube",
+  "trusted": true,
+  "added": "2026-10-02",
+  "note": "사용자가 직접 지정"
+ },
+ {
+  "who": "비밀이야",
+  "platform": "YouTube",
+  "trusted": true,
+  "added": "2026-10-03",
+  "note": "사용자가 직접 지정"
+ },
+ {
+  "who": "space_tamnik",
+  "platform": "Instagram",
+  "trusted": true,
+  "added": "2026-10-03",
+  "note": "사용자가 직접 지정"
+ },
+ {
+  "who": "더들리",
+  "platform": "YouTube",
+  "trusted": true,
+  "always": true,
+  "added": "2026-10-03",
+  "note": "사용자가 직접 지정. 이 사람 의견은 무조건 참고"
+ }
+]
