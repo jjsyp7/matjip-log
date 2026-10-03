@@ -348,7 +348,7 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "yaksan-heukyeomso",
@@ -585,7 +585,7 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "wooraeok",
@@ -703,7 +703,7 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "myeongdong-gyoja",
@@ -824,7 +824,7 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "mutan-apgujeong",
@@ -1050,7 +1050,7 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "gwanghwamun-mijin",
@@ -1162,7 +1162,7 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "jinju-hoegwan",
@@ -1268,7 +1268,7 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "manjok-ohyang-jokbal",
@@ -1373,7 +1373,7 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "jinmi-pyeongyang",
@@ -1589,7 +1589,7 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "geumdwaeji-sikdang",
@@ -1802,9 +1802,9 @@
   "lng": 126.98069,
   "country": "한국",
   "poisonChecked": null,
-  "old": true,
+  "old": false,
   "raw": false,
-  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
  },
  {
   "id": "jeongin-myeonok",
@@ -2012,7 +2012,7 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영 · 이전한 가게라 이전 이후 후기만 봐야 함(재조사 예정)"
  },
  {
   "id": "persian-palace",
@@ -2133,9 +2133,9 @@
   "lng": 126.99731,
   "country": "한국",
   "poisonChecked": null,
-  "old": true,
+  "old": false,
   "raw": false,
-  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
  },
  {
   "id": "nampo-myeonok",
@@ -2243,7 +2243,7 @@
   "healthNote": "배탈·설사 주장 3건(1년 전, 2년 전, 7년 전)이 있으나 시기가 흩어져 있어 제외하지 않고 참고로만 표시. '음식이 변질돼 있었고 다음 날 배탈이 나 종일 고생'(1년 전), '복통과 구토를 했다'(2년 전), '같이 간 지인과 둘 다 설사'(7년 전).",
   "old": true,
   "raw": false,
-  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "jaha-sonmandu",
@@ -2345,7 +2345,7 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "buchon-yukhoe",
@@ -2445,7 +2445,7 @@
   "poisonChecked": "구글 약 400건",
   "old": true,
   "raw": true,
-  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
  },
  {
   "id": "gubok-mandu",
@@ -2551,7 +2551,7 @@
   "poisonChecked": null,
   "old": false,
   "raw": false,
-  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영 · 이전한 가게라 이전 이후 후기만 봐야 함(재조사 예정)"
  },
  {
   "id": "oreno-ramen",
@@ -2646,8 +2646,7 @@
   "poisonChecked": null,
   "old": false,
   "raw": false,
-  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영",
-  "healthNote": "카카오 5점 후기 1건(2026.8): '인생 라멘집인데 여기만 다녀오면 설사를 한다, 간혹 그런 후기를 보긴 했다'. 식중독 주장은 아니고 진한 닭 육수가 몸에 안 맞는다는 내용이라 참고로만 표시."
+  "window": "일반 기준: 최근 3년(2023.10 이후) 후기만 반영"
  },
  {
   "id": "yeokjeon-hoegwan",
@@ -2749,6 +2748,6 @@
   "poisonChecked": null,
   "old": true,
   "raw": false,
-  "window": "노포 기준: 최근 5년(2021.10 이후) 후기만 반영"
+  "window": "노포(30년 이상) 기준: 최근 5년(2021.10 이후) 후기만 반영"
  }
 ]
