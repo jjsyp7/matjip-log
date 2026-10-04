@@ -207,6 +207,7 @@ function render(){
   list.forEach((x,i)=>{ const {p,sc}=x; const on=openId===p.id;
     if(region==="전체"&&p.region!==grp){ grp=p.region; rows.append(el("p",{class:"grp",text:`${grp||"지역 미정"} · ${list.filter(y=>y.p.region===grp).length}곳`})); }
     if(region!=="전체"&&x.occ&&!sc.ban&&!sc.hid&&!(list[i-1]&&list[i-1].occ)) rows.append(el("p",{class:"grp",text:"분위기용 · 분위기와 서비스를 더 크게 봄"}));
+    if(sc.ban&&!(list[i-1]&&list[i-1].sc.ban&&(region!=="전체"||list[i-1].p.region===p.region))) rows.append(el("p",{class:"grp",text:"가지 말 것 · 식중독 주장 반복"}));
     const r=el("button",{class:"row",type:"button",id:"row-"+p.id+(x.occ&&p.occasionAlso?"-occ":""),"aria-expanded":String(on)});
     const mid=el("div",null,el("h2",{text:p.name||"이름 없음"}),el("p",{class:"meta",text:[p.area,[p.cuisine,(p.menus||[]).join("·")].filter(Boolean).join(" › ")||p.category,(p.ratings||[]).filter(r=>num(r.rating)!=null).map(r=>`${r.src} ${r.rating}${r.distrust?"(의심)":""}`).join(" / ")||null].filter(Boolean).join(" · ")}));
     if(p.summary) mid.append(el("p",{class:"sum",text:p.summary}));
@@ -217,7 +218,7 @@ function render(){
     if(p.noKakao&&!sc.hid) flags.append(el("span",{class:"flag f-warn",text:p.noKakao}));
     if(p.pest) flags.append(el("span",{class:"flag f-bad",text:p.pest}));
     if(p.tourist) flags.append(el("span",{class:"flag f-warn",text:"관광객 많음"}));
-    if(p.occasion) flags.append(el("span",{class:"flag f-warn",text:"분위기용 · "+p.occasion}));
+    if(p.occasion) flags.append(el("span",{class:"flag f-warn",text:"분위기용"}));
     if(p.caution) flags.append(el("span",{class:"flag f-bad",text:"⚠ "+p.caution}));
     if(p.axes&&p.axes.mood&&p.axes.mood.fo&&/음식 속 이물질|머리카락|그릇에 죽은 벌레/.test(p.axes.mood.fo)) flags.append(el("span",{class:"flag f-bad",text:"음식 이물질 후기"}));
     sc.weak.forEach(k=>flags.append(el("span",{class:"flag f-bad",text:`${AXN[k]} 약함`})));

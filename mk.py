@@ -40,7 +40,9 @@ if den:
     if negs: basis+=", 믿는 유튜버 비추천 −0.5"
     if k.get('hidden'):
         pen=1.0 if den==1 else 0.5; v-=pen; basis+=f", 카카오로 확인할 수 없어 −{pen:g}"+(" (남은 평점이 한 곳뿐)" if pen==1 else ""); e['noKakao']=f"카카오 미확인 · 맛 −{pen:g}"
-    if k.get('hidden') and den==1 and parts[0].startswith('다이닝코드') and v-bonus>3.5: v=3.5+bonus; basis+=", 다이닝코드만 남은 곳은 맛 점수 상한 3.5"; e['noKakao']="카카오 미확인 · 다이닝코드만 있어 맛 상한 3.5"
+    if k.get('hidden') and den==1:
+        if v-bonus>3.5: v=3.5+bonus
+        basis+=", 평점이 한 곳만 남은 곳은 맛 점수 상한 3.5"; e['noKakao']="카카오 미확인 · 평점 한 곳뿐이라 맛 상한 3.5"
     if e.get('luke'): v-=0.5; basis+=f", 후기 내용이 미지근한 쪽이 많아 −0.5 ({e['luke']})"
     ax['taste']['s']=max(1,min(5,int(v*2+0.5)/2))
 else: basis="현지인 평점을 쓸 수 없어 구체적인 맛 후기를 읽고 매긴 값"; e['unranked']=bool(k.get('hidden') or not k)
