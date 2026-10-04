@@ -99,11 +99,11 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,att
 function el(tag,attrs,...kids){ const n=document.createElement(tag); if(attrs) for(const k in attrs){ if(k==="class") n.className=attrs[k]; else if(k==="text") n.textContent=attrs[k]; else n.setAttribute(k,attrs[k]); } for(const c of kids){ if(c==null) continue; n.append(c.nodeType?c:document.createTextNode(String(c))); } return n; }
 const safeUrl=u=>typeof u==="string"&&/^https:\/\//.test(u)?u:null;
 const num=v=>typeof v==="number"&&isFinite(v)?v:null;
-const gcls=g=>/극찬|호평/.test(g||"")?"f-good":/아쉬움|비추/.test(g||"")?"f-bad":"f-warn";
+const gcls=g=>/비추|아쉬움/.test(g||"")?"f-bad":/추천|극찬|호평/.test(g||"")?"f-good":"f-warn";
 
 // 가게가 후기를 비공개로 돌린 경우: 감점하지 않고 순위에서 빼 '예외'로 따로 둔다
 const hidden=p=>(p.ratings||[]).some(r=>r.hidden);
-// 식중독·배탈 주장이 반복적으로(일관되게) 나올 때만 가지 않는 곳으로 분류. 흩어진 한두 건은 healthNote로 참고만
+// 식중독 기준: 1년 안 3건 이상이면 제외(믿는 유튜버 추천이 있으면 5건), 날것 가게는 2년 안 2건. 그 아래는 healthNote로 참고만
 const poisoned=p=>!!p.poison;
 function score(p){
   let w=0,t=0; const weak=[], strong=[];
@@ -168,6 +168,7 @@ function detail(p){
     const m=el("div",{class:"meter"}); if(s!=null){ const i=el("i",{class:s>=4?"bg-good":s>=3?"bg-warn":"bg-bad"}); i.style.width=(s/5*100)+"%"; m.append(i); }
     ax.append(el("div",{class:"axis"},el("span",{class:"nm"+(pri.has(k)?" pri":""),text:n}),m,el("span",{class:"note",text:s==null?"근거 없음":(a.n||"")})));
   }
+  if(p.tasteBasis) ax.append(el("p",{class:"evid",style:"margin-top:2px",text:"맛 점수 근거: "+p.tasteBasis}));
   d.append(ax);
   if(p.poison){ const b=el("div",{class:"layer",style:"border-top:0;padding-top:0"},el("h3",{text:"가지 않는 이유",style:"color:var(--bad)"})); b.append(el("p",{class:"note",text:p.poison})); d.prepend(b); }
   if(p.healthNote&&!p.poison){ const b=el("div",{class:"layer",style:"border-top:0;padding-top:0"},el("h3",{text:"배탈·식중독 주장 (참고)"})); b.append(el("p",{class:"note",text:p.healthNote})); d.prepend(b); }
