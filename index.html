@@ -118,7 +118,7 @@ function score(p,occ){
   return {v,tier,weak,strong,hid,ban};
 }
 // 지역을 고르면 그 안에서 순위를 매기고, 전체에서는 순위 없이 지역별로 묶는다
-const ranked=()=>{ const l=places.filter(p=>(cuisine==="전체"||p.cuisine===cuisine)&&(menu==="전체"||(p.menus||[]).includes(menu))&&(country==="전체"||(p.country||"한국")===country)&&(region==="전체"||p.region===region)).flatMap(p=>!p.occasion?[{p,sc:score(p)}]:p.occasionAlso?[{p,sc:score(p)},{p,sc:score(p,true),occ:true}]:[{p,sc:score(p,true),occ:true}]).sort((a,b)=>(b.sc.v??-1)-(a.sc.v??-1));
+const ranked=()=>{ const l=places.filter(p=>(cuisine==="전체"||p.cuisine===cuisine)&&(menu==="전체"||(p.menus||[]).includes(menu))&&(country==="전체"||(p.country||"한국")===country)&&(region==="전체"||p.region===region)).map(p=>({p,sc:score(p)})).sort((a,b)=>(b.sc.v??-1)-(a.sc.v??-1));
   const ex=x=>x.sc.ban?2:x.sc.hid?1:x.occ?0.5:0;
   l.sort((a,b)=>ex(a)-ex(b));
   if(region==="전체"){ const cnt={}; l.forEach(x=>cnt[x.p.region]=(cnt[x.p.region]||0)+1); l.sort((a,b)=>(cnt[b.p.region]-cnt[a.p.region])||String(a.p.region).localeCompare(String(b.p.region))||(ex(a)-ex(b))||((b.sc.v??-1)-(a.sc.v??-1))); }
@@ -217,7 +217,7 @@ function render(){
     if(p.noKakao&&!sc.hid) flags.append(el("span",{class:"flag f-warn",text:p.noKakao}));
     if(p.pest) flags.append(el("span",{class:"flag f-bad",text:p.pest}));
     if(p.tourist) flags.append(el("span",{class:"flag f-warn",text:"관광객 많음"}));
-    if(p.occasion) flags.append(el("span",{class:"flag f-warn",text:p.occasion+(x.occ?"":" · 분위기용 묶음에도 있음")}));
+    if(p.occasion) flags.append(el("span",{class:"flag f-warn",text:"분위기용 · "+p.occasion}));
     if(p.caution) flags.append(el("span",{class:"flag f-bad",text:"⚠ "+p.caution}));
     if(p.axes&&p.axes.mood&&p.axes.mood.fo&&/음식 속 이물질|머리카락|그릇에 죽은 벌레/.test(p.axes.mood.fo)) flags.append(el("span",{class:"flag f-bad",text:"음식 이물질 후기"}));
     sc.weak.forEach(k=>flags.append(el("span",{class:"flag f-bad",text:`${AXN[k]} 약함`})));
