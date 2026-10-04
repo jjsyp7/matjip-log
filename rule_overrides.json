@@ -1,0 +1,101 @@
+{
+ "pricey": [
+  "hangukui-jip",
+  "ichunbok-chamchi",
+  "jigok-sanjang",
+  "mutan-apgujeong",
+  "persian-palace",
+  "sinsikdang",
+  "sunmine-gejang",
+  "walking-on-the-cloud",
+  "wooraeok",
+  "yaksan-heukyeomso",
+  "yeokjeon-hoegwan"
+ ],
+ "fo": {
+  "myeongdong-gyoja": [
+   3,
+   "머리카락 3건 / 음식 속 이물질 2건(플라스틱 조각, 국물에 벌레) / 매장 바퀴벌레 2건"
+  ],
+  "samcheongdong-sujebi": [
+   3,
+   "머리카락 3건 / 매장 벌레 2건(바퀴벌레, 날파리) / 식기 위생 3건(그릇·숟가락에 고춧가루, 눌어붙은 자국)"
+  ],
+  "gwanghwamun-mijin": [
+   1,
+   "음식 속 이물질 2건(벼룩파리가 같이 튀겨짐, 물에서 벌레 다리)"
+  ],
+  "jinmi-pyeongyang": [
+   1,
+   "식기 위생 4건(수저·앞접시·그릇에 고춧가루, 그릇 이물질)"
+  ],
+  "imbyeongju-sandong": [
+   1,
+   "머리카락 2건(김치)"
+  ],
+  "hwangsaengga": [
+   2,
+   "음식 속 이물질 2건(김치에서 수세미 조각, 칼국수에서 천) / 식기 위생 4건(컵 립스틱 자국, 물컵·접시에 고춧가루)"
+  ],
+  "jaha-sonmandu": [
+   1,
+   "식기 위생 4건(종지·앞접시 먼지, 컵 립스틱 자국, 수저받침 고춧가루)"
+  ],
+  "buchon-yukhoe": [
+   1,
+   "음식 속 이물질 2건(육회에서 날파리, 비닐랩)"
+  ],
+  "oreno-ramen": [
+   1,
+   "머리카락 2건"
+  ],
+  "yeokjeon-hoegwan": [
+   1,
+   "머리카락 2건"
+  ],
+  "chebudong-janchijip": [
+   2,
+   "음식 속 이물질 4건(플라스틱·비닐·철수세미) / 매장·식기 위생 4건(룸·테이블·식기가 더럽다)"
+  ],
+  "wonjo-halabeoji-sondubu": [
+   1,
+   "매장 위생 2건(파리·쥐, 주방 위생)"
+  ],
+  "hakata-bunko": [
+   1,
+   "매장 벌레·행주 냄새 7건"
+  ],
+  "gwanghwamun-ttukgam": [
+   1,
+   "벌레 2건(감자탕·반찬에서 벌레, 매장 벌레)"
+  ],
+  "okdongsik-seogyo": [
+   1,
+   "음식 속 이물질 4건(고기에 박힌 돼지털)"
+  ],
+  "jongno-halmeoni-kalguksu": [
+   1,
+   "매장·식기 위생 4건(식탁 바퀴벌레, 앞접시 찌꺼기)"
+  ],
+  "kyodaiya": [
+   1,
+   "매장 위생 2건(초파리, 주방 위생)"
+  ],
+  "yeonhadong": [
+   1,
+   "매장·식기 위생 2건(앞접시 이물질, 비위생적)"
+  ],
+  "buil-galbi": [
+   1,
+   "매장 위생 2건(동치미에 날파리, 위생은 포기해야 함)"
+  ],
+  "new-mandujip": [
+   1,
+   "음식 속 이물질 2건(만두에서 비닐, 밥에서 날파리)"
+  ],
+  "namsogwan": [
+   1,
+   "식기 위생 2건(물컵 냄새, 접시 지문 자국)"
+  ]
+ }
+}
