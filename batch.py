@@ -37,14 +37,15 @@ for e in specs:
     if fo:
         k,txt=fo; ax['mood']['s']=max(1,ax['mood']['s']-0.5*k); ax['mood']['fo']=f"위생 {0.5*k:g}점 감점 — 2건 이상 반복된 상황마다 0.5점: {txt}"
         R=json.load(open('rule_overrides.json')); R['fo'][e['id']]=fo; json.dump(R,open('rule_overrides.json','w'),ensure_ascii=False,indent=1)
-    # 분위기용: 분위기 칭찬 언급 10건 이상 + 위생 감점 없음 + 관광객 위주 아님 (세 조건 모두)
+    # 분위기용: 분위기 칭찬 비율 10% 이상 + 위생 감점 없음 + 관광객 위주 아님 (세 조건 모두)
     op=(0 if dis else s2['mood'][0])+(kd[4] if kd else 0)
-    p.pop('occasion',None); p['_occPos']=op
+    on=(0 if dis else s2['n'])+(kd[0] if kd else 0)
+    p.pop('occasion',None); p['_occPos']=[op,on]
     ro=e.get('roachNote')
     if ro:
         p['roach']=True; p['pest']=e.get('pest','바퀴벌레 후기'); mo=ax['mood']; mo['s']=max(1,mo['s']-1); mo['fo']=(mo['fo']+' / ' if mo.get('fo') else '위생 감점 — ')+'쥐·바퀴벌레는 최근 2년 안에 1건이어도 1점 감점: '+ro
-    op=p.pop('_occPos',0)
-    if op>=10 and not ax['mood'].get('fo') and not p.get('tourist'): p['occasion']=f"분위기 칭찬 {op}건, 위생 감점 없음, 관광객 위주 아님"
+    op,on=p.pop('_occPos',[0,0])
+    if on and round(op/on*100)>=10 and not ax['mood'].get('fo') and not p.get('tourist'): p['occasion']=f"후기 {on}건 중 {op}건({round(op/on*100)}%)이 분위기 칭찬, 위생 감점 없음, 관광객 위주 아님"
     json.dump(P,open('places.json','w'),ensure_ascii=False,indent=1)
     w={'taste':2,'service':1,'value':1,'mood':1,'access':1}
     print(p['name'],{a:ax[a]['s'] for a in w}, round((sum(w[a]*ax[a]['s'] for a in w)/6-1)/4*100), '의심' if dis else '', '예외' if any(x.get('hidden') for x in p['ratings']) else '')
