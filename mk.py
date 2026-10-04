@@ -61,5 +61,5 @@ for f in('caution','poison','healthNote','occasion','occasionAlso','tasteFirst',
 P=[x for x in P if x['id']!=p['id']]+[p]
 json.dump(P,open('places.json','w'),ensure_ascii=False,indent=1)
 w={'taste':2,'service':1,'value':1,'mood':1,'access':1}
-sc=round((sum(w[a]*ax[a]['s'] for a in w)/sum(w.values())-1)/4*100)
+sc=round((sum(w[a]*ax[a]['s'] for a in w if ax[a]['s'] is not None)/sum(w[a] for a in w if ax[a]['s'] is not None)-1)/4*100)
 print(len(P),p['name'],lat,lng,{a:ax[a]['s'] for a in ax},'점수',sc)

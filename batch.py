@@ -33,7 +33,7 @@ for e in specs:
     if p.get('tasteFirst'):
         va=ax['value']; kg=e.get('kg'); v=kw(kg[1],kg[2]) if kg else None; va.pop('kw',None)
         if v is not None: va.update(s=v,src='kakao',auto=True); va['kwk']=f"맛을 보고 가는 메뉴라 가격·양은 보지 않고 가심비(값을 한다고 느꼈는지)만 봄: 카카오 {kg[0]}건 중 '비싸도 만족·값어치 한다' {kg[1]} · '돈 아깝다·값만큼은 아니다' {kg[2]}"
-        else: va.update(s=ax['taste']['s'],src='taste',auto=False); va['kwk']="맛을 보고 가는 메뉴라 가격·양은 보지 않음. 가심비를 직접 말한 후기가 8건 미만이라 맛 점수를 그대로 가심비로 씀"
+        else: va.update(s=None,src='none',auto=False); va['kwk']="맛을 보고 가는 메뉴라 가격·양은 보지 않음. 가심비를 직접 말한 후기가 8건 미만이라 이 칸은 점수에서 뺌"
     if fo:
         k,txt=fo; ax['mood']['s']=max(1,ax['mood']['s']-0.5*k); ax['mood']['fo']=f"위생 {0.5*k:g}점 감점 — 2건 이상 반복된 상황마다 0.5점: {txt}"
         R=json.load(open('rule_overrides.json')); R['fo'][e['id']]=fo; json.dump(R,open('rule_overrides.json','w'),ensure_ascii=False,indent=1)
@@ -48,4 +48,4 @@ for e in specs:
     if on and round(op/on*100)>=10 and not ax['mood'].get('fo') and not p.get('tourist'): p['occasion']=f"후기 {on}건 중 {op}건({round(op/on*100)}%)이 분위기 칭찬, 위생 감점 없음, 관광객 위주 아님"
     json.dump(P,open('places.json','w'),ensure_ascii=False,indent=1)
     w={'taste':2,'service':1,'value':1,'mood':1,'access':1}
-    print(p['name'],{a:ax[a]['s'] for a in w}, round((sum(w[a]*ax[a]['s'] for a in w)/6-1)/4*100), '의심' if dis else '', '예외' if any(x.get('hidden') for x in p['ratings']) else '')
+    print(p['name'],{a:ax[a]['s'] for a in w}, round((sum(w[a]*ax[a]['s'] for a in w if ax[a]['s'] is not None)/sum(w[a] for a in w if ax[a]['s'] is not None)-1)/4*100), '의심' if dis else '', '예외' if any(x.get('hidden') for x in p['ratings']) else '')
