@@ -2,6 +2,7 @@
  "tasteFirst": [
   "bongsanok-seocho",
   "gaeseong-mandu-gung",
+  "hakata-bunko",
   "hangukui-jip",
   "ichunbok-chamchi",
   "jaha-sonmandu",
@@ -9,15 +10,14 @@
   "jigok-sanjang",
   "jinju-hoegwan",
   "jinmi-pyeongyang",
-  "mapo-ok",
   "mutan-apgujeong",
   "nampo-myeonok",
   "new-mandujip",
+  "oreno-ramen",
   "persian-palace",
   "pildong-myeonok",
   "sinsikdang",
   "sunmine-gejang",
-  "walking-on-the-cloud",
   "wooraeok",
   "yaksan-heukyeomso",
   "yeokjeon-hoegwan"
@@ -86,6 +86,18 @@
   "namsogwan": [
    1,
    "식기 위생 2건(물컵 냄새, 접시 지문 자국)"
+  ],
+  "gwanghwamun-mijin": [
+   1,
+   "음식 속 이물질 2건(벼룩파리가 같이 튀겨짐, 물에서 벌레 다리)"
+  ],
+  "buchon-yukhoe": [
+   1,
+   "음식 속 이물질 2건(육회에서 날파리, 비닐랩)"
+  ],
+  "new-mandujip": [
+   1,
+   "음식 속 이물질 2건(만두에서 비닐, 밥에서 날파리)"
   ]
  }
 }
