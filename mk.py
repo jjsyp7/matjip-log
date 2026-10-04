@@ -38,9 +38,11 @@ if den:
     if e.get('event'): basis+=" (구글은 리뷰 이벤트 의심으로 제외)"
     if bonus: basis+=f", 믿는 유튜버 추천 {recs}명 +{bonus:g}"
     if negs: basis+=", 믿는 유튜버 비추천 −0.5"
+    if k.get('hidden'):
+        pen=1.0 if den==1 else 0.5; v-=pen; basis+=f", 카카오로 확인할 수 없어 −{pen:g}"+(" (남은 평점이 한 곳뿐)" if pen==1 else ""); e['noKakao']=f"카카오 미확인 · 맛 −{pen:g}"
     if e.get('luke'): v-=0.5; basis+=f", 후기 내용이 미지근한 쪽이 많아 −0.5 ({e['luke']})"
     ax['taste']['s']=max(1,min(5,int(v*2+0.5)/2))
-else: basis="현지인 평점을 쓸 수 없어 구체적인 맛 후기를 읽고 매긴 값"
+else: basis="현지인 평점을 쓸 수 없어 구체적인 맛 후기를 읽고 매긴 값"; e['unranked']=bool(k.get('hidden') or not k)
 s2=e['s2']
 for a in('service','value','mood'):
     pos,neg=s2[a]; ax[a]['kw']=f"최근 한국어 구글 후기 {s2['n']}건 중 긍정 언급 {pos} · 부정 언급 {neg}"
@@ -51,7 +53,7 @@ p={"id":e['id'],"name":e['name'],"area":e['area'],"region":e.get('region','서�
  "summary":e['summary'],"axes":ax,"tasteBasis":basis,"ratings":ratings,"youtubers":ys,"complaints":e['complaints'],"praise":e['praise'],"recent":e.get('recent',''),"tips":e.get('tips',[]),
  "evidence":e['evidence'],"checked":e.get('checked','2026-10-04'),"old":old,
  "window":f"{'노포(30년 이상)' if old else '일반'} 기준: 최근 {5 if old else 3}년({cut}.10 이후) 후기만 반영, 번역된 외국어 리뷰 제외"}
-for f in('caution','poison','healthNote','occasion','occasionAlso','tasteFirst','tourist','roach','kakaoId'):
+for f in('caution','poison','healthNote','occasion','occasionAlso','tasteFirst','tourist','roach','pest','noKakao','unranked','kakaoId'):
     if e.get(f): p[f]=e[f]
 P=[x for x in P if x['id']!=p['id']]+[p]
 json.dump(P,open('places.json','w'),ensure_ascii=False,indent=1)

@@ -101,8 +101,8 @@ const safeUrl=u=>typeof u==="string"&&/^https:\/\//.test(u)?u:null;
 const num=v=>typeof v==="number"&&isFinite(v)?v:null;
 const gcls=g=>/비추|아쉬움/.test(g||"")?"f-bad":/추천|극찬|호평/.test(g||"")?"f-good":"f-warn";
 
-// 가게가 후기를 비공개로 돌린 경우: 감점하지 않고 순위에서 빼 '예외'로 따로 둔다
-const hidden=p=>(p.ratings||[]).some(r=>r.hidden);
+// 카카오로 확인할 수 없는 가게는 맛 점수를 낮춰 같은 줄에 세운다. 믿을 평점이 하나도 없을 때만(unranked) 순위에서 뺀다
+const hidden=p=>!!p.unranked;
 // 식중독 기준: 1년 안 3건 이상이면 제외(믿는 유튜버 추천이 있으면 5건), 날것 가게는 2년 안 2건. 그 아래는 healthNote로 참고만
 const poisoned=p=>!!p.poison;
 // 분위기용 묶음은 분위기·서비스에 2배, 맛은 1배로 본다
@@ -213,8 +213,9 @@ function render(){
     const flags=el("div");
     if(sc.ban) flags.append(el("span",{class:"flag f-bad",text:"✕ 가지 않음 · 식중독 주장 반복"}));
     if(p.healthNote&&!sc.ban) flags.append(el("span",{class:"flag f-warn",text:"배탈 언급 있음 (참고)"}));
-    if(sc.hid) flags.append(el("span",{class:"flag f-bad",text:"예외 · 카카오로 확인 불가 (순위 제외)"}));
-    if(p.roach) flags.append(el("span",{class:"flag f-bad",text:"바퀴벌레 후기"}));
+    if(sc.hid) flags.append(el("span",{class:"flag f-bad",text:"예외 · 믿을 평점 없음 (순위 제외)"}));
+    if(p.noKakao&&!sc.hid) flags.append(el("span",{class:"flag f-warn",text:p.noKakao}));
+    if(p.pest) flags.append(el("span",{class:"flag f-bad",text:p.pest}));
     if(p.tourist) flags.append(el("span",{class:"flag f-warn",text:"관광객 많음"}));
     if(p.occasion) flags.append(el("span",{class:"flag f-warn",text:p.occasion+(x.occ?"":" · 분위기용 묶음에도 있음")}));
     if(p.caution) flags.append(el("span",{class:"flag f-bad",text:"⚠ "+p.caution}));

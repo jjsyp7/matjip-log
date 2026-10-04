@@ -39,7 +39,7 @@ for e in specs:
         R=json.load(open('rule_overrides.json')); R['fo'][e['id']]=fo; json.dump(R,open('rule_overrides.json','w'),ensure_ascii=False,indent=1)
     ro=e.get('roachNote')
     if ro:
-        p['roach']=True; mo=ax['mood']; mo['s']=max(1,mo['s']-1); mo['fo']=(mo['fo']+' / ' if mo.get('fo') else '위생 감점 — ')+'바퀴벌레는 1건이어도 1점 감점: '+ro
+        p['roach']=True; p['pest']=e.get('pest','바퀴벌레 후기'); mo=ax['mood']; mo['s']=max(1,mo['s']-1); mo['fo']=(mo['fo']+' / ' if mo.get('fo') else '위생 감점 — ')+'쥐·바퀴벌레는 최근 2년 안에 1건이어도 1점 감점: '+ro
     json.dump(P,open('places.json','w'),ensure_ascii=False,indent=1)
     w={'taste':2,'service':1,'value':1,'mood':1,'access':1}
     print(p['name'],{a:ax[a]['s'] for a in w}, round((sum(w[a]*ax[a]['s'] for a in w)/6-1)/4*100), '의심' if dis else '', '예외' if any(x.get('hidden') for x in p['ratings']) else '')
