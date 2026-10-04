@@ -10,12 +10,15 @@
   "jigok-sanjang",
   "jinju-hoegwan",
   "jinmi-pyeongyang",
+  "moyeon",
   "mutan-apgujeong",
   "nampo-myeonok",
   "new-mandujip",
   "oreno-ramen",
   "persian-palace",
   "pildong-myeonok",
+  "ramen-truck",
+  "sekkeut-ramen",
   "sinsikdang",
   "sunmine-gejang",
   "wooraeok",
@@ -98,6 +101,10 @@
   "new-mandujip": [
    1,
    "음식 속 이물질 2건(만두에서 비닐, 밥에서 날파리)"
+  ],
+  "kkupdang": [
+   1,
+   "식기 위생 2건(수저·그릇에 이물질, 숟가락 5개 중 4개에 이물질, 2024.8)"
   ]
  }
 }
