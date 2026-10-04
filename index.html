@@ -167,7 +167,7 @@ function detail(p){
   for(const [k,n] of AXES){ const a=(p.axes&&p.axes[k])||{}; const s=num(a.s);
     if(k==="wait"){ ax.append(el("div",{class:"axis"},el("span",{class:"nm",text:"대기 정보"}),el("span",{class:"cnt",text:"점수 제외"}),el("span",{class:"note",text:a.n||"정보 없음"}))); continue; }
     const m=el("div",{class:"meter"}); if(s!=null){ const i=el("i",{class:s>=4?"bg-good":s>=3?"bg-warn":"bg-bad"}); i.style.width=(s/5*100)+"%"; m.append(i); }
-    ax.append(el("div",{class:"axis"},el("span",{class:"nm"+(pri.has(k)?" pri":""),text:n}),m,el("span",{class:"note",text:s==null?"근거 없음":(a.n||"")+(a.fo?` ⚠ ${a.fo}`:"")+(a.kw?` [${a.kw}${a.auto?"":a.fo?"":" · 언급이 적어 점수에는 미반영"}]`:"")})));
+    ax.append(el("div",{class:"axis"},el("span",{class:"nm"+(pri.has(k)?" pri":""),text:n}),m,el("span",{class:"note",text:s==null?"근거 없음":(a.n||"")+(a.fo?` ⚠ ${a.fo}`:"")+(a.kwk?` [${a.kwk}]`:"")+(a.kw?` [${a.kw}${a.auto?"":a.fo?"":" · 언급이 적어 점수에는 미반영"}]`:"")})));
   }
   if(p.tasteBasis) ax.append(el("p",{class:"evid",style:"margin-top:2px",text:"맛 점수 근거: "+p.tasteBasis}));
   d.append(ax);
