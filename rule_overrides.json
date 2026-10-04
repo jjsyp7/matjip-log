@@ -1,10 +1,20 @@
 {
- "pricey": [
+ "tasteFirst": [
+  "bongsanok-seocho",
+  "gaeseong-mandu-gung",
   "hangukui-jip",
   "ichunbok-chamchi",
+  "jaha-sonmandu",
+  "jeongin-myeonok",
   "jigok-sanjang",
+  "jinju-hoegwan",
+  "jinmi-pyeongyang",
+  "mapo-ok",
   "mutan-apgujeong",
+  "nampo-myeonok",
+  "new-mandujip",
   "persian-palace",
+  "pildong-myeonok",
   "sinsikdang",
   "sunmine-gejang",
   "walking-on-the-cloud",
@@ -18,12 +28,8 @@
    "머리카락 3건 / 음식 속 이물질 2건(플라스틱 조각, 국물에 벌레) / 매장 바퀴벌레 2건"
   ],
   "samcheongdong-sujebi": [
-   3,
-   "머리카락 3건 / 매장 벌레 2건(바퀴벌레, 날파리) / 식기 위생 3건(그릇·숟가락에 고춧가루, 눌어붙은 자국)"
-  ],
-  "gwanghwamun-mijin": [
-   1,
-   "음식 속 이물질 2건(벼룩파리가 같이 튀겨짐, 물에서 벌레 다리)"
+   2,
+   "머리카락 3건 / 식기 위생 3건(그릇·숟가락에 고춧가루, 눌어붙은 자국)"
   ],
   "jinmi-pyeongyang": [
    1,
@@ -41,10 +47,6 @@
    1,
    "식기 위생 4건(종지·앞접시 먼지, 컵 립스틱 자국, 수저받침 고춧가루)"
   ],
-  "buchon-yukhoe": [
-   1,
-   "음식 속 이물질 2건(육회에서 날파리, 비닐랩)"
-  ],
   "oreno-ramen": [
    1,
    "머리카락 2건"
@@ -59,11 +61,11 @@
   ],
   "wonjo-halabeoji-sondubu": [
    1,
-   "매장 위생 2건(파리·쥐, 주방 위생)"
+   "매장 위생 2건(쥐가 돌아다님, 주방 위생)"
   ],
   "hakata-bunko": [
    1,
-   "매장 벌레·행주 냄새 7건"
+   "매장 위생 7건(덜 마른 행주 냄새, 끈적한 바닥, 벽 얼룩)"
   ],
   "gwanghwamun-ttukgam": [
    1,
@@ -77,21 +79,9 @@
    1,
    "매장·식기 위생 4건(식탁 바퀴벌레, 앞접시 찌꺼기)"
   ],
-  "kyodaiya": [
-   1,
-   "매장 위생 2건(초파리, 주방 위생)"
-  ],
   "yeonhadong": [
    1,
    "매장·식기 위생 2건(앞접시 이물질, 비위생적)"
-  ],
-  "buil-galbi": [
-   1,
-   "매장 위생 2건(동치미에 날파리, 위생은 포기해야 함)"
-  ],
-  "new-mandujip": [
-   1,
-   "음식 속 이물질 2건(만두에서 비닐, 밥에서 날파리)"
   ],
   "namsogwan": [
    1,
