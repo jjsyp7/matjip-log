@@ -107,7 +107,7 @@ const hidden=p=>(p.ratings||[]).some(r=>r.hidden);
 const poisoned=p=>!!p.poison;
 function score(p){
   let w=0,t=0; const weak=[], strong=[];
-  for(const [k] of AXES){ const s=num(p.axes&&p.axes[k]&&p.axes[k].s); if(s==null) continue; const wt=pri.has(k)?3:1; w+=wt; t+=wt*s; if(pri.has(k)){ if(s<=2.5) weak.push(k); else if(s>=4.5) strong.push(k);} }
+  for(const [k] of AXES){ const s=num(p.axes&&p.axes[k]&&p.axes[k].s); if(s==null) continue; const wt=pri.has(k)?3:(k==="taste"&&!pri.size?2:1); w+=wt; t+=wt*s; if(pri.has(k)){ if(s<=2.5) weak.push(k); else if(s>=4.5) strong.push(k);} }
   if(!w) return {v:null,tier:"none",weak,strong};
   let v=Math.round((t/w-1)/4*100);
   if(weak.length) v=Math.max(0,v-8*weak.length);
@@ -144,7 +144,7 @@ function renderChips(){
   const regs=["전체",...[...new Set(places.filter(p=>country==="전체"||(p.country||"한국")===country).map(p=>p.region).filter(Boolean))].sort()];
   if(!regs.includes(region)) region="전체";
   for(const r of regs){ const b=el("button",{class:"chip",type:"button","aria-pressed":String(region===r),text:r}); b.onclick=()=>{ region=r; openId=null; save(); render(); }; rg.append(b); }
-  document.getElementById("hint").textContent=pri.size?`${[...pri].map(k=>AXN[k]).join(", ")}에 3배 가중치. 이 항목이 약한 가게는 점수가 깎이고 경고가 붙습니다.`:"고르지 않으면 여섯 항목을 똑같이 봅니다.";
+  document.getElementById("hint").textContent=pri.size?`${[...pri].map(k=>AXN[k]).join(", ")}에 3배 가중치. 이 항목이 약한 가게는 점수가 깎이고 경고가 붙습니다.`:"고르지 않으면 맛을 2배로, 나머지 다섯 항목은 똑같이 봅니다.";
   document.getElementById("hint").textContent+=region==="전체"?" 지역을 고르면 그 안에서 순위가 매겨집니다.":"";
 }
 
