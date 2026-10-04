@@ -3917,7 +3917,9 @@
   "old": true,
   "window": "재개관(리모델링) 이후 후기만 반영. 정확한 재개관 시점은 확인하지 못했고, 리뷰상 최소 1년 전이라 최근 약 1년을 기준으로 함. 번역된 외국어 리뷰 제외",
   "kakaoId": "13050574",
-  "tasteFirst": true
+  "tasteFirst": true,
+  "occasion": "한옥·기념일용",
+  "occasionAlso": true
  },
  {
   "id": "gwanghwamun-gukbap",
