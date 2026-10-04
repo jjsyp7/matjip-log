@@ -31,9 +31,9 @@ for e in specs:
             if v is not None: ax['value']['s']=v; ax['value']['auto']=True
             else: ax['value']['s']=e['axes']['value']['s']; ax['value']['auto']=False
     if p.get('tasteFirst'):
-        va=ax['value']; v=kw(kd[1],kd[2]) if kd else None; va.pop('kw',None)
-        if v is not None: va['s']=v; va['src']='kakao'; va['kwk']=f"맛을 보고 가는 메뉴라 가격이 싼지 비싼지는 보지 않고 값어치 평가만 봄: 카카오 {kd[0]}건 중 '값을 한다·만족' {kd[1]} · '돈 아깝다·값만큼은 아니다' {kd[2]}"
-        else: va['s']=ax['taste']['s']; va['src']='taste'; va['auto']=False; va['kwk']="맛을 보고 가는 메뉴라 가격은 보지 않음. 값어치 후기가 적어 맛 점수를 그대로 가심비로 씀"
+        va=ax['value']; kg=e.get('kg'); v=kw(kg[1],kg[2]) if kg else None; va.pop('kw',None)
+        if v is not None: va.update(s=v,src='kakao',auto=True); va['kwk']=f"맛을 보고 가는 메뉴라 가격·양은 보지 않고 가심비(값을 한다고 느꼈는지)만 봄: 카카오 {kg[0]}건 중 '비싸도 만족·값어치 한다' {kg[1]} · '돈 아깝다·값만큼은 아니다' {kg[2]}"
+        else: va.update(s=ax['taste']['s'],src='taste',auto=False); va['kwk']="맛을 보고 가는 메뉴라 가격·양은 보지 않음. 가심비를 직접 말한 후기가 8건 미만이라 맛 점수를 그대로 가심비로 씀"
     if fo:
         k,txt=fo; ax['mood']['s']=max(1,ax['mood']['s']-0.5*k); ax['mood']['fo']=f"위생 {0.5*k:g}점 감점 — 2건 이상 반복된 상황마다 0.5점: {txt}"
         R=json.load(open('rule_overrides.json')); R['fo'][e['id']]=fo; json.dump(R,open('rule_overrides.json','w'),ensure_ascii=False,indent=1)
