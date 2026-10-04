@@ -107,7 +107,7 @@ const hidden=p=>(p.ratings||[]).some(r=>r.hidden);
 const poisoned=p=>!!p.poison;
 function score(p){
   let w=0,t=0; const weak=[], strong=[];
-  for(const [k] of AXES){ const s=num(p.axes&&p.axes[k]&&p.axes[k].s); if(s==null) continue; const wt=pri.has(k)?3:(k==="taste"&&!pri.size?2:1); w+=wt; t+=wt*s; if(pri.has(k)){ if(s<=2.5) weak.push(k); else if(s>=4.5) strong.push(k);} }
+  for(const [k] of AXES){ if(k==="wait") continue; const s=num(p.axes&&p.axes[k]&&p.axes[k].s); if(s==null) continue; const wt=pri.has(k)?3:(k==="taste"&&!pri.size?2:1); w+=wt; t+=wt*s; if(pri.has(k)){ if(s<=2.5) weak.push(k); else if(s>=4.5) strong.push(k);} }
   if(!w) return {v:null,tier:"none",weak,strong};
   let v=Math.round((t/w-1)/4*100);
   if(weak.length) v=Math.max(0,v-8*weak.length);
@@ -125,7 +125,7 @@ const ranked=()=>{ const l=places.filter(p=>(cuisine==="전체"||p.cuisine===cui
 
 function renderChips(){
   const ax=document.getElementById("axisChips"); ax.replaceChildren();
-  for(const [k,n] of AXES){ const b=el("button",{class:"chip",type:"button","aria-pressed":String(pri.has(k)),text:n}); b.onclick=()=>{ pri.has(k)?pri.delete(k):pri.add(k); save(); render(); }; ax.append(b); }
+  pri.delete("wait"); for(const [k,n] of AXES){ if(k==="wait") continue; const b=el("button",{class:"chip",type:"button","aria-pressed":String(pri.has(k)),text:n}); b.onclick=()=>{ pri.has(k)?pri.delete(k):pri.add(k); save(); render(); }; ax.append(b); }
   const CO=["한식","일식","중식","양식"];
   const cu=document.getElementById("cuisineChips"); cu.replaceChildren();
   const cus=["전체",...[...new Set(places.map(p=>p.cuisine).filter(Boolean))].sort((a,b)=>(CO.indexOf(a)<0?9:CO.indexOf(a))-(CO.indexOf(b)<0?9:CO.indexOf(b))||a.localeCompare(b))];
@@ -144,7 +144,7 @@ function renderChips(){
   const regs=["전체",...[...new Set(places.filter(p=>country==="전체"||(p.country||"한국")===country).map(p=>p.region).filter(Boolean))].sort()];
   if(!regs.includes(region)) region="전체";
   for(const r of regs){ const b=el("button",{class:"chip",type:"button","aria-pressed":String(region===r),text:r}); b.onclick=()=>{ region=r; openId=null; save(); render(); }; rg.append(b); }
-  document.getElementById("hint").textContent=pri.size?`${[...pri].map(k=>AXN[k]).join(", ")}에 3배 가중치. 이 항목이 약한 가게는 점수가 깎이고 경고가 붙습니다.`:"고르지 않으면 맛을 2배로, 나머지 다섯 항목은 똑같이 봅니다.";
+  document.getElementById("hint").textContent=pri.size?`${[...pri].map(k=>AXN[k]).join(", ")}에 3배 가중치. 이 항목이 약한 가게는 점수가 깎이고 경고가 붙습니다. 웨이팅은 점수에 넣지 않습니다.`:"고르지 않으면 맛을 2배로, 나머지 네 항목은 똑같이 봅니다. 웨이팅은 점수에 넣지 않고 정보로만 보여줍니다.";
   document.getElementById("hint").textContent+=region==="전체"?" 지역을 고르면 그 안에서 순위가 매겨집니다.":"";
 }
 
@@ -165,6 +165,7 @@ function detail(p){
   const d=el("div",{class:"detail"});
   const ax=el("div",null,el("h3",{text:"항목별 평가"}));
   for(const [k,n] of AXES){ const a=(p.axes&&p.axes[k])||{}; const s=num(a.s);
+    if(k==="wait"){ ax.append(el("div",{class:"axis"},el("span",{class:"nm",text:"대기 정보"}),el("span",{class:"cnt",text:"점수 제외"}),el("span",{class:"note",text:a.n||"정보 없음"}))); continue; }
     const m=el("div",{class:"meter"}); if(s!=null){ const i=el("i",{class:s>=4?"bg-good":s>=3?"bg-warn":"bg-bad"}); i.style.width=(s/5*100)+"%"; m.append(i); }
     ax.append(el("div",{class:"axis"},el("span",{class:"nm"+(pri.has(k)?" pri":""),text:n}),m,el("span",{class:"note",text:s==null?"근거 없음":(a.n||"")+(a.kw?` [${a.kw}${a.auto?"":" · 언급이 적어 점수에는 미반영"}]`:"")})));
   }
