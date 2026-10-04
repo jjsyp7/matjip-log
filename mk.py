@@ -33,7 +33,7 @@ if den:
     if bonus: basis+=f", 믿는 유튜버 추천 {recs}명 +{bonus:g}"
     if negs: basis+=", 믿는 유튜버 비추천 −0.5"
     if e.get('luke'): v-=0.5; basis+=f", 후기 내용이 미지근한 쪽이 많아 −0.5 ({e['luke']})"
-    ax['taste']['s']=max(1,min(5,round(v*2)/2))
+    ax['taste']['s']=max(1,min(5,int(v*2+0.5)/2))
 else: basis="현지인 평점을 쓸 수 없어 구체적인 맛 후기를 읽고 매긴 값"
 s2=e['s2']
 for a in('service','value','mood'):

@@ -167,7 +167,7 @@ function detail(p){
   for(const [k,n] of AXES){ const a=(p.axes&&p.axes[k])||{}; const s=num(a.s);
     if(k==="wait"){ ax.append(el("div",{class:"axis"},el("span",{class:"nm",text:"대기 정보"}),el("span",{class:"cnt",text:"점수 제외"}),el("span",{class:"note",text:a.n||"정보 없음"}))); continue; }
     const m=el("div",{class:"meter"}); if(s!=null){ const i=el("i",{class:s>=4?"bg-good":s>=3?"bg-warn":"bg-bad"}); i.style.width=(s/5*100)+"%"; m.append(i); }
-    ax.append(el("div",{class:"axis"},el("span",{class:"nm"+(pri.has(k)?" pri":""),text:n}),m,el("span",{class:"note",text:s==null?"근거 없음":(a.n||"")+(a.kw?` [${a.kw}${a.auto?"":" · 언급이 적어 점수에는 미반영"}]`:"")})));
+    ax.append(el("div",{class:"axis"},el("span",{class:"nm"+(pri.has(k)?" pri":""),text:n}),m,el("span",{class:"note",text:s==null?"근거 없음":(a.n||"")+(a.fo?` ⚠ ${a.fo}`:"")+(a.kw?` [${a.kw}${a.auto?"":a.fo?"":" · 언급이 적어 점수에는 미반영"}]`:"")})));
   }
   if(p.tasteBasis) ax.append(el("p",{class:"evid",style:"margin-top:2px",text:"맛 점수 근거: "+p.tasteBasis}));
   d.append(ax);
@@ -213,6 +213,7 @@ function render(){
     if(p.healthNote&&!sc.ban) flags.append(el("span",{class:"flag f-warn",text:"배탈 언급 있음 (참고)"}));
     if(sc.hid) flags.append(el("span",{class:"flag f-bad",text:"예외 · 카카오로 확인 불가 (순위 제외)"}));
     if(p.caution) flags.append(el("span",{class:"flag f-bad",text:"⚠ "+p.caution}));
+    if(p.axes&&p.axes.mood&&p.axes.mood.fo&&/^이물질·위생 후기로 (1|1\.5|2)점/.test(p.axes.mood.fo)) flags.append(el("span",{class:"flag f-bad",text:"음식 이물질 후기"}));
     sc.weak.forEach(k=>flags.append(el("span",{class:"flag f-bad",text:`${AXN[k]} 약함`})));
     sc.strong.forEach(k=>flags.append(el("span",{class:"flag f-good",text:`${AXN[k]} 강함`})));
     (p.youtubers||[]).forEach(y=>flags.append(el("span",{class:"flag "+gcls(y.grade),text:`${y.who} ${y.grade}`})));
