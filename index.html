@@ -166,7 +166,7 @@ function detail(p){
   const ax=el("div",null,el("h3",{text:"항목별 평가"}));
   for(const [k,n] of AXES){ const a=(p.axes&&p.axes[k])||{}; const s=num(a.s);
     const m=el("div",{class:"meter"}); if(s!=null){ const i=el("i",{class:s>=4?"bg-good":s>=3?"bg-warn":"bg-bad"}); i.style.width=(s/5*100)+"%"; m.append(i); }
-    ax.append(el("div",{class:"axis"},el("span",{class:"nm"+(pri.has(k)?" pri":""),text:n}),m,el("span",{class:"note",text:s==null?"근거 없음":(a.n||"")})));
+    ax.append(el("div",{class:"axis"},el("span",{class:"nm"+(pri.has(k)?" pri":""),text:n}),m,el("span",{class:"note",text:s==null?"근거 없음":(a.n||"")+(a.kw?` [${a.kw}${a.auto?"":" · 언급이 적어 점수에는 미반영"}]`:"")})));
   }
   if(p.tasteBasis) ax.append(el("p",{class:"evid",style:"margin-top:2px",text:"맛 점수 근거: "+p.tasteBasis}));
   d.append(ax);
@@ -190,7 +190,8 @@ function detail(p){
   d.append(l3);
   if(Array.isArray(p.tips)&&p.tips.length){ const t=el("div",{class:"layer"},el("h3",{text:"가기 전에"})); const ul=el("ul",{class:"plain"}); p.tips.forEach(x=>ul.append(el("li",{text:x}))); t.append(ul); d.append(t); }
   const foot=el("div",{class:"layer"}); const gm=safeUrl(p.gmaps); if(gm) foot.append(el("a",{class:"go",href:gm,target:"_blank",rel:"noopener",text:"구글 지도에서 열기"}));
-  foot.append(el("p",{class:"evid",text:`근거: ${p.evidence||"미기재"}${p.checked?` · 확인일 ${p.checked}`:""}`})); if(p.window) foot.append(el("p",{class:"evid",style:"margin-top:2px",text:p.window}));
+  foot.append(el("p",{class:"evid",text:`근거: ${p.evidence||"미기재"}${p.checked?` · 확인일 ${p.checked}`:""}`})); if(p.repass) foot.append(el("p",{class:"evid",style:"margin-top:2px",text:p.repass}));
+  if(p.window) foot.append(el("p",{class:"evid",style:"margin-top:2px",text:p.window}));
   d.append(foot);
   return d;
 }
