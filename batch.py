@@ -40,7 +40,7 @@ for e in specs:
     # 분위기용: 분위기 칭찬이 후기의 15% 이상(10건 이상)이고 감점 전 분위기 점수 4.0 이상
     on=(0 if dis else s2['n'])+(kd[0] if kd else 0); op=(0 if dis else s2['mood'][0])+(kd[4] if kd else 0)
     p.pop('occasion',None)
-    if on and op>=10 and op/on>=0.15 and ax['mood']['s']+(0.5*fo[0] if fo else 0)>=4.0: p['occasion']=f"후기 {on}건 중 {op}건({round(op/on*100)}%)이 분위기 칭찬"
+    if on and op>=10 and round(op/on*100)>=15 and ax['mood']['s']+(0.5*fo[0] if fo else 0)>=4.0: p['occasion']=f"후기 {on}건 중 {op}건({round(op/on*100)}%)이 분위기 칭찬"
     ro=e.get('roachNote')
     if ro:
         p['roach']=True; p['pest']=e.get('pest','바퀴벌레 후기'); mo=ax['mood']; mo['s']=max(1,mo['s']-1); mo['fo']=(mo['fo']+' / ' if mo.get('fo') else '위생 감점 — ')+'쥐·바퀴벌레는 최근 2년 안에 1건이어도 1점 감점: '+ro
