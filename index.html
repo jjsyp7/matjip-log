@@ -211,7 +211,7 @@ function render(){
     const flags=el("div");
     if(sc.ban) flags.append(el("span",{class:"flag f-bad",text:"✕ 가지 않음 · 식중독 주장 반복"}));
     if(p.healthNote&&!sc.ban) flags.append(el("span",{class:"flag f-warn",text:"배탈 언급 있음 (참고)"}));
-    if(sc.hid) flags.append(el("span",{class:"flag f-bad",text:"예외 · 카카오 후기 비공개 (순위 제외)"}));
+    if(sc.hid) flags.append(el("span",{class:"flag f-bad",text:"예외 · 카카오로 확인 불가 (순위 제외)"}));
     if(p.caution) flags.append(el("span",{class:"flag f-bad",text:"⚠ "+p.caution}));
     sc.weak.forEach(k=>flags.append(el("span",{class:"flag f-bad",text:`${AXN[k]} 약함`})));
     sc.strong.forEach(k=>flags.append(el("span",{class:"flag f-good",text:`${AXN[k]} 강함`})));
