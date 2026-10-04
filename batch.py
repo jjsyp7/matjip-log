@@ -35,8 +35,11 @@ for e in specs:
         if v is not None: va['s']=v; va['src']='kakao'; va['kwk']=f"맛을 보고 가는 메뉴라 가격이 싼지 비싼지는 보지 않고 값어치 평가만 봄: 카카오 {kd[0]}건 중 '값을 한다·만족' {kd[1]} · '돈 아깝다·값만큼은 아니다' {kd[2]}"
         else: va['s']=ax['taste']['s']; va['src']='taste'; va['auto']=False; va['kwk']="맛을 보고 가는 메뉴라 가격은 보지 않음. 값어치 후기가 적어 맛 점수를 그대로 가심비로 씀"
     if fo:
-        k,txt=fo; ax['mood']['s']=max(1,ax['mood']['s']-0.5*k); ax['mood']['fo']=f"2건 이상 반복된 상황마다 0.5점씩 {0.5*k:g}점 감점(매장에 날아다니는 날파리는 세지 않음): {txt}"
+        k,txt=fo; ax['mood']['s']=max(1,ax['mood']['s']-0.5*k); ax['mood']['fo']=f"위생 {0.5*k:g}점 감점 — 2건 이상 반복된 상황마다 0.5점: {txt}"
         R=json.load(open('rule_overrides.json')); R['fo'][e['id']]=fo; json.dump(R,open('rule_overrides.json','w'),ensure_ascii=False,indent=1)
+    ro=e.get('roachNote')
+    if ro:
+        p['roach']=True; mo=ax['mood']; mo['s']=max(1,mo['s']-1); mo['fo']=(mo['fo']+' / ' if mo.get('fo') else '위생 감점 — ')+'바퀴벌레는 1건이어도 1점 감점: '+ro
     json.dump(P,open('places.json','w'),ensure_ascii=False,indent=1)
     w={'taste':2,'service':1,'value':1,'mood':1,'access':1}
     print(p['name'],{a:ax[a]['s'] for a in w}, round((sum(w[a]*ax[a]['s'] for a in w)/6-1)/4*100), '의심' if dis else '', '예외' if any(x.get('hidden') for x in p['ratings']) else '')

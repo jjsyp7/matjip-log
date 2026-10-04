@@ -214,6 +214,8 @@ function render(){
     if(sc.ban) flags.append(el("span",{class:"flag f-bad",text:"✕ 가지 않음 · 식중독 주장 반복"}));
     if(p.healthNote&&!sc.ban) flags.append(el("span",{class:"flag f-warn",text:"배탈 언급 있음 (참고)"}));
     if(sc.hid) flags.append(el("span",{class:"flag f-bad",text:"예외 · 카카오로 확인 불가 (순위 제외)"}));
+    if(p.roach) flags.append(el("span",{class:"flag f-bad",text:"바퀴벌레 후기"}));
+    if(p.tourist) flags.append(el("span",{class:"flag f-warn",text:"관광객 많음"}));
     if(p.occasion) flags.append(el("span",{class:"flag f-warn",text:p.occasion+(x.occ?"":" · 분위기용 묶음에도 있음")}));
     if(p.caution) flags.append(el("span",{class:"flag f-bad",text:"⚠ "+p.caution}));
     if(p.axes&&p.axes.mood&&p.axes.mood.fo&&/음식 속 이물질|머리카락|그릇에 죽은 벌레/.test(p.axes.mood.fo)) flags.append(el("span",{class:"flag f-bad",text:"음식 이물질 후기"}));

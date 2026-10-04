@@ -19,6 +19,8 @@ G_IDX=len(ratings); ratings.append({"src":"구글","rating":g['r'],"count":tot,"
 kr=e['kr']; n=sum(kr)
 # 5점 쏠림: 최근 한국어 구글 30건 이상에서 5점이 85% 이상이면서 카카오보다 1점 이상 높으면 구글을 믿지 않음
 if n>=30 and kr[4]/n>=0.85 and k.get('r') and g['r']-k['r']>=1: e['event']=True
+if n>=30 and kr[4]/n>=0.9 and not k.get('r'): e['event']=True  # 카카오가 없어 비교할 수 없으면 90% 이상에서 의심
+if e.get('tr',0)+n>=30 and e.get('tr',0)/(e.get('tr',0)+n)>=0.7: e['tourist']=f"구글 최신 리뷰 {e['tr']+n}건 중 {e['tr']}건이 외국어"
 ratings[G_IDX]['distrust']=bool(e.get('event'))
 n=sum(kr); gk=round(sum((i+1)*c for i,c in enumerate(kr))/n,1) if n else None
 if n: ratings.append({"src":"구글(한국어·최근)","rating":gk,"count":n,"distrust":bool(e.get('event')),"note":f"최신순 리뷰에서 번역된 외국어 {e.get('tr',0)}건과 기간 밖 리뷰를 빼고 한국어 {n}건만 집계: 5점 {kr[4]} · 4점 {kr[3]} · 3점 {kr[2]} · 2점 {kr[1]} · 1점 {kr[0]}."})
@@ -49,7 +51,7 @@ p={"id":e['id'],"name":e['name'],"area":e['area'],"region":e.get('region','서�
  "summary":e['summary'],"axes":ax,"tasteBasis":basis,"ratings":ratings,"youtubers":ys,"complaints":e['complaints'],"praise":e['praise'],"recent":e.get('recent',''),"tips":e.get('tips',[]),
  "evidence":e['evidence'],"checked":e.get('checked','2026-10-04'),"old":old,
  "window":f"{'노포(30년 이상)' if old else '일반'} 기준: 최근 {5 if old else 3}년({cut}.10 이후) 후기만 반영, 번역된 외국어 리뷰 제외"}
-for f in('caution','poison','healthNote','occasion','occasionAlso','tasteFirst','kakaoId'):
+for f in('caution','poison','healthNote','occasion','occasionAlso','tasteFirst','tourist','roach','kakaoId'):
     if e.get(f): p[f]=e[f]
 P=[x for x in P if x['id']!=p['id']]+[p]
 json.dump(P,open('places.json','w'),ensure_ascii=False,indent=1)
