@@ -133,12 +133,12 @@ const MENU_GROUPS={
  "중식":{"요리":["중식 요리","홍콩 요리","북경오리","코스 요리","중화요리","양꼬치"],"만두·딤섬":["만두","딤섬"],"면":["우육면","짜장면","라멘"],"볶음밥":["볶음밥"]}};
 const MG={}; for(const c in MENU_GROUPS){ MG[c]={}; for(const g in MENU_GROUPS[c]) MENU_GROUPS[c][g].forEach(m=>MG[c][m]=g); }
 const groupsOf=p=>[...new Set((p.menus||[]).map(m=>(MG[p.cuisine]&&MG[p.cuisine][m])||m))];
-// 해외는 나라를 고르면 지역을 나누지 않고 점수순으로 줄을 세운다
-const flat=()=>region!=="전체"||(country!=="전체"&&country!=="한국");
-// 이 점수에 못 미치는 가게는 목록과 지도에서 숨긴다(가지 말 것·순위 제외 묶음은 그대로 둠)
-const MIN_SCORE=50; let hiddenLow=0;
+// 어느 화면에서든 지역을 나누지 않고 점수순으로 줄을 세운다
+const flat=()=>true;
+// 기본 점수(중요 항목을 고르지 않았을 때의 점수)가 이 값에 못 미치는 가게는 목록과 지도에서 숨긴다(가지 말 것·순위 제외 묶음은 그대로 둠)
+const MIN_SCORE=60; let hiddenLow=0;
 // 지역을 고르면 그 안에서 순위를 매기고, 전체에서는 순위 없이 지역별로 묶는다
-const ranked=()=>{ hiddenLow=0; const l=places.filter(p=>(cuisine==="전체"||p.cuisine===cuisine)&&(menu==="전체"||groupsOf(p).includes(menu))&&(country==="전체"||(p.country||"한국")===country)&&(region==="전체"||p.region===region)).map(p=>({p,sc:score(p)})).filter(x=>{ const low=!x.sc.ban&&!x.sc.hid&&x.sc.v!=null&&x.sc.v<MIN_SCORE; if(low) hiddenLow++; return !low; }).sort((a,b)=>(b.sc.v??-1)-(a.sc.v??-1));
+const ranked=()=>{ hiddenLow=0; const l=places.filter(p=>(cuisine==="전체"||p.cuisine===cuisine)&&(menu==="전체"||groupsOf(p).includes(menu))&&(country==="전체"||(p.country||"한국")===country)&&(region==="전체"||p.region===region)).map(p=>({p,sc:score(p)})).filter(x=>{ const keep=pri; pri=new Set(); const base=score(x.p).v; pri=keep; const low=!x.sc.ban&&!x.sc.hid&&base!=null&&base<MIN_SCORE; if(low) hiddenLow++; return !low; }).sort((a,b)=>(b.sc.v??-1)-(a.sc.v??-1));
   const ex=x=>x.sc.ban?2:x.sc.hid?1:x.occ?0.5:0;
   l.sort((a,b)=>ex(a)-ex(b));
   if(!flat()){ const cnt={}; l.forEach(x=>cnt[x.p.region]=(cnt[x.p.region]||0)+1); l.sort((a,b)=>(cnt[b.p.region]-cnt[a.p.region])||String(a.p.region).localeCompare(String(b.p.region))||(ex(a)-ex(b))||((b.sc.v??-1)-(a.sc.v??-1))); }
@@ -252,7 +252,7 @@ function render(){
     r.onclick=()=>{ openId=on?null:p.id; render(); if(openId&&markers[p.id]) map.panTo(markers[p.id].getLatLng()); };
     rows.append(r); if(on) rows.append(detail(p));
   });
-  if(hiddenLow) rows.append(el("p",{class:"evid",text:`${MIN_SCORE}점에 못 미치는 ${hiddenLow}곳은 숨겼습니다.`}));
+  if(hiddenLow) rows.append(el("p",{class:"evid",text:`기본 점수가 ${MIN_SCORE}점에 못 미치는 ${hiddenLow}곳은 숨겼습니다.`}));
   // 폐업한 곳은 지도와 순위에서 지우고 이름만 남긴다 (closed.json)
   if(gone.length){ rows.append(el("p",{class:"grp",text:`폐업 · ${gone.length}곳`}));
     gone.forEach(c=>rows.append(el("div",{class:"gone"},el("b",{text:c.name}),el("p",{text:[c.area,c.closedOn&&c.closedOn+" 확인",c.note].filter(Boolean).join(" · ")})))); }
