@@ -45,7 +45,7 @@ body{font-family:var(--body);font-size:15px;line-height:1.55;color:var(--ink);ba
 .score b{font-family:var(--display);font-weight:400;font-size:25px;line-height:1;display:block}
 .score span{font-size:11px;color:var(--sub)}
 .flag{display:inline-block;font-size:11.5px;font-weight:600;border-radius:4px;padding:1px 6px;margin:5px 5px 0 0}
-.f-bad{background:var(--bad-soft);color:var(--bad)} .f-good{background:var(--good-soft);color:var(--good)} .f-warn{background:var(--warn-soft);color:var(--warn)}
+.f-bad{background:var(--bad-soft);color:var(--bad)} .f-good{background:var(--good-soft);color:var(--good)} .f-warn{background:var(--warn-soft);color:var(--warn)} .f-info{background:#e2eaf6;color:var(--accent)}
 .detail{background:var(--panel);border:1px solid var(--accent);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:14px;margin-top:-3px}
 .detail h3{font-size:12px;letter-spacing:.05em;color:var(--sub);margin:0 0 6px;font-weight:600}
 .axis{display:grid;grid-template-columns:82px 56px minmax(0,1fr);gap:9px;align-items:baseline;font-size:13.5px;margin-bottom:6px}
@@ -218,6 +218,7 @@ function render(){
     if(p.noKakao&&!sc.hid) flags.append(el("span",{class:"flag f-warn",text:p.noKakao}));
     if(p.pest) flags.append(el("span",{class:"flag f-bad",text:p.pest}));
     if(p.tourist) flags.append(el("span",{class:"flag f-warn",text:"관광객 많음"}));
+    if(p.krPopular) flags.append(el("span",{class:"flag f-info",text:"한국인에게 인기"}));
     if(p.occasion) flags.append(el("span",{class:"flag f-warn",text:"분위기용"}));
     if(p.caution) flags.append(el("span",{class:"flag f-bad",text:"⚠ "+p.caution}));
     if(p.axes&&p.axes.mood&&p.axes.mood.fo&&/음식 속 이물질|머리카락|그릇에 죽은 벌레/.test(p.axes.mood.fo)) flags.append(el("span",{class:"flag f-bad",text:"음식 이물질 후기"}));

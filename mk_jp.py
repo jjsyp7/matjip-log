@@ -22,6 +22,7 @@ for e in json.load(open(sys.argv[1])):
      "complaints":e['complaints'],"praise":e['praise'],"recent":e.get('recent',''),"tips":e.get('tips',[]),"kr":e['kr'],"evidence":e['evidence'],"checked":e.get('checked','2026-10-07'),"old":old,
      "window":f"{'노포(30년 이상)' if old else '일반'} 기준: 최근 {yrs}년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리","tabelog":"https://tabelog.com"+e['tabelog'][2]}
     if alln>=30 and nonja/alln>=0.7: p['tourist']=f"구글 최신 후기 {alln}건 중 {nonja}건이 일본어가 아님"
+    if sum(ko)>=30 and alln and sum(ko)/alln>=0.2: p['krPopular']=f"구글 최신 후기 {alln}건 중 {sum(ko)}건({round(sum(ko)/alln*100)}%)이 한국어"
     for f in('caution','poison','healthNote','occasion'):
         if e.get(f): p[f]=e[f]
     P=[x for x in P if x['id']!=p['id']]+[p]
