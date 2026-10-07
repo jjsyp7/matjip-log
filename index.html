@@ -118,7 +118,7 @@ const poisoned=p=>!!p.poison;
 // 분위기용 묶음은 분위기·서비스에 2배, 맛은 1배로 본다
 function score(p,occ){
   let w=0,t=0; const weak=[], strong=[];
-  for(const [k] of AXES){ if(k==="wait") continue; const s=num(p.axes&&p.axes[k]&&p.axes[k].s); if(s==null) continue; const wt=pri.has(k)?3:(!pri.size&&(occ?(k==="mood"||k==="service"):k==="taste")?2:1); w+=wt; t+=wt*s; if(pri.has(k)){ if(s<=2.5) weak.push(k); else if(s>=4.5) strong.push(k);} }
+  for(const [k] of AXES){ if(k==="wait") continue; const s=num(p.axes&&p.axes[k]&&p.axes[k].s); if(s==null) continue; const cafe=p.cuisine==="카페·디저트"; const wt=pri.has(k)?3:(!pri.size&&(occ?(k==="mood"||k==="service"):(k==="taste"||(cafe&&k==="mood")))?2:1); w+=wt; t+=wt*s; if(pri.has(k)){ if(s<=2.5) weak.push(k); else if(s>=4.5) strong.push(k);} }
   if(!w) return {v:null,tier:"none",weak,strong};
   let v=Math.round((t/w-1)/4*100);
   if(weak.length) v=Math.max(0,v-8*weak.length);
@@ -175,7 +175,7 @@ const ranked=()=>{ if(query){ hiddenLow=0; return places.map(p=>({p,sc:score(p),
 function renderChips(){
   const ax=document.getElementById("axisChips"); ax.replaceChildren();
   pri.delete("wait"); for(const [k,n] of AXES){ if(k==="wait") continue; const b=el("button",{class:"chip",type:"button","aria-pressed":String(pri.has(k)),text:n}); b.onclick=()=>{ pri.has(k)?pri.delete(k):pri.add(k); save(); render(); }; ax.append(b); }
-  const CO=["한식","일식","중식","양식"];
+  const CO=["한식","일식","중식","양식","카페·디저트"];
   const cu=document.getElementById("cuisineChips"); cu.replaceChildren();
   const cus=["전체",...[...new Set(places.map(p=>p.cuisine).filter(Boolean))].sort((a,b)=>(CO.indexOf(a)<0?9:CO.indexOf(a))-(CO.indexOf(b)<0?9:CO.indexOf(b))||a.localeCompare(b))];
   if(!cus.includes(cuisine)) cuisine="전체";
