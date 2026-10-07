@@ -217,7 +217,7 @@ function render(){
     if(sc.hid) flags.append(el("span",{class:"flag f-bad",text:"예외 · 믿을 평점 없음 (순위 제외)"}));
     if(p.noKakao&&!sc.hid) flags.append(el("span",{class:"flag f-warn",text:p.noKakao}));
     if(p.pest) flags.append(el("span",{class:"flag f-bad",text:p.pest}));
-    if(p.tourist) flags.append(el("span",{class:"flag f-warn",text:"관광객 많음"}));
+    if(p.tourist&&!p.krPopular) flags.append(el("span",{class:"flag f-warn",text:"관광객 많음"}));
     if(p.krPopular) flags.append(el("span",{class:"flag f-info",text:"한국인에게 인기"}));
     if(p.occasion) flags.append(el("span",{class:"flag f-warn",text:"분위기용"}));
     if(p.caution) flags.append(el("span",{class:"flag f-bad",text:"⚠ "+p.caution}));
