@@ -21,6 +21,11 @@ for e in json.load(open(sys.argv[1])):
      "gmaps":"https://www.google.com/maps/search/?api=1&query="+urllib.parse.quote(e['q']),"summary":e['summary'],"axes":ax,"tasteBasis":basis,"ratings":ratings,"youtubers":ys,
      "complaints":e['complaints'],"praise":e['praise'],"recent":e.get('recent',''),"tips":e.get('tips',[]),"kr":e['kr'],"evidence":e['evidence'],"checked":e.get('checked','2026-10-07'),"old":old,
      "window":f"{'노포(30년 이상)' if old else '일반'} 기준: 최근 {yrs}년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리","tabelog":"https://tabelog.com"+e['tabelog'][2]}
+    if e.get('tbr'):
+        n,a,b,txt=e['tbr']; ratings[0]['note']=f"일본 현지인이 주로 쓰는 사이트(3.5면 좋은 집, 3.7 이상이면 아주 좋은 집). 최근 방문순 후기 {n}건을 읽음: 개별 점수 평균 {a} — 4.0 이상 {b[3]} · 3.5~3.9 {b[2]} · 3.0~3.4 {b[1]} · 3.0 미만 {b[0]}. 낮은 점수 후기 내용: {txt}."
+        p['complaints'].append({"axis":"taste","text":"타베로그 낮은 점수 후기: "+txt+".","n":b[0],"when":"타베로그 3.0 이하, 최근 후기","tb":True})
+    if e.get('glow'):
+        g2=e['glow']; ratings[1]['note']+=f" 낮은 평점순도 따로 불러와 기간 안 {g2[0]}건 확인(1~2점: 일본어 {g2[1]}건 · 한국어 {g2[2]}건)."
     if alln>=30 and nonja/alln>=0.7: p['tourist']=f"구글 최신 후기 {alln}건 중 {nonja}건이 일본어가 아님"
     if sum(ko)>=30 and alln and sum(ko)/alln>=0.2: p['krPopular']=f"구글 최신 후기 {alln}건 중 {sum(ko)}건({round(sum(ko)/alln*100)}%)이 한국어"
     for f in('caution','poison','healthNote','occasion'):

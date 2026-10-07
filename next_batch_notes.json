@@ -213,7 +213,7 @@
    "ステーキ丼 西新宿(Japanese Steak Bowl & Beef Curry)",
    "café&bar ポピー(本所)"
   ],
-  "next": "11번(토리타케)부터 20곳 남음. 구글은 ?hl=ko로 열고 최신순 한 번만(400건) 읽는 __GS/__GA(크롬 sessionStorage 'gj') → scratchpad tk1.py 형식 spec → python3 mk_jp.py spec.json → deploy. 가게 1곳당 batch 1개.",
+  "next": "16번(미사키)부터 15곳 남음. 순서: 타베로그 후기(탭 B, tabelog.com에서 window.__TV(path,'YYYYMM') — 최근 방문순 200건, 결과 __TVR[path]) → 구글 낮은 평점순 __GS(년,'low') → 구글 최신순 __GS(년,'new')(크롬 sessionStorage 'gj', navigate 뒤 3초 기다린 다음 실행) → scratchpad tk2.py 형식 spec(tbr, glow 포함) → python3 mk_jp.py → deploy. 처음 10곳은 낮은 평점순·타베로그 후기까지 반영됨.",
   "done": [
    "1 츠지한",
    "2 카네코 한노스케 본점",
@@ -224,7 +224,12 @@
    "7 카츠카미 2",
    "8 후나바시야",
    "9 히키니쿠토 코메 기치조지",
-   "10 쇼타이엔 시바다이몬"
+   "10 쇼타이엔 시바다이몬",
+   "11 토리타케",
+   "12 뉴 토리긴",
+   "13 다이와 스시",
+   "14 스시 다이",
+   "15 큐베이"
   ]
  }
 }
