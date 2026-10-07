@@ -1,4 +1,4 @@
-# 사용: python3 kakao_text.py [--apply] — 카카오 점수를 "기간 안, 글(공백 빼고 10자 이상) 있는 후기"의 평균으로 바꿔 맛 점수를 다시 계산.
+# 사용: python3 kakao_text.py [--apply] — 카카오 점수를 "기간 안, 글이 한 글자라도 있는 후기"의 평균으로 바꿔 맛 점수를 다시 계산.
 # 글 있는 후기가 20건 미만이면 카카오 전체 평점을 그대로 쓴다. 원자료: kakao_text_raw.json [id, 전체평점, 전체건수, 기간 안 별점분포, 글 있는 후기 별점분포]
 import json,re,sys
 R={r[0]:r for r in json.load(open('kakao_text_raw.json'))}
@@ -6,6 +6,7 @@ P=json.load(open('places.json')); avg=lambda h:sum((i+1)*c for i,c in enumerate(
 rnd=lambda v:max(1,min(5,int(v*2+0.5)/2)); out=[]
 for p in P:
     r=R.get(str(p.get('kakaoId'))); b=p.get('tasteBasis','')
+    b=re.sub(r', 후기 내용이 미지근한 쪽이 많아 −0\.5 \(.*?이 3점 이하\)','',b)  # 같은 규칙의 옛 표기
     m=re.search(r'카카오( 글 있는 후기)? ([\d.]+)\(×2\)',b)
     if not r or not m: continue
     _,oa,ot,allh,th=r; n=sum(th)
@@ -14,12 +15,15 @@ for p in P:
     num=sum((new if k.startswith('카카오') else float(v))*int(w) for k,v,w in parts); den=sum(int(w) for *_,w in parts); L=num/den
     v=L; mm=re.search(r'추천 \d+명 \+([\d.]+)',b); v+=float(mm.group(1)) if mm else 0
     if '비추천 −0.5' in b: v-=0.5
-    low=re.search(r', 기간 안 카카오 후기 \d+건 중 \d+건\(\d+%\)이 3점 이하라 −0\.5',b); share=sum(th[:3])/n
+    low=re.search(r', 기간 안 카카오(?: 글 있는)? 후기 \d+건 중 \d+건\(\d+%\)이 3점 이하라 −0\.5',b); share=sum(th[:3])/n
     other=len(re.findall(r'−0\.5 \(',b)); v-=0.5*other
-    if low: v-=0.5  # 3점 이하 과반 감점은 이미 붙어 있던 곳만 그대로 유지(새로 붙이지 않음)
+    if share>=0.5: v-=0.5  # 글 있는 후기(20건 이상) 중 3점 이하가 절반 이상이면 모든 가게에 −0.5
     old=p['axes']['taste']['s']; s=rnd(v)
     nb=re.sub(r'카카오( 글 있는 후기)? [\d.]+\(×2\)',f'카카오 글 있는 후기 {new}(×2)',b); nb=re.sub(r'→ [\d.]+',f'→ {L:.1f}',nb,1)
     out.append((p['name'],float(m.group(2)),new,sum(allh)-n,n,old,s,bool(low),share>=0.5))
+    if low: nb=nb.replace(low.group(0),'')
+    nb=re.sub(r', 기간 안 카카오 글 있는 후기 \d+건 중 \d+건\(\d+%\)이 3점 이하라 −0\.5','',nb)
+    if share>=0.5: nb+=f", 기간 안 카카오 글 있는 후기 {n}건 중 {sum(th[:3])}건({round(share*100)}%)이 3점 이하라 −0.5"
     if '--apply' in sys.argv:
         p['axes']['taste']['s']=s; p['tasteBasis']=nb
         for x in p['ratings']:

@@ -65,6 +65,9 @@ a{color:var(--accent)}
 .grp:first-child{margin-top:0}
 .pinicon.dot{font-size:11.5px}
 .empty{color:var(--sub);text-align:center;padding:30px 10px}
+.gone{border:1px dashed var(--line);border-radius:10px;padding:9px 12px;color:var(--sub)}
+.gone b{font-weight:600;color:var(--ink);text-decoration:line-through;text-decoration-color:var(--sub)}
+.gone p{margin:1px 0 0;font-size:12.5px}
 .pinicon{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font:600 13px var(--body);border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.45)}
 .pinicon.on{width:38px;height:38px;font-size:15px;margin:-4px 0 0 -4px}
 .leaflet-tooltip{font-family:var(--body);font-weight:600}
@@ -89,7 +92,7 @@ a{color:var(--accent)}
 <script>
 const AXES=[["taste","맛"],["service","서비스"],["value","가성비"],["wait","웨이팅·예약"],["mood","분위기·청결"],["access","접근성"]];
 const AXN=Object.fromEntries(AXES);
-let places=[], pri=new Set(), country="전체", region="전체", cuisine="전체", menu="전체", openId=null, markers={}, fitKey="";
+let places=[], closed=[], pri=new Set(), country="전체", region="전체", cuisine="전체", menu="전체", openId=null, markers={}, fitKey="";
 try{ const s=JSON.parse(localStorage.getItem("jjin")||"{}"); pri=new Set(s.pri||[]); region=s.region||"전체"; country=s.country||"전체"; cuisine=s.cuisine||"전체"; menu=s.menu||"전체"; }catch(e){}
 const save=()=>{ try{ localStorage.setItem("jjin",JSON.stringify({pri:[...pri],region,country,cuisine,menu})); }catch(e){} };
 
@@ -202,7 +205,8 @@ function render(){
   renderChips();
   const list=ranked(); renderMap(list);
   const rows=document.getElementById("rows"); rows.replaceChildren();
-  if(!list.length){ rows.append(el("p",{class:"empty",text:"이 조건에 맞는 가게가 아직 없습니다."})); return; }
+  const gone=closed.filter(c=>(country==="전체"||(c.country||"한국")===country)&&(region==="전체"||c.region===region)&&(cuisine==="전체"||c.cuisine===cuisine));
+  if(!list.length) rows.append(el("p",{class:"empty",text:"이 조건에 맞는 가게가 아직 없습니다."}));
   let grp=null;
   list.forEach((x,i)=>{ const {p,sc}=x; const on=openId===p.id;
     if(region==="전체"&&p.region!==grp){ grp=p.region; rows.append(el("p",{class:"grp",text:`${grp||"지역 미정"} · ${list.filter(y=>y.p.region===grp).length}곳`})); }
@@ -230,8 +234,12 @@ function render(){
     r.onclick=()=>{ openId=on?null:p.id; render(); if(openId&&markers[p.id]) map.panTo(markers[p.id].getLatLng()); };
     rows.append(r); if(on) rows.append(detail(p));
   });
+  // 폐업한 곳은 지도와 순위에서 지우고 이름만 남긴다 (closed.json)
+  if(gone.length){ rows.append(el("p",{class:"grp",text:`폐업 · ${gone.length}곳`}));
+    gone.forEach(c=>rows.append(el("div",{class:"gone"},el("b",{text:c.name}),el("p",{text:[c.area,c.closedOn&&c.closedOn+" 확인",c.note].filter(Boolean).join(" · ")})))); }
 }
 
+fetch("closed.json",{cache:"no-store"}).then(r=>r.ok?r.json():[]).then(d=>{ closed=d; if(places.length) render(); }).catch(()=>{});
 fetch("places.json",{cache:"no-store"}).then(r=>r.json()).then(d=>{ places=d; render(); })
   .catch(()=>{ document.getElementById("rows").replaceChildren(el("p",{class:"empty",text:"places.json을 읽지 못했습니다."})); });
 </script>
