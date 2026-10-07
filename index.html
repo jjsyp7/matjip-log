@@ -75,7 +75,7 @@ a{color:var(--accent)}
 .gone b{font-weight:600;color:var(--ink);text-decoration:line-through;text-decoration-color:var(--sub)}
 .gone p{margin:1px 0 0;font-size:12.5px}
 .pinicon{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font:600 13px var(--body);border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.45)}
-.pinicon.many{background:var(--ink);color:var(--bg,#fff);font-size:13px;border-width:3px;box-shadow:0 0 0 1px var(--ink),0 2px 6px rgba(0,0,0,.4);cursor:pointer}
+.pinicon.many{width:34px;height:34px;font-size:13.5px;cursor:pointer;box-shadow:3px 3px 0 -1px rgba(255,255,255,.95),3px 3px 0 0 rgba(0,0,0,.28),0 1px 5px rgba(0,0,0,.45)}
 .pinicon.on{width:38px;height:38px;font-size:15px;margin:-4px 0 0 -4px}
 .leaflet-tooltip{font-family:var(--body);font-weight:600}
 </style>
@@ -207,10 +207,11 @@ function drawPins(){
     const g=z<15&&openId!==x.p.id&&groups.find(g=>!g.solo&&Math.hypot(g.pt.x-pt.x,g.pt.y-pt.y)<40);
     if(g) g.items.push(x); else groups.push({pt,items:[x],solo:openId===x.p.id}); });
   groups.forEach((g,gi)=>{
-    if(g.items.length>1){ const n=g.items.length, ll=g.items.map(x=>[x.p.lat,x.p.lng]), d=n<10?32:n<50?38:44;
+    if(g.items.length>1){ const n=g.items.length, ll=g.items.map(x=>[x.p.lat,x.p.lng]);
+      const top=g.items.filter(x=>!x.sc.ban&&!x.sc.hid&&x.sc.v!=null).sort((a,b)=>b.sc.v-a.sc.v)[0]||g.items[0];
       const c=[ll.reduce((a,l)=>a+l[0],0)/n, ll.reduce((a,l)=>a+l[1],0)/n];
-      const m=L.marker(c,{icon:L.divIcon({className:"",html:`<div class="pinicon many" style="width:${d}px;height:${d}px">${n}</div>`,iconSize:[d,d],iconAnchor:[d/2,d/2]}),title:n+"곳",keyboard:true}).addTo(map);
-      m.bindTooltip(n+"곳 · 누르면 펼쳐집니다",{direction:"top",offset:[0,-d/2]});
+      const m=L.marker(c,{icon:L.divIcon({className:"",html:`<div class="pinicon many bg-${top.sc.tier}">${top.sc.v??"–"}</div>`,iconSize:[34,34],iconAnchor:[17,17]}),title:n+"곳"}).addTo(map);
+      m.bindTooltip(`${n}곳 · 가장 높은 곳 ${top.p.name}`,{direction:"top",offset:[0,-18]});
       m.on("click",()=>map.fitBounds(ll,{padding:[60,60],maxZoom:16}));
       markers["g"+gi]=m; return; }
     const {p,sc}=g.items[0], on=openId===p.id;
