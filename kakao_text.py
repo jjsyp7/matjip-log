@@ -40,7 +40,8 @@ for p in P:
     r=R.get(str(p.get('kakaoId'))); kn=sum(r[4]) if r else 0
     gn=sum(x.get('count') or 0 for x in p['ratings'] if x['src']=='구글(한국어·최근)')
     b=re.sub(r', 후기 적음\(.*?\) 맛 점수 상한 [\d.]+','',p.get('tasteBasis','')); t=p['axes']['taste']
-    if kn+gn<CAP_N and (t.get('s') or 0)>CAP:
+    allt=sum((x.get('count') or 0) for x in p['ratings'] if x['src'] in ('카카오맵','구글'))  # 전체 기간 후기 수
+    if kn+gn<CAP_N and allt<100 and (t.get('s') or 0)>CAP:  # 예전 후기가 많은(전체 100건 이상) 오래된 가게는 상한을 걸지 않음
         capped.append((p['name'],kn,gn,t['s'])); t['rawTaste']=t['s']; t['s']=CAP
         b+=f", 후기 적음(카카오 글 있는 후기 {kn}건 + 한국어 구글 {gn}건 = {kn+gn}건, 30건 미만) 맛 점수 상한 {CAP}"
         p['fewReviews']=f"후기 {kn+gn}건"
