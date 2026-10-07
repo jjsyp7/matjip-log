@@ -8,8 +8,8 @@ for e in json.load(open(sys.argv[1])):
     tb,tn=e['tabelog'][:2]; conv=max(1,min(5,2*tb-3)); ja=e['ja']; ko=e['ko']; ga=avg(ja); ka=avg(ko)
     ys=e.get('youtubers',[]); recs=len({y['who'] for y in ys if y['grade']=='추천'}); bonus=min(1.0,0.5+0.25*(recs-1)) if recs else 0
     num=2*conv; den=2; parts=[f"타베로그 {tb} → 환산 {conv:.1f}(×2)"]
-    if ga is not None and sum(ja)>=10: num+=ga; den+=1; parts.append(f"일본어 구글 {ga}(×1)")
-    L=num/den; v=L+bonus; basis=" + ".join(parts)+f" → {L:.1f}"+(f", 믿는 유튜버 추천 {recs}명 +{bonus:g}" if bonus else "")+" (한국어 후기는 점수에 넣지 않음)"
+    if ga is not None and sum(ja)>=10 and not e.get('gdis'): num+=ga; den+=1; parts.append(f"일본어 구글 {ga}(×1)")
+    L=num/den; v=L+bonus; basis=" + ".join(parts)+f" → {L:.1f}"+(f", 믿는 유튜버 추천 {recs}명 +{bonus:g}" if bonus else "")+(f" (구글은 뺌: {e['gdis']})" if e.get('gdis') else "")+" (한국어 후기는 점수에 넣지 않음)"
     ax=e['axes']; ax['taste']['s']=max(1,min(5,int(v*2+0.5)/2))
     g=e['google']; hist=g['hist']; tot=sum(hist); old=e.get('old',False); yrs=5 if old else 3
     nonja=sum(ko)+e.get('x',0); alln=nonja+sum(ja)
@@ -21,6 +21,10 @@ for e in json.load(open(sys.argv[1])):
      "gmaps":"https://www.google.com/maps/search/?api=1&query="+urllib.parse.quote(e['q']),"summary":e['summary'],"axes":ax,"tasteBasis":basis,"ratings":ratings,"youtubers":ys,
      "complaints":e['complaints'],"praise":e['praise'],"recent":e.get('recent',''),"tips":e.get('tips',[]),"kr":e['kr'],"evidence":e['evidence'],"checked":e.get('checked','2026-10-07'),"old":old,
      "window":f"{'노포(30년 이상)' if old else '일반'} 기준: 최근 {yrs}년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리","tabelog":"https://tabelog.com"+e['tabelog'][2]}
+    if e.get('gdis'):
+        ratings[1]['distrust']=True; ratings[2]['distrust']=True
+    if e.get('roachNote'):
+        p['roach']=True; p['pest']='바퀴벌레 후기'; mo=ax['mood']; mo['s']=max(1,mo['s']-1); mo['fo']='위생 감점 — 쥐·바퀴벌레는 최근 2년 안에 1건이어도 1점 감점: '+e['roachNote']
     if e.get('tbr'):
         n,a,b,txt=e['tbr']; ratings[0]['note']=f"일본 현지인이 주로 쓰는 사이트(3.5면 좋은 집, 3.7 이상이면 아주 좋은 집). 최근 방문순 후기 {n}건을 읽음: 개별 점수 평균 {a} — 4.0 이상 {b[3]} · 3.5~3.9 {b[2]} · 3.0~3.4 {b[1]} · 3.0 미만 {b[0]}. 낮은 점수 후기 내용: {txt}."
         p['complaints'].append({"axis":"taste","text":"타베로그 낮은 점수 후기: "+txt+".","n":b[0],"when":"타베로그 3.0 이하, 최근 후기","tb":True})
