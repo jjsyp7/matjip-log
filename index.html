@@ -75,6 +75,7 @@ a{color:var(--accent)}
 .gone b{font-weight:600;color:var(--ink);text-decoration:line-through;text-decoration-color:var(--sub)}
 .gone p{margin:1px 0 0;font-size:12.5px}
 .pinicon{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font:600 13px var(--body);border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.45)}
+.pinicon.many{background:var(--ink);color:var(--bg,#fff);font-size:13px;border-width:3px;box-shadow:0 0 0 1px var(--ink),0 2px 6px rgba(0,0,0,.4);cursor:pointer}
 .pinicon.on{width:38px;height:38px;font-size:15px;margin:-4px 0 0 -4px}
 .leaflet-tooltip{font-family:var(--body);font-weight:600}
 </style>
@@ -198,17 +199,34 @@ function renderChips(){
   document.getElementById("hint").textContent+=!flat()?" 지역을 고르면 그 안에서 순위가 매겨집니다.":"";
 }
 
-function renderMap(list){
+let mapList=[];
+function drawPins(){
   Object.values(markers).forEach(m=>m.remove()); markers={};
-  const pts=[];
-  list.forEach((x,i)=>{ const {p,sc}=x; if(num(p.lat)==null||num(p.lng)==null||(x.occ&&p.occasionAlso)) return; const on=openId===p.id;
-    const icon=L.divIcon({className:"",html:`<div class="pinicon bg-${sc.tier}${on?" on":""}${country==="전체"&&!query?" bare":" dot"}">${sc.ban?"✕":sc.hid?"?":country==="전체"&&!query?"":(sc.v??"–")}</div>`,iconSize:[30,30],iconAnchor:[15,15]});
+  const z=map.getZoom(), bare=country==="전체"&&!query, groups=[];
+  mapList.forEach(x=>{ const pt=map.project([x.p.lat,x.p.lng],z);
+    const g=z<15&&openId!==x.p.id&&groups.find(g=>!g.solo&&Math.hypot(g.pt.x-pt.x,g.pt.y-pt.y)<40);
+    if(g) g.items.push(x); else groups.push({pt,items:[x],solo:openId===x.p.id}); });
+  groups.forEach((g,gi)=>{
+    if(g.items.length>1){ const n=g.items.length, ll=g.items.map(x=>[x.p.lat,x.p.lng]), d=n<10?32:n<50?38:44;
+      const c=[ll.reduce((a,l)=>a+l[0],0)/n, ll.reduce((a,l)=>a+l[1],0)/n];
+      const m=L.marker(c,{icon:L.divIcon({className:"",html:`<div class="pinicon many" style="width:${d}px;height:${d}px">${n}</div>`,iconSize:[d,d],iconAnchor:[d/2,d/2]}),title:n+"곳",keyboard:true}).addTo(map);
+      m.bindTooltip(n+"곳 · 누르면 펼쳐집니다",{direction:"top",offset:[0,-d/2]});
+      m.on("click",()=>map.fitBounds(ll,{padding:[60,60],maxZoom:16}));
+      markers["g"+gi]=m; return; }
+    const {p,sc}=g.items[0], on=openId===p.id;
+    const icon=L.divIcon({className:"",html:`<div class="pinicon bg-${sc.tier}${on?" on":""}${bare?" bare":" dot"}">${sc.ban?"✕":sc.hid?"?":bare?"":(sc.v??"–")}</div>`,iconSize:[30,30],iconAnchor:[15,15]});
     const m=L.marker([p.lat,p.lng],{icon,zIndexOffset:on?1000:0,title:p.name}).addTo(map);
     m.bindTooltip(p.name,{direction:"top",offset:[0,-14]});
     m.on("click",()=>{ openId=on?null:p.id; render(); const r=document.getElementById("row-"+p.id); r&&r.scrollIntoView({block:"nearest",behavior:"smooth"}); });
-    markers[p.id]=m; pts.push([p.lat,p.lng]); });
+    markers[p.id]=m; });
+}
+map.on("zoomend",drawPins);
+function renderMap(list){
+  mapList=list.filter(x=>num(x.p.lat)!=null&&num(x.p.lng)!=null&&!(x.occ&&x.p.occasionAlso));
+  const pts=mapList.map(x=>[x.p.lat,x.p.lng]);
   const key=country+"|"+region+"|"+cuisine+"|"+menu+"|"+pts.length;
-  if(pts.length&&key!==fitKey){ fitKey=key; map.fitBounds(pts,{padding:[50,50],maxZoom:15}); }
+  if(pts.length&&key!==fitKey){ fitKey=key; map.fitBounds(pts,{padding:[50,50],maxZoom:15,animate:false}); }
+  drawPins();
 }
 
 function detail(p){
