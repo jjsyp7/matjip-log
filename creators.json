@@ -27,5 +27,27 @@
   "always": true,
   "added": "2026-10-03",
   "note": "사용자가 직접 지정. 이 사람 의견은 무조건 참고"
+ },
+ {
+  "who": "라멘괴인 웅성",
+  "platform": "YouTube",
+  "channel": "UCMSXTsIuYiaHgV6ONd4rnNw",
+  "trusted": true,
+  "fields": [
+   "라멘"
+  ],
+  "added": "2026-10-07",
+  "note": "사용자가 직접 지정. 라멘 분야에서만 참고. 하쿠텐과는 팝업(라멘폭격단)을 함께 한 사이"
+ },
+ {
+  "who": "카라미",
+  "platform": "YouTube",
+  "channel": "UCK44QT7G-cXYfIgm93N93Sg",
+  "trusted": true,
+  "fields": [
+   "라멘"
+  ],
+  "added": "2026-10-07",
+  "note": "사용자가 직접 지정. 라멘 분야에서만 참고. 영상 제목·설명에 가게 이름이 없어 자막으로 확인해야 함"
  }
 ]
