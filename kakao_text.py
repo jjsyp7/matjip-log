@@ -4,6 +4,9 @@ import json,re,sys
 R={r[0]:r for r in json.load(open('kakao_text_raw.json'))}
 P=json.load(open('places.json')); avg=lambda h:sum((i+1)*c for i,c in enumerate(h))/sum(h)
 rnd=lambda v:max(1,min(5,int(v*2+0.5)/2)); out=[]
+for p in P:  # 지난번에 건 상한을 풀고 원래 맛 점수에서 다시 계산
+    t=p['axes']['taste']
+    if 'rawTaste' in t: t['s']=t.pop('rawTaste')
 for p in P:
     r=R.get(str(p.get('kakaoId'))); b=p.get('tasteBasis','')
     b=re.sub(r', 후기 내용이 미지근한 쪽이 많아 −0\.5 \(.*?이 3점 이하\)','',b)  # 같은 규칙의 옛 표기
@@ -30,6 +33,20 @@ for p in P:
             if x['src']=='카카오맵':
                 x['textRating']=new; x['textCount']=n
                 x['note']=re.sub(r' 맛 점수에는 .*$','',x.get('note',''))+f" 맛 점수에는 기간 안 후기 {sum(allh)}건 중 글이 있는 {n}건의 평균 {new}을 씀(글 없이 별점만 준 {sum(allh)-n}건은 뺌)."
+# 후기 적음 상한: 한국 가게에서 (기간 안 카카오 글 있는 후기 + 최근 한국어 구글 후기)가 30건 미만이면 맛 점수 상한 4.0 (유튜버 가산 포함)
+CAP_N,CAP=30,4.0; capped=[]
+for p in P:
+    if p.get('country','한국')!='한국': continue
+    r=R.get(str(p.get('kakaoId'))); kn=sum(r[4]) if r else 0
+    gn=sum(x.get('count') or 0 for x in p['ratings'] if x['src']=='구글(한국어·최근)')
+    b=re.sub(r', 후기 적음\(.*?\) 맛 점수 상한 [\d.]+','',p.get('tasteBasis','')); t=p['axes']['taste']
+    if kn+gn<CAP_N and (t.get('s') or 0)>CAP:
+        capped.append((p['name'],kn,gn,t['s'])); t['rawTaste']=t['s']; t['s']=CAP
+        b+=f", 후기 적음(카카오 글 있는 후기 {kn}건 + 한국어 구글 {gn}건 = {kn+gn}건, 30건 미만) 맛 점수 상한 {CAP}"
+        p['fewReviews']=f"후기 {kn+gn}건"
+    else: p.pop('fewReviews',None)
+    if '--apply' in sys.argv: p['tasteBasis']=b
+print('후기 적음 상한:',capped)
 ch=[o for o in out if o[5]!=o[6]]
 print(len(out),'곳 계산, 맛 점수 바뀜',len(ch))
 for o in sorted(out,key=lambda o:o[2]-o[1]): 

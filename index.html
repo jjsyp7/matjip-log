@@ -220,6 +220,7 @@ function render(){
     if(p.healthNote&&!sc.ban) flags.append(el("span",{class:"flag f-warn",text:"배탈 언급 있음 (참고)"}));
     if(sc.hid) flags.append(el("span",{class:"flag f-bad",text:"예외 · 믿을 평점 없음 (순위 제외)"}));
     if(p.noKakao&&!sc.hid) flags.append(el("span",{class:"flag f-warn",text:p.noKakao}));
+    if(p.fewReviews) flags.append(el("span",{class:"flag f-warn",text:"후기 적음 · 맛 상한 4.0"}));
     if(p.pest) flags.append(el("span",{class:"flag f-bad",text:p.pest}));
     if(p.tourist&&!p.krPopular) flags.append(el("span",{class:"flag f-warn",text:"관광객 많음"}));
     if(p.krPopular) flags.append(el("span",{class:"flag f-info",text:"한국인에게 인기"}));
