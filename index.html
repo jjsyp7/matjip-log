@@ -253,7 +253,12 @@ function render(){
   const rows=document.getElementById("rows"); rows.replaceChildren();
   const gone=query?[]:closed.filter(c=>(country==="전체"||(c.country||"한국")===country)&&(region==="전체"||c.region===region)&&(cuisine==="전체"||c.cuisine===cuisine));
   const gs=document.getElementById("guess"); gs.replaceChildren();
-  if(query){ const names=list.slice(0,5).filter(x=>squash(x.p.name)!==squash(query)); if(names.length) gs.append(el("span",{class:"cnt",text:"혹시"})); names.forEach(x=>{ const b=el("button",{class:"chip",type:"button",text:x.p.name}); b.onclick=()=>{ query=x.p.name; document.getElementById("q").value=query; openId=x.p.id; render(); }; gs.append(b); }); }
+  if(query){ const names=list.slice(0,5).filter(x=>squash(x.p.name)!==squash(query));
+    // 이름뿐 아니라 메뉴 묶음·메뉴·종류·지역·나라도 짐작해서 보여 준다(누르면 그 말로 찾는다)
+    const jq=jamo(query), terms={}; places.forEach(p=>[[co(p),"나라"],[p.region,"지역"],[p.cuisine,"종류"],...groupsOf(p).map(g=>[g,"메뉴"]),...(p.menus||[]).map(m=>[m,"메뉴"])].forEach(([t,k])=>{ if(!t) return; (terms[t]=terms[t]||{k,n:0,ids:new Set()}).ids.add(p.id); }));
+    const cats=Object.entries(terms).map(([t,v])=>({t,k:v.k,n:v.ids.size,i:t.split(/[·\s]+/).findIndex(w=>jamo(w).startsWith(jq)||(/^[ㄱ-ㅎ]+$/.test(squash(query))&&chos(w).startsWith(squash(query))))})).filter(c=>c.i>=0&&squash(c.t)!==squash(query)).sort((a,b)=>(a.i-b.i)||(b.n-a.n)).slice(0,4);
+    if(names.length||cats.length) gs.append(el("span",{class:"cnt",text:"혹시"}));
+    cats.forEach(c=>{ const b=el("button",{class:"chip",type:"button",text:`${c.t} · ${c.k} ${c.n}곳`}); b.onclick=()=>{ query=c.t; document.getElementById("q").value=query; openId=null; render(); }; gs.append(b); }); names.forEach(x=>{ const b=el("button",{class:"chip",type:"button",text:x.p.name}); b.onclick=()=>{ query=x.p.name; document.getElementById("q").value=query; openId=x.p.id; render(); }; gs.append(b); }); }
   if(!list.length) rows.append(el("p",{class:"empty",text:query?`'${query}'에 맞는 가게를 찾지 못했습니다. 이름 앞부분이나 동네, 메뉴로 찾아보세요.`:"이 조건에 맞는 가게가 아직 없습니다."}));
   let grp=null;
   list.forEach((x,i)=>{ const {p,sc}=x; const on=openId===p.id;
