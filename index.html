@@ -318,8 +318,8 @@ function render(){
     if(p.skew) flags.append(el("span",{class:"flag f-warn",text:"5점 쏠림 · 후기 이벤트 의심"}));
     if(p.fewReviews) flags.append(el("span",{class:"flag f-warn",text:"후기 적음 · 맛 상한 4.0"}));
     if(p.pest) flags.append(el("span",{class:"flag f-bad",text:p.pest}));
-    const kTxt=((p.ratings||[]).find(r=>r.src==="카카오맵")||{}).textCount||0;  // 카카오에 글 후기가 20건 이상이면 한국인도 다니는 집
-    if(p.tourist&&!p.krPopular) flags.append(kTxt>=20?el("span",{class:"flag f-info",text:"외국인 손님도 많음"}):el("span",{class:"flag f-warn",text:"관광객 많음"}));
+    const loc=(p.ratings||[]).find(r=>r.src==="카카오맵"||r.src==="타베로그")||{}, locN=loc.src==="타베로그"?(loc.count||0):(loc.textCount||0);  // 현지 후기(카카오 글 후기·타베로그)가 20건 이상이면 현지인도 다니는 집이라 표시하지 않음
+    if(p.tourist&&!p.krPopular&&locN<20) flags.append(el("span",{class:"flag f-warn",text:"관광객 많음"}));
     if(p.krPopular) flags.append(el("span",{class:"flag f-info",text:"한국인에게 인기"}));
     if(p.occasion) flags.append(el("span",{class:"flag f-warn",text:"분위기용"}));
     if(p.caution) flags.append(el("span",{class:"flag f-bad",text:"⚠ "+p.caution}));
