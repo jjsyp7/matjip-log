@@ -234,11 +234,12 @@ function drawPins(){
     markers[p.id]=m; });
 }
 map.on("zoomend",drawPins);
+map.on("resize",e=>{ if(!e.oldSize.x||!e.oldSize.y){ fitKey=""; renderMap(mapList.map(x=>x)); } });
 function renderMap(list){
   mapList=list.filter(x=>num(x.p.lat)!=null&&num(x.p.lng)!=null&&!(x.occ&&x.p.occasionAlso));
   const pts=mapList.map(x=>[x.p.lat,x.p.lng]);
   const key=country+"|"+region+"|"+cuisine+"|"+menu+"|"+pts.length;
-  if(pts.length&&key!==fitKey){ fitKey=key; map.fitBounds(pts,{padding:[50,50],maxZoom:15,animate:false}); }
+  if(pts.length&&key!==fitKey&&map.getSize().x&&map.getSize().y){ fitKey=key; map.fitBounds(pts,{padding:[50,50],maxZoom:15,animate:false}); }
   drawPins();
 }
 
