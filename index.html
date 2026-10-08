@@ -267,7 +267,7 @@ function detail(p){
     const m=el("div",{class:"meter"}); if(s!=null){ const i=el("i",{class:s>=4?"bg-good":s>=3?"bg-warn":"bg-bad"}); i.style.width=(s/5*100)+"%"; m.append(i); }
     ax.append(el("div",{class:"axis"},el("span",{class:"nm"+(pri.has(k)?" pri":""),text:n}),m,el("span",{class:"note",text:s==null?(a.kwk||"근거 없음"):(a.n||"")+(a.fo?` ⚠ ${a.fo}`:"")+(a.kwk?` [${a.kwk}]`:"")+(a.kw?` [${a.kw}${a.auto?"":a.fo?"":" · 언급이 적어 점수에는 미반영"}]`:"")})));
   }
-  if(priceText(p)) ax.append(el("p",{class:"evid",style:"margin-top:2px",text:priceText(p).replace("(어림)","")+" — "+(p.price.est?"값이 적힌 후기가 없어 메뉴 종류로 어림한 값":(p.price.t?"후기에 적힌 값: "+p.price.t:"후기에 적힌 값 기준"))}));
+  if(priceText(p)) ax.append(el("p",{class:"evid",style:"margin-top:2px",text:priceText(p).replace("(어림)","")+" — "+(p.price.g?"구글 지도에 적힌 1인당 값: "+p.price.g:p.price.est?"구글에도 후기에도 값이 없어 메뉴 종류로 어림한 값":(p.price.t?"후기에 적힌 값: "+p.price.t:"후기에 적힌 값 기준"))}));
   if(p.tasteBasis) ax.append(el("p",{class:"evid",style:"margin-top:2px",text:"맛 점수 근거: "+p.tasteBasis}));
   d.append(ax);
   if(p.poison){ const b=el("div",{class:"layer",style:"border-top:0;padding-top:0"},el("h3",{text:"가지 않는 이유",style:"color:var(--bad)"})); b.append(el("p",{class:"note",text:p.poison})); d.prepend(b); }
