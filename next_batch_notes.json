@@ -1293,7 +1293,7 @@
    }
   },
   "notion_mark": {
-   "how": "2026-10-08 변경(사용자: 새 목록으로 옮기자): 조사 끝난 줄은 '가볼 곳 - 국내'(collection://f8df5600-0472-4e8a-b2e6-c00c84d33ab5)에서 새 목록 '지도에 올린 곳 - 국내'(collection://d3ab5142-2f69-4c4b-a7b4-b76d6be749db, 엔터테인먼트 페이지 아래)로 옮긴다: ①update-page로 '지도'=올림/숨김/제외 ②notion-move-pages new_parent {type:data_source_id, data_source_id:'d3ab5142-2f69-4c4b-a7b4-b76d6be749db'}. 132줄 옮김(올림 98·숨김 33·제외 1). 남은 대기: 맛집 통과 248, 카페/디저트 통과 164, 보류는 나중. 대기 목록은 가볼 곳 DB에서 판정='통과' AND 분류='맛집' ORDER BY 구글 리뷰수 DESC. 노션 SQL은 한 번에 DB 하나만 가능.",
+   "how": "2026-10-08 최종: 조사 끝난 음식점 줄은 '가볼 곳 - 국내'(collection://f8df5600-0472-4e8a-b2e6-c00c84d33ab5)에서 아카이브 '지도에 올린 곳 - 국내'(collection://d3ab5142-2f69-4c4b-a7b4-b76d6be749db)로 notion-move-pages(new_parent {type:data_source_id, data_source_id:'d3ab5142-2f69-4c4b-a7b4-b76d6be749db'})로 옮기기만 한다. 아카이브에는 '지도' 칸이 없음(올림/숨김 구분 안 함 — 60점 미만은 지도 화면에서만 가림). 지도에 넣지 않는 것(시장 전체 등)만 '가볼 곳'에 남기고 '지도'='제외'. 현재 아카이브 131줄. 남은 대기: 맛집 통과 248. 카페·베이커리·놀거리 등은 지금 하지 않음(음식점만). 노션 SQL은 한 번에 DB 하나만.",
    "page_ids_to_mark_올림": {
     "명동교자": "3ecb6c49099e8162b71bd3cac64b77a4",
     "우래옥": "3ecb6c49099e81219529fb3f92acce54",
