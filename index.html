@@ -113,6 +113,7 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,att
 function el(tag,attrs,...kids){ const n=document.createElement(tag); if(attrs) for(const k in attrs){ if(k==="class") n.className=attrs[k]; else if(k==="text") n.textContent=attrs[k]; else n.setAttribute(k,attrs[k]); } for(const c of kids){ if(c==null) continue; n.append(c.nodeType?c:document.createTextNode(String(c))); } return n; }
 const safeUrl=u=>typeof u==="string"&&/^https:\/\//.test(u)?u:null;
 const num=v=>typeof v==="number"&&isFinite(v)?v:null;
+const within1y=ym=>{ if(!ym) return false; const n=new Date(), c=new Date(n.getFullYear()-1,n.getMonth(),1); const [y,m]=String(ym).split("-").map(Number); return new Date(y,(m||1)-1,1)>=c; };  // 위생 후기 표시는 최근 1년 안의 것만(pestDate·foDate: YYYY-MM)
 const gcls=g=>/비추|아쉬움/.test(g||"")?"f-bad":/추천|극찬|호평/.test(g||"")?"f-good":"f-warn";
 
 // 카카오로 확인할 수 없는 가게는 맛 점수를 낮춰 같은 줄에 세운다. 믿을 평점이 하나도 없을 때만(unranked) 순위에서 뺀다
@@ -314,9 +315,9 @@ function render(){
     if(sc.ban) flags.append(el("span",{class:"flag f-bad",text:"✕ 가지 않음 · 식중독 주장 반복"}));
     if(sc.hid) flags.append(el("span",{class:"flag f-bad",text:"예외 · 믿을 평점 없음 (순위 제외)"}));
     // 표시는 꼭 봐야 하는 것만: 위생·식중독 경고와 카카오 후기 없음. 점수에 이미 들어간 것(유튜버, 5점 쏠림, 후기 적음, 강한·약한 항목, 분위기용, 배탈 언급 참고)은 상세 화면에서만 보여 줌
-    if(p.pest) flags.append(el("span",{class:"flag f-bad",text:p.pest}));
-    if(p.caution) flags.append(el("span",{class:"flag f-bad",text:"⚠ "+p.caution}));
-    if(p.axes&&p.axes.mood&&p.axes.mood.fo&&/음식 속 이물질|머리카락|그릇에 죽은 벌레/.test(p.axes.mood.fo)) flags.append(el("span",{class:"flag f-bad",text:"음식 이물질 후기"}));
+    if(p.pest&&within1y(p.pestDate)) flags.append(el("span",{class:"flag f-bad",text:p.pest}));
+    if(p.caution&&/차이|평점 차/.test(p.caution)) flags.append(el("span",{class:"flag f-warn",text:"평점 차이 있음"}));
+    if(within1y(p.foDate)) flags.append(el("span",{class:"flag f-bad",text:"음식 이물질 후기"}));
     if(p.noKakao&&!sc.hid) flags.append(el("span",{class:"flag f-warn",text:"카카오 후기 없음"}));
     while(flags.childNodes.length>3) flags.lastChild.remove();
     if(flags.childNodes.length) mid.append(flags);

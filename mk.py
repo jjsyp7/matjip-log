@@ -56,7 +56,7 @@ p={"id":e['id'],"name":e['name'],"area":e['area'],"region":e.get('region','서�
  "summary":e['summary'],"axes":ax,"tasteBasis":basis,"ratings":ratings,"youtubers":ys,"complaints":e['complaints'],"praise":e['praise'],"recent":e.get('recent',''),"tips":e.get('tips',[]),
  "evidence":e['evidence'],"checked":e.get('checked','2026-10-04'),"old":old,
  "window":f"{'노포(30년 이상)' if old else '일반'} 기준: 최근 {5 if old else 3}년({cut}.10 이후) 후기만 반영, 번역된 외국어 리뷰 제외"}
-for f in('caution','poison','healthNote','occasion','occasionAlso','tasteFirst','tourist','roach','pest','noKakao','unranked','kakaoId'):
+for f in('caution','poison','healthNote','occasion','occasionAlso','tasteFirst','tourist','roach','pest','noKakao','unranked','kakaoId','pestDate','foDate'):
     if e.get(f): p[f]=e[f]
 P=[x for x in P if x['id']!=p['id']]+[p]
 json.dump(P,open('places.json','w'),ensure_ascii=False,indent=1)
