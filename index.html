@@ -75,6 +75,8 @@ a{color:var(--accent)}
 .gone b{font-weight:600;color:var(--ink);text-decoration:line-through;text-decoration-color:var(--sub)}
 .gone p{margin:1px 0 0;font-size:12.5px}
 .pinicon{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font:600 13px var(--body);border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.45)}
+.gsw{display:flex;align-items:center;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:3px 4px 3px 11px;font:500 12.5px var(--body);color:var(--sub);box-shadow:0 1px 4px rgba(0,0,0,.18)}
+.gsw .chip{font-size:12.5px;padding:2px 10px;border-color:transparent}
 .pinicon.many{width:34px;height:34px;font-size:13.5px;cursor:pointer;box-shadow:3px 3px 0 -1px rgba(255,255,255,.95),3px 3px 0 0 rgba(0,0,0,.28),0 1px 5px rgba(0,0,0,.45)}
 .pinicon.on{width:38px;height:38px;font-size:15px;margin:-4px 0 0 -4px}
 .leaflet-tooltip{font-family:var(--body);font-weight:600}
@@ -199,7 +201,14 @@ function renderChips(){
   document.getElementById("hint").textContent+=!flat()?" 지역을 고르면 그 안에서 순위가 매겨집니다.":"";
 }
 
-let mapList=[];
+let mapList=[], groupBy="avg";
+try{ groupBy=localStorage.getItem("jjin-group")==="top"?"top":"avg"; }catch(e){}
+const groupCtl=L.control({position:"topright"});
+groupCtl.onAdd=()=>{ const d=el("div",{class:"gsw",role:"group","aria-label":"묶인 점에 적는 점수"},el("span",{text:"묶인 점"}));
+  [["avg","평균"],["top","최고"]].forEach(([k,t])=>{ const b=el("button",{class:"chip",type:"button","aria-pressed":String(groupBy===k),text:t});
+    b.onclick=()=>{ groupBy=k; try{ localStorage.setItem("jjin-group",k); }catch(e){} d.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b))); drawPins(); }; d.append(b); });
+  L.DomEvent.disableClickPropagation(d); return d; };
+groupCtl.addTo(map);
 function drawPins(){
   Object.values(markers).forEach(m=>m.remove()); markers={};
   const z=map.getZoom(), bare=country==="전체"&&!query, groups=[];
@@ -208,10 +217,13 @@ function drawPins(){
     if(g) g.items.push(x); else groups.push({pt,items:[x],solo:openId===x.p.id}); });
   groups.forEach((g,gi)=>{
     if(g.items.length>1){ const n=g.items.length, ll=g.items.map(x=>[x.p.lat,x.p.lng]);
-      const top=g.items.filter(x=>!x.sc.ban&&!x.sc.hid&&x.sc.v!=null).sort((a,b)=>b.sc.v-a.sc.v)[0]||g.items[0];
+      const ok=g.items.filter(x=>!x.sc.ban&&!x.sc.hid&&x.sc.v!=null).sort((a,b)=>b.sc.v-a.sc.v), top=ok[0]||g.items[0];
+      const avg=ok.length?Math.round(ok.reduce((a,x)=>a+x.sc.v,0)/ok.length):null;
+      const rep=groupBy==="top"||avg==null?top:ok.reduce((a,x)=>Math.abs(x.sc.v-avg)<Math.abs(a.sc.v-avg)?x:a,ok[0]);
+      const shown=groupBy==="top"?(top.sc.v??"–"):(avg??"–");
       const c=[ll.reduce((a,l)=>a+l[0],0)/n, ll.reduce((a,l)=>a+l[1],0)/n];
-      const m=L.marker(c,{icon:L.divIcon({className:"",html:`<div class="pinicon many bg-${top.sc.tier}">${top.sc.v??"–"}</div>`,iconSize:[34,34],iconAnchor:[17,17]}),title:n+"곳"}).addTo(map);
-      m.bindTooltip(`${n}곳 · 가장 높은 곳 ${top.p.name}`,{direction:"top",offset:[0,-18]});
+      const m=L.marker(c,{icon:L.divIcon({className:"",html:`<div class="pinicon many bg-${rep.sc.tier}">${shown}</div>`,iconSize:[34,34],iconAnchor:[17,17]}),title:n+"곳"}).addTo(map);
+      m.bindTooltip(groupBy==="top"?`${n}곳 · 가장 높은 곳 ${top.p.name}`:`${n}곳 평균 · 가장 높은 곳 ${top.p.name} ${top.sc.v??""}`,{direction:"top",offset:[0,-18]});
       m.on("click",()=>map.fitBounds(ll,{padding:[60,60],maxZoom:16}));
       markers["g"+gi]=m; return; }
     const {p,sc}=g.items[0], on=openId===p.id;
