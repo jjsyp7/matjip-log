@@ -1433,6 +1433,6 @@
   "google_tip": "구글은 한 batch에 한 곳만(두 곳 넣으면 시간 초과). 토담 PC 8Q99WQHM%2BQ66. 이재모피자는 2026.6 치즈 교체 이후 후기 중심으로(46차 규칙) — __KZ(id,'2026-06-01') 분포를 따로 뽑을 것.",
   "rules_48": "식중독 주장은 지금부터 1년 안의 것만 셈. 후기가 1년 넘게 끊긴 곳은 '최근 후기 없음'으로 보류(청춘조개 → 노션 '제외' 대신 보류 메모). 재료·주인 변경 등 일이 있은 곳은 카카오·구글 모두 그 뒤 후기만(구글은 DOM에서 'N개월 전'으로 직접 셈, 다이닝코드는 날짜를 못 갈라 dc=None). 숨김은 60점 미만만.",
   "rules_49": "분위기는 연기·추위 등 여러 건이면 직접 낮춤(manual). 새 보류 기준 만들지 말 것. 다이닝코드는 항상 계산. 특정한 일=주인 변경·이전·주재료 변경만.",
-  "kakao_helper": "내장 브라우저 place.map.kakao.com 탭에서 eval(sessionStorage.getItem('kz')) → __KZ(id,since,maxPg) → {avg,tot,all,txt,k{sp,sn,vp,vw,ve,mp,mn,gp,gn},P,H,low,hi}. kc=[sp,sn], kd=[vp,vw,ve,mp,mn], kg=[gp,gn]. '양이 적다'는 집계에 안 잡히니 가성비는 낮은 평을 읽고 확인."
+  "kakao_helper": "내장 브라우저 place.map.kakao.com 탭에서 eval(sessionStorage.getItem('kz')) → __KZ(id,since,maxPg) → {avg,tot,all,txt,k{sp,sn,vp,vw,ve,mp,mn,gp,gn},P,H,low,hi}. kc=[sp,sn], kd=[vp,vw,ve,mp,mn], kg=[gp,gn]. '양이 적다'는 집계에 안 잡히니 가성비는 낮은 평을 읽고 확인. 주의: 카카오 검색 결과에 '후기 미제공'이면 __KZ를 돌리지 말고 kakao={'hidden':True}로 올릴 것(58차)."
  }
 }
