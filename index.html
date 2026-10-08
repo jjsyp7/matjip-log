@@ -314,16 +314,13 @@ function render(){
     if(sc.ban) flags.append(el("span",{class:"flag f-bad",text:"✕ 가지 않음 · 식중독 주장 반복"}));
     if(p.healthNote&&!sc.ban) flags.append(el("span",{class:"flag f-warn",text:"배탈 언급 있음 (참고)"}));
     if(sc.hid) flags.append(el("span",{class:"flag f-bad",text:"예외 · 믿을 평점 없음 (순위 제외)"}));
-    if(p.noKakao&&!sc.hid) flags.append(el("span",{class:"flag f-warn",text:p.noKakao.replace("예외 · 카카오 미확인","카카오 후기 없음")}));
-    if(p.skew) flags.append(el("span",{class:"flag f-warn",text:"5점 쏠림 · 후기 이벤트 의심"}));
-    if(p.fewReviews) flags.append(el("span",{class:"flag f-warn",text:"후기 적음 · 맛 상한 4.0"}));
+    // 표시는 꼭 봐야 하는 것만: 위생·식중독 경고, 카카오 후기 없음, 강한 항목. 점수에 이미 들어간 것(유튜버, 5점 쏠림, 후기 적음, 약한 항목, 분위기용)은 상세 화면에서만 보여 줌
     if(p.pest) flags.append(el("span",{class:"flag f-bad",text:p.pest}));
-    if(p.occasion) flags.append(el("span",{class:"flag f-warn",text:"분위기용"}));
     if(p.caution) flags.append(el("span",{class:"flag f-bad",text:"⚠ "+p.caution}));
     if(p.axes&&p.axes.mood&&p.axes.mood.fo&&/음식 속 이물질|머리카락|그릇에 죽은 벌레/.test(p.axes.mood.fo)) flags.append(el("span",{class:"flag f-bad",text:"음식 이물질 후기"}));
-    sc.weak.forEach(k=>flags.append(el("span",{class:"flag f-bad",text:`${AXN[k]} 약함`})));
+    if(p.noKakao&&!sc.hid) flags.append(el("span",{class:"flag f-warn",text:"카카오 후기 없음"}));
     sc.strong.forEach(k=>flags.append(el("span",{class:"flag f-good",text:`${AXN[k]} 강함`})));
-    (p.youtubers||[]).forEach(y=>flags.append(el("span",{class:"flag "+gcls(y.grade),text:`${y.who} ${y.grade}`})));
+    while(flags.childNodes.length>3) flags.lastChild.remove();
     if(flags.childNodes.length) mid.append(flags);
     r.append(el("span",{class:"rank bg-"+sc.tier,text:sc.ban?"✕":sc.hid?"?":String(x.rank??"")}),mid,el("div",{class:"score"},el("b",{text:sc.v==null?"–":String(sc.v)}),el("span",{text:"맞춤 점수"})));
     r.onclick=()=>{ openId=on?null:p.id; render(); if(openId&&markers[p.id]) map.panTo(markers[p.id].getLatLng()); };
