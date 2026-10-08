@@ -91,6 +91,7 @@ a{color:var(--accent)}
     <div class="rowc"><span class="lab">내가 중요하게 보는 것</span><span id="axisChips" class="rowc"></span></div>
     <div class="rowc"><span class="lab">종류</span><span id="cuisineChips" class="rowc"></span></div>
     <div class="rowc" id="menuRow"><span class="lab">메뉴</span><span id="menuChips" class="rowc"></span></div>
+    <div class="rowc"><span class="lab">1인 가격</span><span id="priceChips" class="rowc"></span></div>
     <div class="rowc"><span class="lab">나라</span><span id="countryChips" class="rowc"></span></div>
     <div class="rowc" id="regionRow"><span class="lab">지역</span><span id="regionChips" class="rowc"></span></div>
     <p class="hint" id="hint"></p>
@@ -103,14 +104,17 @@ a{color:var(--accent)}
 <script>
 const AXES=[["taste","맛"],["service","서비스"],["value","가성비"],["wait","웨이팅·예약"],["mood","분위기·청결"],["access","접근성"]];
 const AXN=Object.fromEntries(AXES);
-let query="", places=[], closed=[], pri=new Set(), country="전체", region="전체", cuisine="전체", menu="전체", openId=null, markers={}, fitKey="";
-try{ const s=JSON.parse(localStorage.getItem("jjin")||"{}"); pri=new Set(s.pri||[]); region=s.region||"전체"; country=s.country||"전체"; cuisine=s.cuisine||"전체"; menu=s.menu||"전체"; }catch(e){}
-const save=()=>{ try{ localStorage.setItem("jjin",JSON.stringify({pri:[...pri],region,country,cuisine,menu})); }catch(e){} };
+let query="", places=[], closed=[], pri=new Set(), country="전체", region="전체", cuisine="전체", menu="전체", price="전체", openId=null, markers={}, fitKey="";
+try{ const s=JSON.parse(localStorage.getItem("jjin")||"{}"); pri=new Set(s.pri||[]); region=s.region||"전체"; country=s.country||"전체"; cuisine=s.cuisine||"전체"; menu=s.menu||"전체"; price=s.price??"전체"; }catch(e){}
+const save=()=>{ try{ localStorage.setItem("jjin",JSON.stringify({pri:[...pri],region,country,cuisine,menu,price})); }catch(e){} };
 
 const map=L.map("map",{zoomControl:true}).setView([36.3,127.8],7);
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
 
 function el(tag,attrs,...kids){ const n=document.createElement(tag); if(attrs) for(const k in attrs){ if(k==="class") n.className=attrs[k]; else if(k==="text") n.textContent=attrs[k]; else n.setAttribute(k,attrs[k]); } for(const c of kids){ if(c==null) continue; n.append(c.nodeType?c:document.createTextNode(String(c))); } return n; }
+// 1인 가격대: 후기에 적힌 값으로 나눈 다섯 구간. est는 값이 적힌 후기가 없어 메뉴 종류로 어림한 것
+const PB=["1만 원 미만","1만 원대","2~3만 원대","4~7만 원대","8만 원 이상"];
+const priceText=p=>p.price&&PB[p.price.b]?`1인 ${PB[p.price.b]}${p.price.est?"(어림)":""}`:null;
 const safeUrl=u=>typeof u==="string"&&/^https:\/\//.test(u)?u:null;
 const num=v=>typeof v==="number"&&isFinite(v)?v:null;
 const within1y=ym=>{ if(!ym) return false; const n=new Date(), c=new Date(n.getFullYear()-1,n.getMonth(),1); const [y,m]=String(ym).split("-").map(Number); return new Date(y,(m||1)-1,1)>=c; };  // 위생 후기 표시는 최근 1년 안의 것만(pestDate·foDate: YYYY-MM)
@@ -169,7 +173,7 @@ function matchScore(p,q){ const jq=jamo(q); if(!jq) return 0;
   return 0; }
 // 나라를 고르지 않으면 나라별로 묶고, 그 안에서 점수순으로 순위를 매긴다. 숨긴 곳은 버튼을 눌렀을 때만 맨 뒤에 붙는다
 const ranked=()=>{ if(query){ hiddenLow=0; return places.map(p=>({p,sc:score(p),m:matchScore(p,query)})).filter(x=>x.m>0).sort((a,b)=>(b.m-a.m)||((b.sc.v??-1)-(a.sc.v??-1))); }
-  let l=places.filter(p=>(cuisine==="전체"||p.cuisine===cuisine)&&(menu==="전체"||groupsOf(p).includes(menu))&&(country==="전체"||(p.country||"한국")===country)&&(region==="전체"||p.region===region)).map(p=>{ const keep=pri; pri=new Set(); const base=score(p).v; pri=keep; const sc=score(p); return {p,sc,low:!sc.ban&&!sc.hid&&base!=null&&base<MIN_SCORE}; });
+  let l=places.filter(p=>(cuisine==="전체"||p.cuisine===cuisine)&&(menu==="전체"||groupsOf(p).includes(menu))&&(price==="전체"||(p.price&&p.price.b===price))&&(country==="전체"||(p.country||"한국")===country)&&(region==="전체"||p.region===region)).map(p=>{ const keep=pri; pri=new Set(); const base=score(p).v; pri=keep; const sc=score(p); return {p,sc,low:!sc.ban&&!sc.hid&&base!=null&&base<MIN_SCORE}; });
   hiddenLow=l.filter(x=>x.low).length; if(!showLow) l=l.filter(x=>!x.low);
   const ex=x=>x.sc.ban?3:x.sc.hid?2:x.low?1:0;
   const cnt={}; l.forEach(x=>cnt[co(x.p)]=(cnt[co(x.p)]||0)+1);
@@ -190,6 +194,9 @@ function renderChips(){
   if(cuisine!=="전체"){ const cnt={}; places.filter(p=>p.cuisine===cuisine).forEach(p=>groupsOf(p).forEach(m=>cnt[m]=(cnt[m]||0)+1));
     const ms=["전체",...Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]||a.localeCompare(b))]; if(!ms.includes(menu)) menu="전체";
     for(const m of ms){ const b=el("button",{class:"chip",type:"button","aria-pressed":String(menu===m),text:m==="전체"?m:`${m} ${cnt[m]}`}); b.onclick=()=>{ menu=m; openId=null; save(); render(); }; mc.append(b); } }
+  const pc=document.getElementById("priceChips"); pc.replaceChildren();
+  { const cnt={}; places.filter(p=>(cuisine==="전체"||p.cuisine===cuisine)&&(country==="전체"||(p.country||"한국")===country)&&(region==="전체"||p.region===region)).forEach(p=>{ if(p.price) cnt[p.price.b]=(cnt[p.price.b]||0)+1; });
+    for(const k of ["전체",0,1,2,3,4]){ const b=el("button",{class:"chip",type:"button","aria-pressed":String(price===k),text:k==="전체"?k:`${PB[k]} ${cnt[k]||0}`}); b.onclick=()=>{ price=k; openId=null; save(); render(); }; pc.append(b); } }
   const cg=document.getElementById("countryChips"); cg.replaceChildren();
   const cs=["전체",...[...new Set(places.map(p=>p.country||"한국"))].sort()];
   if(!cs.includes(country)) country="전체";
@@ -260,6 +267,7 @@ function detail(p){
     const m=el("div",{class:"meter"}); if(s!=null){ const i=el("i",{class:s>=4?"bg-good":s>=3?"bg-warn":"bg-bad"}); i.style.width=(s/5*100)+"%"; m.append(i); }
     ax.append(el("div",{class:"axis"},el("span",{class:"nm"+(pri.has(k)?" pri":""),text:n}),m,el("span",{class:"note",text:s==null?(a.kwk||"근거 없음"):(a.n||"")+(a.fo?` ⚠ ${a.fo}`:"")+(a.kwk?` [${a.kwk}]`:"")+(a.kw?` [${a.kw}${a.auto?"":a.fo?"":" · 언급이 적어 점수에는 미반영"}]`:"")})));
   }
+  if(priceText(p)) ax.append(el("p",{class:"evid",style:"margin-top:2px",text:priceText(p).replace("(어림)","")+" — "+(p.price.est?"값이 적힌 후기가 없어 메뉴 종류로 어림한 값":(p.price.t?"후기에 적힌 값: "+p.price.t:"후기에 적힌 값 기준"))}));
   if(p.tasteBasis) ax.append(el("p",{class:"evid",style:"margin-top:2px",text:"맛 점수 근거: "+p.tasteBasis}));
   d.append(ax);
   if(p.poison){ const b=el("div",{class:"layer",style:"border-top:0;padding-top:0"},el("h3",{text:"가지 않는 이유",style:"color:var(--bad)"})); b.append(el("p",{class:"note",text:p.poison})); d.prepend(b); }
@@ -309,7 +317,7 @@ function render(){
     if(flat()&&x.occ&&!sc.ban&&!sc.hid&&!(list[i-1]&&list[i-1].occ)) rows.append(el("p",{class:"grp",text:"분위기용 · 분위기와 서비스를 더 크게 봄"}));
     if(!query&&sc.ban&&!(list[i-1]&&list[i-1].sc.ban&&co(list[i-1].p)===co(p))) rows.append(el("p",{class:"grp",text:"가지 말 것 · 식중독 주장 반복"}));
     const r=el("button",{class:"row",type:"button",id:"row-"+p.id+(x.occ&&p.occasionAlso?"-occ":""),"aria-expanded":String(on)});
-    const mid=el("div",null,el("h2",{text:p.name||"이름 없음"}),el("p",{class:"meta",text:[p.area,[p.cuisine,(p.menus||[]).join("·")].filter(Boolean).join(" › ")||p.category,(p.ratings||[]).filter(r=>num(r.rating)!=null).map(r=>`${r.src} ${r.rating}${r.distrust?"(의심)":""}`).join(" / ")||null].filter(Boolean).join(" · ")}));
+    const mid=el("div",null,el("h2",{text:p.name||"이름 없음"}),el("p",{class:"meta",text:[p.area,[p.cuisine,(p.menus||[]).join("·")].filter(Boolean).join(" › ")||p.category,priceText(p),(p.ratings||[]).filter(r=>num(r.rating)!=null).map(r=>`${r.src} ${r.rating}${r.distrust?"(의심)":""}`).join(" / ")||null].filter(Boolean).join(" · ")}));
     if(p.summary) mid.append(el("p",{class:"sum",text:p.summary}));
     const flags=el("div");
     if(sc.ban) flags.append(el("span",{class:"flag f-bad",text:"✕ 가지 않음 · 식중독 주장 반복"}));
