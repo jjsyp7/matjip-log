@@ -112,9 +112,9 @@ const map=L.map("map",{zoomControl:true}).setView([36.3,127.8],7);
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
 
 function el(tag,attrs,...kids){ const n=document.createElement(tag); if(attrs) for(const k in attrs){ if(k==="class") n.className=attrs[k]; else if(k==="text") n.textContent=attrs[k]; else n.setAttribute(k,attrs[k]); } for(const c of kids){ if(c==null) continue; n.append(c.nodeType?c:document.createTextNode(String(c))); } return n; }
-// 1인 가격대: 후기에 적힌 값으로 나눈 다섯 구간. est는 값이 적힌 후기가 없어 메뉴 종류로 어림한 것
+// 1인 가격대: 다섯 구간. est는 메뉴 종류로 정한 값(화면에는 따로 표시하지 않고, 나중에 값이 확인되면 바꾼다)
 const PB=["1만 원 미만","1만 원대","2~3만 원대","4~7만 원대","8만 원 이상"];
-const priceText=p=>p.price&&PB[p.price.b]?`1인 ${PB[p.price.b]}${p.price.est?"(어림)":""}`:null;
+const priceText=p=>p.price&&PB[p.price.b]?`1인 ${PB[p.price.b]}`:null;
 const safeUrl=u=>typeof u==="string"&&/^https:\/\//.test(u)?u:null;
 const num=v=>typeof v==="number"&&isFinite(v)?v:null;
 const within1y=ym=>{ if(!ym) return false; const n=new Date(), c=new Date(n.getFullYear()-1,n.getMonth(),1); const [y,m]=String(ym).split("-").map(Number); return new Date(y,(m||1)-1,1)>=c; };  // 위생 후기 표시는 최근 1년 안의 것만(pestDate·foDate: YYYY-MM)
@@ -267,7 +267,7 @@ function detail(p){
     const m=el("div",{class:"meter"}); if(s!=null){ const i=el("i",{class:s>=4?"bg-good":s>=3?"bg-warn":"bg-bad"}); i.style.width=(s/5*100)+"%"; m.append(i); }
     ax.append(el("div",{class:"axis"},el("span",{class:"nm"+(pri.has(k)?" pri":""),text:n}),m,el("span",{class:"note",text:s==null?(a.kwk||"근거 없음"):(a.n||"")+(a.fo?` ⚠ ${a.fo}`:"")+(a.kwk?` [${a.kwk}]`:"")+(a.kw?` [${a.kw}${a.auto?"":a.fo?"":" · 언급이 적어 점수에는 미반영"}]`:"")})));
   }
-  if(priceText(p)) ax.append(el("p",{class:"evid",style:"margin-top:2px",text:priceText(p).replace("(어림)","")+" — "+(p.price.g?"구글 지도에 적힌 1인당 값: "+p.price.g:p.price.est?"구글에도 후기에도 값이 없어 메뉴 종류로 어림한 값":(p.price.t?"후기에 적힌 값: "+p.price.t:"후기에 적힌 값 기준"))}));
+  if(priceText(p)) ax.append(el("p",{class:"evid",style:"margin-top:2px",text:priceText(p)+(p.price.g?" — 구글 지도에 적힌 1인당 값: "+p.price.g:p.price.t?" — 후기에 적힌 값: "+p.price.t:"")}));
   if(p.tasteBasis) ax.append(el("p",{class:"evid",style:"margin-top:2px",text:"맛 점수 근거: "+p.tasteBasis}));
   d.append(ax);
   if(p.poison){ const b=el("div",{class:"layer",style:"border-top:0;padding-top:0"},el("h3",{text:"가지 않는 이유",style:"color:var(--bad)"})); b.append(el("p",{class:"note",text:p.poison})); d.prepend(b); }
