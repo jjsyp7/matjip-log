@@ -43,7 +43,7 @@ for e in specs:
     p.pop('occasion',None); p['_occPos']=[op,on]
     ro=e.get('roachNote')
     if ro:
-        p['roach']=True; p['pest']=e.get('pest','바퀴벌레 후기'); mo=ax['mood']; mo['s']=max(1,mo['s']-1); mo['fo']=(mo['fo']+' / ' if mo.get('fo') else '위생 감점 — ')+'쥐·바퀴벌레는 최근 2년 안에 1건이어도 1점 감점: '+ro
+        p['roach']=True; p['pest']=e.get('pest','바퀴벌레 후기'); mo=ax['mood']; mo['s']=max(1,mo['s']-1); mo['fo']=(mo['fo']+' / ' if mo.get('fo') else '위생 감점 — ')+'쥐·바퀴벌레는 최근 1년 안에 1건이어도 1점 감점: '+ro
     op,on=p.pop('_occPos',[0,0])
     if on and round(op/on*100)>=10 and not ax['mood'].get('fo') and not p.get('tourist'): p['occasion']=f"후기 {on}건 중 {op}건({round(op/on*100)}%)이 분위기 칭찬, 위생 감점 없음, 관광객 위주 아님"
     json.dump(P,open('places.json','w'),ensure_ascii=False,indent=1)
