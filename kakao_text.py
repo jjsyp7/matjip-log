@@ -12,6 +12,7 @@ for p in P:
     b=re.sub(r', 후기 내용이 미지근한 쪽이 많아 −0\.5 \(.*?이 3점 이하\)','',b)  # 같은 규칙의 옛 표기
     m=re.search(r'카카오( 글 있는 후기)? ([\d.]+)\(×2\)',b)
     if not r or not m: continue
+    if p['axes']['taste'].get('manual'): continue  # 후기 이벤트 의심 등으로 후기를 직접 읽고 매긴 맛 점수는 건드리지 않음
     _,oa,ot,allh,th=r; n=sum(th)
     if n<20: continue
     new=round(avg(th),1); parts=re.findall(r'(카카오(?: 글 있는 후기)?|한국어 구글|다이닝코드)\s*([\d.]+)\(×(\d)\)',b)
