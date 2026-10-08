@@ -217,6 +217,12 @@ function drawPins(){
   mapList.forEach(x=>{ const pt=map.project([x.p.lat,x.p.lng],z);
     const g=z<15&&openId!==x.p.id&&groups.find(g=>!g.solo&&Math.hypot(g.pt.x-pt.x,g.pt.y-pt.y)<40);
     if(g) g.items.push(x); else groups.push({pt,items:[x],solo:openId===x.p.id}); });
+  const named=new Set();
+  if(z>=NAME_ZOOM){ const hit=(a,b)=>a[0]<b[2]&&b[0]<a[2]&&a[1]<b[3]&&b[1]<a[3], taken=groups.map(g=>[g.pt.x-15,g.pt.y-15,g.pt.x+15,g.pt.y+15,g]);
+    const ctx=drawPins.ctx||(drawPins.ctx=document.createElement("canvas").getContext("2d")); ctx.font="600 12px sans-serif";
+    groups.filter(g=>g.items.length===1).sort((a,b)=>(b.solo-a.solo)||((b.items[0].sc.v??-1)-(a.items[0].sc.v??-1))).forEach(g=>{
+      const w=ctx.measureText(g.items[0].p.name||"").width/2+3, box=[g.pt.x-w,g.pt.y+17,g.pt.x+w,g.pt.y+33];
+      if(g.solo||!taken.some(t=>t[4]!==g&&hit(box,t))){ named.add(g); taken.push([...box,g]); } }); }
   groups.forEach((g,gi)=>{
     if(g.items.length>1){ const n=g.items.length, ll=g.items.map(x=>[x.p.lat,x.p.lng]);
       const ok=g.items.filter(x=>!x.sc.ban&&!x.sc.hid&&x.sc.v!=null).sort((a,b)=>b.sc.v-a.sc.v), top=ok[0]||g.items[0];
@@ -229,7 +235,7 @@ function drawPins(){
       m.on("click",()=>map.fitBounds(ll,{padding:[60,60],maxZoom:16}));
       markers["g"+gi]=m; return; }
     const {p,sc}=g.items[0], on=openId===p.id, near=z>=NAME_ZOOM, plain=bare&&!near;
-    const icon=L.divIcon({className:"",html:`<div class="pinicon bg-${sc.tier}${on?" on":""}${plain?" bare":" dot"}">${sc.ban?"✕":sc.hid?"?":plain?"":(sc.v??"–")}</div>${near?`<span class="pinname">${esc(p.name)}</span>`:""}`,iconSize:[30,30],iconAnchor:[15,15]});
+    const icon=L.divIcon({className:"",html:`<div class="pinicon bg-${sc.tier}${on?" on":""}${plain?" bare":" dot"}">${sc.ban?"✕":sc.hid?"?":plain?"":(sc.v??"–")}</div>${named.has(g)?`<span class="pinname">${esc(p.name)}</span>`:""}`,iconSize:[30,30],iconAnchor:[15,15]});
     const m=L.marker([p.lat,p.lng],{icon,zIndexOffset:on?1000:0,title:p.name}).addTo(map);
     m.bindTooltip(p.name,{direction:"top",offset:[0,-14]});
     m.on("click",()=>{ openId=on?null:p.id; render(); const r=document.getElementById("row-"+p.id); r&&r.scrollIntoView({block:"nearest",behavior:"smooth"}); });
