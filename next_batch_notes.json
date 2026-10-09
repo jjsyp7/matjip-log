@@ -1466,7 +1466,9 @@
    "method": "①타베로그 검색: 크롬 탭에서 https://tabelog.com/rstLst/?sw=이름 으로 이동 후 sessionStorage 'T'의 __T() (가게당 4초 간격, 한 batch 7~9곳). ②타베로그 후기: tabelog 탭에서 sessionStorage 'T1' eval 후 await __T1(path) — 최근 100건 통계와 낮은 점수 후기(한 batch에 js 8개). ③구글: 구글 지도 탭에서 navigate(?hl=ko) → wait 7 → eval(sessionStorage.getItem('kick')) → wait 38 → __JS() : 평점·분포·좌표·일본어/한국어 분포·낮은 평. 한 batch 2곳까지. '연결 안 됨'이 떠도 앞 batch는 계속 돌므로 30초 기다린 뒤 제목 확인. 출력은 1,500자쯤에서 잘림. ④등록: scratchpad jp1.py(J 함수) → jp1.json → python3 mk_jp.py → 가격 패치(jp1_price.json), tb 불만 n=0 제거.",
    "gdis": "구글 5점 쏠림+타베로그와 차이 큰 곳은 gdis로 구글 제외: 젠야, 모토무라 시부야, 히로키야, 웨스트게이트, 모토야마 신주쿠, 센터비프(리뷰 쓰면 음료), 이즈모 아사쿠사(일본어 9건).",
    "files": "scratchpad jp1.txt(타베로그 점수), jp1_tb.txt, jp1_g.txt(후기 메모), jp_notion_ids.txt(노션 페이지 id)",
-   "todo": "오사카 31, 후쿠오카 43, 교토 7, 고베·기타큐슈 등, 보류 14. 본점 따로 조사할지(모토야마 오카치마치 본점, 스고 신바시 본점, 레드락 고베 본점, SAMA 삿포로, 히로키야) 사용자에게 물음."
+   "todo": "오사카 31, 후쿠오카 43, 교토 7, 고베·기타큐슈 등, 보류 14. 본점 따로 조사할지(모토야마 오카치마치 본점, 스고 신바시 본점, 레드락 고베 본점, SAMA 삿포로, 히로키야) 사용자에게 물음.",
+   "archive": "노션 '지도에 올린 곳 - 일본' 새로 만듦: data_source_id d887d03f-0be8-4e40-93af-221c67b3d471 (국내 보관함과 같은 '엔터테인먼트' 페이지 아래). 도쿄 60행 옮김.",
+   "osaka_started": "오사카 타베로그 검색 5곳 저장: scratchpad jp2.txt"
   }
  }
 }
