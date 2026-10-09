@@ -896,7 +896,7 @@
    "깔리인도요리"
   ],
   "skip_question": "제주동문시장(시장 전체)은 가게가 아니라 보류 — 사용자에게 물음. 노션 '보류' 판정 행을 조사할지도 물음.",
-  "pace": "맛집 통과 끝(지도 415곳). 노션에 남은 것은 꿰레(구글에서 가게 못 찾음) 1곳. 다음은 맛집 보류 재조사, 그다음 일본 목록. 구글 빠른 방식은 대기 50초·한 batch 2곳이 안전, 리뷰가 많은 곳은 __K2가 noit로 나올 때가 있어 다시 열어 읽는다.",
+  "pace": "2026-10-09: maejip tonggwa done (map 415). Next: bolyu 83 rows - query Notion with bunryu=matjip, panjeong=bolyu, jido IS NULL, order by google review count desc (first: Texas de Brazil, Seongsu Darak, Sanggukine, Kappa Sushi Guro, Vikings Wharf Jamsil, Tamgwang ...). Big ones (>50 google reviews) need the standard google method. Then Japan list.",
   "pending_kakao_2026-10-08": {
    "형식": "[카카오 id, 전체평점, 전체건수, 기간 안 분포 1→5, 글 있는 후기 분포, 친절/불친절, 값어치+/돈아깝다/비싸다만, 분위기+/−, 가심비 만족/불만, 배탈 언급 수, 이물질 언급 수, 노포(5년) 여부] — 낮은 평 내용은 아직 안 읽음(__KZ 다시 돌려 low/hi/P/H 확인)",
    "금수복국 해운대본점": [
