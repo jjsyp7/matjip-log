@@ -72870,7 +72870,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/hokkaido/A0101/A010102/1000316/"
+  "tabelog": "https://tabelog.com/hokkaido/A0101/A010102/1000316/",
+  "price": {
+   "b": 0,
+   "t": "미소라멘 1,000엔"
+  }
  },
  {
   "id": "sp-junren",
@@ -72994,7 +72998,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/hokkaido/A0101/A010303/1000031/"
+  "tabelog": "https://tabelog.com/hokkaido/A0101/A010303/1000031/",
+  "price": {
+   "b": 1,
+   "t": "미소라멘 1,200~1,380엔"
+  }
  },
  {
   "id": "sp-sumire",
@@ -73118,7 +73126,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/hokkaido/A0101/A010303/1000134/"
+  "tabelog": "https://tabelog.com/hokkaido/A0101/A010303/1000134/",
+  "price": {
+   "b": 1,
+   "est": true
+  }
  },
  {
   "id": "sp-saimi",
@@ -73243,7 +73255,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/hokkaido/A0101/A010303/1000018/"
+  "tabelog": "https://tabelog.com/hokkaido/A0101/A010303/1000018/",
+  "price": {
+   "b": 0,
+   "t": "미소라멘 1,000엔"
+  }
  },
  {
   "id": "ob-pancho",
@@ -73367,7 +73383,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/hokkaido/A0111/A011101/1000213/"
+  "tabelog": "https://tabelog.com/hokkaido/A0111/A011101/1000213/",
+  "price": {
+   "b": 1,
+   "t": "부타동 마쓰 1,050엔"
+  }
  },
  {
   "id": "ob-tonta",
@@ -73492,7 +73512,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/hokkaido/A0111/A011101/1056297/"
+  "tabelog": "https://tabelog.com/hokkaido/A0111/A011101/1056297/",
+  "price": {
+   "b": 0,
+   "t": "부타동 1천 엔 미만"
+  }
  },
  {
   "id": "sd-aji-tasuke",
@@ -73593,13 +73617,6 @@
     "text": "맛은 보통이다.",
     "n": 3,
     "when": "구글 일본어, 2026.9"
-   },
-   {
-    "axis": "taste",
-    "text": "타베로그 낮은 점수 후기: 낮은 점수 후기에 불만 내용은 거의 없음.",
-    "n": 0,
-    "when": "타베로그 3.0 이하, 최근 후기",
-    "tb": true
    }
   ],
   "praise": [
@@ -73617,7 +73634,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/miyagi/A0401/A040101/4000048/"
+  "tabelog": "https://tabelog.com/miyagi/A0401/A040101/4000048/",
+  "price": {
+   "b": 2,
+   "t": "우설 3매 정식 2,900엔"
+  }
  },
  {
   "id": "sd-kaku",
@@ -73743,7 +73764,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/miyagi/A0401/A040101/4000039/"
+  "tabelog": "https://tabelog.com/miyagi/A0401/A040101/4000039/",
+  "price": {
+   "b": 3,
+   "t": "둘이 10만 원쯤"
+  }
  },
  {
   "id": "sd-issen",
@@ -73867,7 +73892,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/miyagi/A0401/A040101/4000348/"
+  "tabelog": "https://tabelog.com/miyagi/A0401/A040101/4000348/",
+  "price": {
+   "b": 3,
+   "t": "신탄 구이 세트 4만 원쯤"
+  }
  },
  {
   "id": "hd-ajisai",
@@ -73990,7 +74019,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/hokkaido/A0105/A010501/1000366/"
+  "tabelog": "https://tabelog.com/hokkaido/A0105/A010501/1000366/",
+  "price": {
+   "b": 1,
+   "t": "시오라멘 1,080엔"
+  }
  },
  {
   "id": "hd-nibankan",
@@ -74112,7 +74145,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/hokkaido/A0105/A010501/1005688/"
+  "tabelog": "https://tabelog.com/hokkaido/A0105/A010501/1005688/",
+  "price": {
+   "b": 0,
+   "t": "카이센동 550엔"
+  }
  },
  {
   "id": "hd-jiyoken",
@@ -74213,13 +74250,6 @@
     "text": "취향이 갈린다.",
     "n": 1,
     "when": "구글 일본어, 2026.7"
-   },
-   {
-    "axis": "taste",
-    "text": "타베로그 낮은 점수 후기: 낮은 점수 후기에 불만 내용은 거의 없음.",
-    "n": 0,
-    "when": "타베로그 3.0 이하, 최근 후기",
-    "tb": true
    }
   ],
   "praise": [
@@ -74237,7 +74267,11 @@
   "checked": "2026-10-10",
   "old": true,
   "window": "노포(30년 이상) 기준: 최근 5년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/hokkaido/A0105/A010501/1007287/"
+  "tabelog": "https://tabelog.com/hokkaido/A0105/A010501/1007287/",
+  "price": {
+   "b": 0,
+   "t": "시오라멘 650엔"
+  }
  },
  {
   "id": "hd-ryuho",
@@ -74355,7 +74389,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/hokkaido/A0105/A010501/1002569/"
+  "tabelog": "https://tabelog.com/hokkaido/A0105/A010501/1002569/",
+  "price": {
+   "b": 1,
+   "est": true
+  }
  },
  {
   "id": "ng-misen-imaike",
@@ -74481,7 +74519,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/aichi/A2301/A230106/23000239/"
+  "tabelog": "https://tabelog.com/aichi/A2301/A230106/23000239/",
+  "price": {
+   "b": 0,
+   "t": "타이완 라멘 850엔"
+  }
  },
  {
   "id": "ng-hanabi-takabata",
@@ -74598,7 +74640,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/aichi/A2301/A230113/23008839/"
+  "tabelog": "https://tabelog.com/aichi/A2301/A230113/23008839/",
+  "price": {
+   "b": 1,
+   "t": "마제소바 1천 엔대"
+  }
  },
  {
   "id": "ng-horaiken",
@@ -74699,13 +74745,6 @@
     "text": "기대만큼은 아니었다.",
     "n": 2,
     "when": "구글 일본어, 2026.10"
-   },
-   {
-    "axis": "taste",
-    "text": "타베로그 낮은 점수 후기: 2시간 반을 기다렸다, 간토식 장어에 익숙하면 다르게 느껴진다(3.0).",
-    "n": 0,
-    "when": "타베로그 3.0 이하, 최근 후기",
-    "tb": true
    }
   ],
   "praise": [
@@ -74723,7 +74762,11 @@
   "checked": "2026-10-10",
   "old": true,
   "window": "노포(30년 이상) 기준: 최근 5년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/aichi/A2301/A230112/23000063/"
+  "tabelog": "https://tabelog.com/aichi/A2301/A230112/23000063/",
+  "price": {
+   "b": 3,
+   "est": true
+  }
  },
  {
   "id": "ng-yabaton",
@@ -74848,7 +74891,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/aichi/A2301/A230103/23000134/"
+  "tabelog": "https://tabelog.com/aichi/A2301/A230103/23000134/",
+  "price": {
+   "b": 1,
+   "t": "로스카츠 정식 1,700~2,000엔"
+  }
  },
  {
   "id": "ng-ramuchii",
@@ -74974,7 +75021,11 @@
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
   "tabelog": "https://tabelog.com/aichi/A2301/A230103/23001001/",
   "tourist": "구글 최신 후기 218건 중 162건이 일본어가 아님",
-  "krPopular": "구글 최신 후기 218건 중 126건(58%)이 한국어"
+  "krPopular": "구글 최신 후기 218건 중 126건(58%)이 한국어",
+  "price": {
+   "b": 1,
+   "t": "미소카츠 정식 1만 5천 원쯤"
+  }
  },
  {
   "id": "ng-stamina-ton",
@@ -75075,13 +75126,6 @@
     "text": "내장 냄새가 난다.",
     "n": 1,
     "when": "한국어, 2026"
-   },
-   {
-    "axis": "taste",
-    "text": "타베로그 낮은 점수 후기: 낮은 점수 후기에 불만 내용은 거의 없음. 분위기 점수가 낮다는 평.",
-    "n": 0,
-    "when": "타베로그 3.0 이하, 최근 후기",
-    "tb": true
    }
   ],
   "praise": [
@@ -75098,7 +75142,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/aichi/A2301/A230113/23012276/"
+  "tabelog": "https://tabelog.com/aichi/A2301/A230113/23012276/",
+  "price": {
+   "b": 1,
+   "t": "오마카세 1,600엔"
+  }
  },
  {
   "id": "tk-taishoken-honten",
@@ -75214,7 +75262,11 @@
   "checked": "2026-10-10",
   "old": true,
   "window": "노포(30년 이상) 기준: 최근 5년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/tokyo/A1305/A130501/13045828/"
+  "tabelog": "https://tabelog.com/tokyo/A1305/A130501/13045828/",
+  "price": {
+   "b": 1,
+   "est": true
+  }
  },
  {
   "id": "tk-moheji-honten",
@@ -75326,7 +75378,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/tokyo/A1313/A131302/13282653/"
+  "tabelog": "https://tabelog.com/tokyo/A1313/A131302/13282653/",
+  "price": {
+   "b": 1,
+   "est": true
+  }
  },
  {
   "id": "yk-ota-nawanoren",
@@ -75450,7 +75506,11 @@
   "checked": "2026-10-10",
   "old": true,
   "window": "노포(30년 이상) 기준: 최근 5년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/kanagawa/A1401/A140102/14001847/"
+  "tabelog": "https://tabelog.com/kanagawa/A1401/A140102/14001847/",
+  "price": {
+   "b": 4,
+   "t": "1인 10만 원 이상"
+  }
  },
  {
   "id": "yk-yoshimuraya",
@@ -75575,7 +75635,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/kanagawa/A1401/A140102/14090328/"
+  "tabelog": "https://tabelog.com/kanagawa/A1401/A140102/14090328/",
+  "price": {
+   "b": 1,
+   "t": "라멘 1천 엔 안팎"
+  }
  },
  {
   "id": "tk-toritsune",
@@ -75699,7 +75763,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/tokyo/A1311/A131101/13005547/"
+  "tabelog": "https://tabelog.com/tokyo/A1311/A131101/13005547/",
+  "price": {
+   "b": 1,
+   "t": "上오야코동 1,500엔"
+  }
  },
  {
   "id": "ak-daikokuya",
@@ -75823,7 +75891,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/hokkaido/A0104/A010401/1027848/"
+  "tabelog": "https://tabelog.com/hokkaido/A0104/A010401/1027848/",
+  "price": {
+   "b": 2,
+   "t": "1인 4천 엔쯤"
+  }
  },
  {
   "id": "km-tengaiten",
@@ -75942,7 +76014,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/kumamoto/A4301/A430101/43013050/"
+  "tabelog": "https://tabelog.com/kumamoto/A4301/A430101/43013050/",
+  "price": {
+   "b": 0,
+   "t": "라멘 980엔"
+  }
  },
  {
   "id": "km-kokutei",
@@ -76066,7 +76142,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/kumamoto/A4301/A430101/43000091/"
+  "tabelog": "https://tabelog.com/kumamoto/A4301/A430101/43000091/",
+  "price": {
+   "b": 1,
+   "t": "라멘 1천 엔대"
+  }
  },
  {
   "id": "km-takamori-dengaku",
@@ -76192,7 +76272,11 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/kumamoto/A4302/A430202/43000002/"
+  "tabelog": "https://tabelog.com/kumamoto/A4302/A430202/43000002/",
+  "price": {
+   "b": 2,
+   "t": "덴가쿠 코스 3,000엔"
+  }
  },
  {
   "id": "km-katsumi",
@@ -76316,6 +76400,10 @@
   "checked": "2026-10-10",
   "old": false,
   "window": "일반 기준: 최근 3년 후기만 반영. 해외는 현지어(일본어) 후기 기준, 한국어 후기는 메모로만 정리",
-  "tabelog": "https://tabelog.com/kumamoto/A4301/A430101/43015316/"
+  "tabelog": "https://tabelog.com/kumamoto/A4301/A430101/43015316/",
+  "price": {
+   "b": 1,
+   "t": "정식 1만 5천 원쯤"
+  }
  }
 ]
