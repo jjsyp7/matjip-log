@@ -152,7 +152,7 @@ const groupsOf=p=>[...new Set((p.menus||[]).map(m=>(MG[p.cuisine]&&MG[p.cuisine]
 // 어느 화면에서든 지역을 나누지 않고 점수순으로 줄을 세운다
 const flat=()=>true;
 // 기본 점수(중요 항목을 고르지 않았을 때의 점수)가 이 값에 못 미치는 가게는 목록과 지도에서 숨긴다(가지 말 것·순위 제외 묶음은 그대로 둠)
-const MIN_SCORE=70; let hiddenLow=0, showLow=false;
+const MIN_SCORE=70; let hiddenLow=0, hiddenUn=0, showLow=false;
 // 지역을 고르면 그 안에서 순위를 매기고, 전체에서는 순위 없이 지역별로 묶는다
 const co=p=>p.country||"한국";
 // 찾기: 한글을 자모로 풀어서 비교하므로 글자를 다 치기 전에도("담ㅌ") 맞는 가게를 짐작해 보여 준다. 초성만 쳐도 되고, 한두 글자 틀려도 순서가 맞으면 뒤쪽에 보여 준다
@@ -174,7 +174,7 @@ function matchScore(p,q){ const jq=jamo(q); if(!jq) return 0;
 // 나라를 고르지 않으면 나라별로 묶고, 그 안에서 점수순으로 순위를 매긴다. 숨긴 곳은 버튼을 눌렀을 때만 맨 뒤에 붙는다
 const ranked=()=>{ if(query){ hiddenLow=0; return places.map(p=>({p,sc:score(p),m:matchScore(p,query)})).filter(x=>x.m>0).sort((a,b)=>(b.m-a.m)||((b.sc.v??-1)-(a.sc.v??-1))); }
   let l=places.filter(p=>(cuisine==="전체"||p.cuisine===cuisine)&&(menu==="전체"||groupsOf(p).includes(menu))&&(price==="전체"||(p.price&&p.price.b===price))&&(country==="전체"||(p.country||"한국")===country)&&(region==="전체"||p.region===region)).map(p=>{ const keep=pri; pri=new Set(); const base=score(p).v; pri=keep; const sc=score(p); return {p,sc,low:!sc.ban&&!sc.hid&&base!=null&&base<=MIN_SCORE}; });
-  hiddenLow=l.filter(x=>x.low).length; if(!showLow) l=l.filter(x=>!x.low);
+  hiddenLow=l.filter(x=>x.low).length; hiddenUn=l.filter(x=>x.sc.hid).length; if(!showLow&&!query) l=l.filter(x=>!x.low&&!x.sc.hid);
   const ex=x=>x.sc.ban?3:x.sc.hid?2:x.low?1:0;
   const cnt={}; l.forEach(x=>cnt[co(x.p)]=(cnt[co(x.p)]||0)+1);
   l.sort((a,b)=>(country==="전체"?(cnt[co(b.p)]-cnt[co(a.p)])||co(a.p).localeCompare(co(b.p)):0)||(ex(a)-ex(b))||((b.sc.v??-1)-(a.sc.v??-1)));
@@ -333,8 +333,8 @@ function render(){
     r.onclick=()=>{ openId=on?null:p.id; render(); if(openId&&markers[p.id]) map.panTo(markers[p.id].getLatLng()); };
     rows.append(r); if(on) rows.append(detail(p));
   });
-  if(hiddenLow){ const b=el("button",{class:"chip",type:"button","aria-pressed":String(showLow),text:showLow?"다시 숨기기":`숨긴 ${hiddenLow}곳 보기`}); b.onclick=()=>{ showLow=!showLow; openId=null; render(); };
-    rows.append(el("p",{class:"evid",text:`기본 점수가 ${MIN_SCORE}점 이하인 ${hiddenLow}곳은 ${showLow?"목록 뒤쪽에 따로 묶었습니다":"숨겼습니다"}. `},b)); }
+  if((hiddenLow||hiddenUn)&&!query){ const b=el("button",{class:"chip",type:"button","aria-pressed":String(showLow),text:showLow?"다시 숨기기":`숨긴 ${hiddenLow+hiddenUn}곳 보기`}); b.onclick=()=>{ showLow=!showLow; openId=null; render(); };
+    rows.append(el("p",{class:"evid",text:`기본 점수가 ${MIN_SCORE}점 이하인 ${hiddenLow}곳과 믿을 평점이 없는 ${hiddenUn}곳은 ${showLow?"목록 뒤쪽에 따로 묶었습니다":"숨겼습니다"}. `},b)); }
   // 폐업한 곳은 지도와 순위에서 지우고 이름만 남긴다 (closed.json)
   if(gone.length){ rows.append(el("p",{class:"grp",text:`폐업 · ${gone.length}곳`}));
     gone.forEach(c=>rows.append(el("div",{class:"gone"},el("b",{text:c.name}),el("p",{text:[c.area,c.closedOn&&c.closedOn+" 확인",c.note].filter(Boolean).join(" · ")})))); }
