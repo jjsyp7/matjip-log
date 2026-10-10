@@ -9,8 +9,10 @@ for e in json.load(open(sys.argv[1])):
     loc=e['loc']; ko=e['ko']; la=avg(loc); ka=avg(ko); lang=e['lang']; site=e.get('site')
     if site: L=(2*site['rating']+la)/3; basis=f"{site['name']} {site['rating']}(×2) + {lang} 구글 {la}(×1) → {L:.1f}"
     else: L=la; basis=f"{lang} 구글 최근 후기 평균 {la} ({e.get('nosite','현지 사이트 자료 없음')})"
-    basis+=" (한국어 후기는 점수에 넣지 않음)"
-    ax=e['axes']; ax['taste']['s']=max(1,min(5,int(L*2+0.5)/2))
+    ys=e.get('youtubers',[]); recs=len({y['who'] for y in ys if y.get('grade')=='\ucd94\ucc9c' and not y.get('tie')}); bonus=min(1.0,0.5+0.25*(recs-1)) if recs else 0
+    if bonus: basis+=f", \ubbff\ub294 \uc720\ud29c\ubc84 \ucd94\ucc9c {recs}\uba85 +{bonus:g}"
+    basis+=" (\ud55c\uad6d\uc5b4 \ud6c4\uae30\ub294 \uc810\uc218\uc5d0 \ub123\uc9c0 \uc54a\uc74c)"
+    ax=e['axes']; ax['taste']['s']=max(1,min(5,int((L+bonus)*2+0.5)/2))
     g=e['google']; hist=g['hist']; tot=sum(hist); nonloc=sum(ko)+e.get('x',0); alln=nonloc+sum(loc)
     ratings=[]
     if site: ratings.append({"src":site['name'],"rating":site['rating'],"count":site['count'],"note":site['note']})
@@ -18,7 +20,7 @@ for e in json.load(open(sys.argv[1])):
       {"src":f"구글({lang}·최근)","rating":la,"count":sum(loc),"note":f"{lang}로 쓴 후기만 집계: 5점 {loc[4]} · 4점 {loc[3]} · 3점 {loc[2]} · 2점 {loc[1]} · 1점 {loc[0]}."}]
     if sum(ko): ratings.append({"src":"구글(한국어·최근)","rating":ka,"count":sum(ko),"note":f"한국어로 쓴 후기: 5점 {ko[4]} · 4점 {ko[3]} · 3점 {ko[2]} · 2점 {ko[1]} · 1점 {ko[0]}. 점수 계산에는 쓰지 않음."})
     p={"id":e['id'],"name":e['name'],"area":e['area'],"region":e['region'],"country":e['country'],"cuisine":e['cuisine'],"menus":e['menus'],"category":"·".join(e['menus']),"lat":e['lat'],"lng":e['lng'],
-     "gmaps":"https://www.google.com/maps/search/?api=1&query="+urllib.parse.quote(e['q']),"summary":e['summary'],"axes":ax,"tasteBasis":basis,"ratings":ratings,"youtubers":[],
+     "gmaps":"https://www.google.com/maps/search/?api=1&query="+urllib.parse.quote(e['q']),"summary":e['summary'],"axes":ax,"tasteBasis":basis,"ratings":ratings,"youtubers":ys,
      "complaints":[dict(axis=a,text=t,n=n,when=w) for a,t,n,w in e['complaints']],"praise":e['praise'],"recent":"","tips":e['tips'],"kr":e['kr'],"evidence":e['evidence'],"checked":e['checked'],"old":False,"price":e['price'],
      "window":f"일반 기준: 최근 3년 후기만 반영. 해외는 현지어({lang}) 후기 기준, 한국어 후기는 메모로만 정리"}
     if alln>=30 and nonloc/alln>=0.7: p['tourist']=f"구글 최신 후기 {alln}건 중 {nonloc}건이 {lang}가 아님"
