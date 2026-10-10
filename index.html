@@ -124,10 +124,10 @@ const gcls=g=>/비추|아쉬움/.test(g||"")?"f-bad":/추천|극찬|호평/.test
 const hidden=p=>!!p.unranked;
 // 식중독 기준: 1년 안 3건 이상이면 제외(믿는 유튜버 추천이 있으면 5건), 날것 가게는 2년 안 2건. 그 아래는 healthNote로 참고만
 const poisoned=p=>!!p.poison;
-// 분위기용 묶음은 분위기·서비스에 2배, 맛은 1배로 본다
+// 분위기용 묶음은 분위기·서비스에 2배, 맛은 1배로 본다. 기본 점수에서 서비스(친절)는 절반만 반영(2026-10-10 사용자: 불친절은 크게 담지 않는다)
 function score(p,occ){
   let w=0,t=0; const weak=[], strong=[];
-  for(const [k] of AXES){ if(k==="wait") continue; const s=num(p.axes&&p.axes[k]&&p.axes[k].s); if(s==null) continue; const cafe=p.cuisine==="카페·디저트"; const wt=pri.has(k)?3:(!pri.size&&(occ?(k==="mood"||k==="service"):(k==="taste"||(cafe&&k==="mood")))?2:1); w+=wt; t+=wt*s; if(pri.has(k)){ if(s<=2.5) weak.push(k); else if(s>=4.5) strong.push(k);} }
+  for(const [k] of AXES){ if(k==="wait") continue; const s=num(p.axes&&p.axes[k]&&p.axes[k].s); if(s==null) continue; const cafe=p.cuisine==="카페·디저트"; const wt=pri.has(k)?3:(!pri.size&&(occ?(k==="mood"||k==="service"):(k==="taste"||(cafe&&k==="mood")))?2:1); const wt2=(k==="service"&&!pri.has(k)&&!occ)?0.5:wt; w+=wt2; t+=wt2*s; if(pri.has(k)){ if(s<=2.5) weak.push(k); else if(s>=4.5) strong.push(k);} }
   if(!w) return {v:null,tier:"none",weak,strong};
   let v=Math.round((t/w-1)/4*100);
   if(weak.length) v=Math.max(0,v-8*weak.length);
