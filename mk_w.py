@@ -1,18 +1,14 @@
 # 사용: python3 mk_w.py spec.json — 일본 밖 해외 가게 등록(2026-10-10 기준).
-# 맛 = 현지 사이트가 있으면 (현지 사이트×2 + 현지어 구글 최근×1)/3, 없으면 현지어 구글 최근 평균.
+# 맛은 scoring.py의 1안 플랫폼별 보정과 유튜버 가감점으로 계산한다.
 # 현지 사이트: 미국 옐프. 홍콩 오픈라이스는 접속이 안 되고, 프랑스·이탈리아 더포크에는 등록되지 않은 가게가 많아 구글 현지어만 씀.
 # 한국어 후기는 점수에 넣지 않고 kr 메모에만 쓴다.
 import json,sys,urllib.parse
+from scoring import apply_scoring, score
 avg=lambda h:(round(sum((i+1)*c for i,c in enumerate(h))/sum(h),1) if sum(h) else None)
 P=json.load(open('places.json'))
 for e in json.load(open(sys.argv[1])):
     loc=e['loc']; ko=e['ko']; la=avg(loc); ka=avg(ko); lang=e['lang']; site=e.get('site')
-    if site: L=(2*site['rating']+la)/3; basis=f"{site['name']} {site['rating']}(×2) + {lang} 구글 {la}(×1) → {L:.1f}"
-    else: L=la; basis=f"{lang} 구글 최근 후기 평균 {la} ({e.get('nosite','현지 사이트 자료 없음')})"
-    ys=e.get('youtubers',[]); recs=len({y['who'] for y in ys if y.get('grade')=='\ucd94\ucc9c' and not y.get('tie')}); bonus=min(1.0,0.5+0.25*(recs-1)) if recs else 0
-    if bonus: basis+=f", \ubbff\ub294 \uc720\ud29c\ubc84 \ucd94\ucc9c {recs}\uba85 +{bonus:g}"
-    basis+=" (\ud55c\uad6d\uc5b4 \ud6c4\uae30\ub294 \uc810\uc218\uc5d0 \ub123\uc9c0 \uc54a\uc74c)"
-    ax=e['axes']; ax['taste']['s']=max(1,min(5,int((L+bonus)*2+0.5)/2))
+    ys=e.get('youtubers',[]); basis=e.get('tasteBasis',''); ax=e['axes']
     g=e['google']; hist=g['hist']; tot=sum(hist); nonloc=sum(ko)+e.get('x',0); alln=nonloc+sum(loc)
     ratings=[]
     if site: ratings.append({"src":site['name'],"rating":site['rating'],"count":site['count'],"note":site['note']})
@@ -27,7 +23,10 @@ for e in json.load(open(sys.argv[1])):
     if sum(ko)>=30 and sum(ko)/alln>=0.2: p['krPopular']=f"구글 최신 후기 {alln}건 중 {sum(ko)}건({round(sum(ko)/alln*100)}%)이 한국어"
     for f in('caution','poison','healthNote','occasion'):
         if e.get(f): p[f]=e[f]
+    if e.get('gdis') or e.get('event'):
+        for rating in ratings:
+            if rating['src'].startswith('구글'): rating['distrust']=True
+    apply_scoring(p)
     P=[x for x in P if x['id']!=p['id']]+[p]
-    w={'taste':2,'service':1,'value':1,'mood':1,'access':1}
-    print(p['name'],{a:ax[a]['s'] for a in w},round((sum(w[a]*ax[a]['s'] for a in w)/6-1)/4*100),'관광객' if p.get('tourist') else '',f"{lang} {la}/{sum(loc)} ko {ka}/{sum(ko)}")
+    print(p['name'],{a:ax[a]['s'] for a in ('taste','service','value','mood','access')},'점수',score(p),'관광객' if p.get('tourist') else '',f"{lang} {la}/{sum(loc)} ko {ka}/{sum(ko)}")
 json.dump(P,open('places.json','w'),ensure_ascii=False,indent=1)

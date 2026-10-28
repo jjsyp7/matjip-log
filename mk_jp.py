@@ -1,16 +1,13 @@
 # 사용: python3 mk_jp.py spec.json — 해외(일본) 가게 등록. 현지인 기준:
-# 맛 = (타베로그 환산×2 + 일본어 구글 최근×1)/3 + 믿는 유튜버 가산. 타베로그 환산 = 2×점수−3 (3.0→3, 3.5→4, 3.75→4.5, 4.0→5).
+# 맛은 scoring.py의 1안 조각별 환산과 베이지안 평균, 유튜버 가감점으로 계산한다.
 # 한국어 후기는 점수에 넣지 않고 kr(한국인 입맛 메모)에만 쓴다. 서비스·가성비·분위기·접근성은 읽고 매긴 값.
 import json,sys,urllib.parse
+from scoring import apply_scoring, score
 avg=lambda h:(round(sum((i+1)*c for i,c in enumerate(h))/sum(h),1) if sum(h) else None)
 P=json.load(open('places.json'))
 for e in json.load(open(sys.argv[1])):
-    tb,tn=e['tabelog'][:2]; conv=max(1,min(5,2*tb-3)); ja=e['ja']; ko=e['ko']; ga=avg(ja); ka=avg(ko)
-    ys=e.get('youtubers',[]); recs=len({y['who'] for y in ys if y['grade']=='추천'}); bonus=min(1.0,0.5+0.25*(recs-1)) if recs else 0
-    num=2*conv; den=2; parts=[f"타베로그 {tb} → 환산 {conv:.1f}(×2)"]
-    if ga is not None and sum(ja)>=10 and not e.get('gdis'): num+=ga; den+=1; parts.append(f"일본어 구글 {ga}(×1)")
-    L=num/den; v=L+bonus; basis=" + ".join(parts)+f" → {L:.1f}"+(f", 믿는 유튜버 추천 {recs}명 +{bonus:g}" if bonus else "")+(f" (구글은 뺌: {e['gdis']})" if e.get('gdis') else "")+" (한국어 후기는 점수에 넣지 않음)"
-    ax=e['axes']; ax['taste']['s']=max(1,min(5,int(v*2+0.5)/2))
+    tb,tn=e['tabelog'][:2]; ja=e['ja']; ko=e['ko']; ga=avg(ja); ka=avg(ko)
+    ys=e.get('youtubers',[]); basis=e.get('tasteBasis',''); ax=e['axes']
     g=e['google']; hist=g['hist']; tot=sum(hist); old=e.get('old',False); yrs=5 if old else 3
     nonja=sum(ko)+e.get('x',0); alln=nonja+sum(ja)
     ratings=[{"src":"타베로그","rating":tb,"count":tn,"note":"일본 현지인이 주로 쓰는 사이트. 3.5면 좋은 집, 3.7 이상이면 아주 좋은 집으로 통함."},
@@ -34,7 +31,9 @@ for e in json.load(open(sys.argv[1])):
     if sum(ko)>=30 and alln and sum(ko)/alln>=0.2: p['krPopular']=f"구글 최신 후기 {alln}건 중 {sum(ko)}건({round(sum(ko)/alln*100)}%)이 한국어"
     for f in('caution','poison','healthNote','occasion'):
         if e.get(f): p[f]=e[f]
+    previous=next((x for x in P if x['id']==p['id']),{})
+    if 'price' in e or 'price' in previous: p['price']=e.get('price',previous.get('price'))
+    apply_scoring(p)
     P=[x for x in P if x['id']!=p['id']]+[p]
-    w={'taste':2,'service':1,'value':1,'mood':1,'access':1}
-    print(p['name'],{a:ax[a]['s'] for a in w},round((sum(w[a]*ax[a]['s'] for a in w)/6-1)/4*100),'관광객' if p.get('tourist') else '',f"ja {ga}/{sum(ja)} ko {ka}/{sum(ko)}")
+    print(p['name'],{a:ax[a]['s'] for a in ('taste','service','value','mood','access')},'점수',score(p),'관광객' if p.get('tourist') else '',f"ja {ga}/{sum(ja)} ko {ka}/{sum(ko)}")
 json.dump(P,open('places.json','w'),ensure_ascii=False,indent=1)

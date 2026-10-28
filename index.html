@@ -9,96 +9,177 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
 <style>
 :root{
-  --bg:#eef2f1; --panel:#ffffff; --ink:#16212b; --sub:#566572; --line:#d3dcdb;
-  --accent:#24508f;
-  --good:#1f7a4d; --good-soft:#dcf0e5; --warn:#a86400; --warn-soft:#fbecd0; --bad:#b3362b; --bad-soft:#f8dedb; --none:#7b8791;
+  --bg:#eef2f1;--panel:#fff;--ink:#16212b;--sub:#566572;--accent:#24508f;--good:#1f7a4d;
+  --line:rgba(22,33,43,.16);--warn:var(--ink);--bad:var(--ink);--none:var(--sub);
   --display:"Do Hyeon","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
   --body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html,body{height:100%;margin:0}
-body{font-family:var(--body);font-size:15px;line-height:1.55;color:var(--ink);background:var(--bg);display:grid;grid-template-columns:minmax(340px,440px) minmax(0,1fr);grid-template-rows:100%}
-#side{display:flex;flex-direction:column;min-height:0;background:var(--bg);border-right:1px solid var(--line)}
-#map{min-height:0}
-@media (max-width:760px){
-  body{grid-template-columns:minmax(0,1fr);grid-template-rows:46% 54%}
-  #map{grid-row:1} #side{grid-row:2;border-right:0;border-top:1px solid var(--line)}
-}
-.top{padding:14px 16px 12px;background:var(--panel);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:9px}
-.top h1{font-family:var(--display);font-weight:400;font-size:26px;line-height:1;margin:0}
-.rowc{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.lab{font-size:12px;font-weight:600;color:var(--sub);letter-spacing:.05em;width:100%}
-.chip{font:inherit;font-size:13.5px;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:4px 12px;cursor:pointer}
-.chip:hover{border-color:var(--accent)}
-.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
-.chip:focus-visible,.row:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.hint{font-size:12.5px;color:var(--sub);margin:0}
-.find{display:flex;flex-direction:column;gap:6px}
-.find input{font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 12px;width:100%}
-.find input:focus-visible{outline:2px solid var(--accent);outline-offset:1px;background:var(--panel)}
-.find .chip{font-size:13px;border-style:dashed}
-.find:has(input:placeholder-shown) #guess{display:none}
-#rows{overflow-y:auto;padding:12px 12px 28px;display:flex;flex-direction:column;gap:9px;min-height:0;flex:1}
-.row{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 12px;cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:11px;align-items:center}
-.row[aria-expanded="true"]{border-color:var(--accent)}
-.rank{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:600;font-size:13px}
-.bg-good{background:var(--good)} .bg-warn{background:var(--warn)} .bg-bad{background:var(--bad)} .bg-none{background:var(--none)}
-.row h2{font-family:var(--display);font-weight:400;font-size:19px;margin:0;line-height:1.2}
-.meta{font-size:12.5px;color:var(--sub);margin:1px 0 0}
-.sum{font-size:13.5px;margin:4px 0 0}
+body{height:100vh;height:100dvh;overflow:hidden;font:400 16px/1.5 var(--body);color:var(--ink);background:var(--bg);display:grid;grid-template-columns:clamp(360px,32vw,440px) minmax(0,1fr)}
+button,input,summary,a{touch-action:manipulation}
+button,input{font:inherit;color:inherit}
+button,summary{cursor:pointer}
+button,a,summary,input{min-height:44px;min-width:44px}
+a{color:var(--accent);display:inline-flex;align-items:center;padding:8px 4px;overflow-wrap:anywhere}
+button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+button,summary,a{transition:background-color .12s,color .12s}
+button:active{background:var(--bg)}
+#side{display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;min-width:0;min-height:0;border-right:1px solid var(--line);background:var(--panel)}
+.top{padding:12px 16px 8px;display:flex;flex-direction:column;gap:8px;background:var(--panel);z-index:2;min-width:0}
+.top h1,.detail-title{font:400 24px/30px var(--display);margin:0;overflow-wrap:anywhere}
+.tagline{font-size:14px;line-height:21px;color:var(--sub);margin:0}
+.brand{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.find{display:grid;gap:4px}
+.lab{font-size:12px;line-height:18px;font-weight:500;color:var(--sub)}
+.find input{width:100%;background:var(--bg);border:1px solid var(--sub);border-radius:6px;padding:8px 12px;line-height:24px;min-width:0}
+.rowc{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+#guess:empty{display:none}
+#guess{max-height:112px;overflow:auto;padding:4px}
+.chip,.plain-button{border:1px solid var(--sub);background:var(--panel);border-radius:6px;padding:8px 12px;line-height:24px;text-decoration:none}
+.chip:hover,.plain-button:hover{background:var(--bg)}
+.chip[aria-pressed="true"],.primary{background:var(--accent);border-color:var(--accent);color:var(--panel)}
+.chip[aria-pressed="true"]:hover,.primary:hover{background:var(--accent)}
+.toolbar{display:flex;gap:8px;justify-content:space-between}
+.toolbar button:first-child{flex:1;text-align:left}
+.resultline{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 16px;border-bottom:1px solid var(--line);font-size:12px;line-height:18px;color:var(--sub);min-height:40px}
+.resultline button{border:0;background:none;color:var(--accent);padding:8px 0;font-size:12px}
+#rows{grid-row:3;min-height:0;overflow:auto;overscroll-behavior:contain;padding:0 8px 24px;scroll-padding:8px;background:var(--panel)}
+.row{width:100%;border:0;border-bottom:1px solid var(--line);border-radius:0;display:grid;grid-template-columns:20px minmax(0,1fr) 64px;gap:8px;align-items:start;background:var(--panel);text-align:left;padding:16px 8px;overflow-wrap:anywhere}
+.row:hover{background:var(--bg)}
+.row[aria-expanded="true"]{box-shadow:inset 3px 0 var(--accent)}
+.rank{font-size:12px;line-height:26px;color:var(--sub);text-align:center}
+.row h2{font:400 20px/26px var(--display);margin:0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.meta{display:grid;gap:2px;font-size:14px;line-height:21px;color:var(--sub);margin:4px 0 0}
+.meta span{display:block;overflow-wrap:anywhere}
+.price{font-size:14px;line-height:21px;margin:6px 0 0;color:var(--ink)}
+.sum{font-size:16px;line-height:24px;margin:8px 0 0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
 .score{text-align:right;font-variant-numeric:tabular-nums}
-.score b{font-family:var(--display);font-weight:400;font-size:25px;line-height:1;display:block}
-.score span{font-size:11px;color:var(--sub)}
-.flag{display:inline-block;font-size:11.5px;font-weight:600;border-radius:4px;padding:1px 6px;margin:5px 5px 0 0}
-.f-bad{background:var(--bad-soft);color:var(--bad)} .f-good{background:var(--good-soft);color:var(--good)} .f-warn{background:var(--warn-soft);color:var(--warn)} .f-info{background:#e2eaf6;color:var(--accent)}
-.detail{background:var(--panel);border:1px solid var(--accent);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:14px;margin-top:-3px}
-.detail h3{font-size:12px;letter-spacing:.05em;color:var(--sub);margin:0 0 6px;font-weight:600}
-.axis{display:grid;grid-template-columns:82px 56px minmax(0,1fr);gap:9px;align-items:baseline;font-size:13.5px;margin-bottom:6px}
+.score b{display:block;font:400 26px/30px var(--display)}
+.score span,.cnt,.evid{font-size:12px;line-height:18px;color:var(--sub)}
+.confidence{font-size:12px;line-height:18px;color:var(--sub);margin:6px 0 0}
+.score .no-score{font:500 14px/21px var(--body)}
+.flags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.flag{display:inline-flex;align-items:baseline;gap:4px;font-size:12px;line-height:18px;color:var(--ink);padding:3px 6px;border:1px solid var(--sub);border-radius:3px;overflow-wrap:anywhere}
+.flag::before{content:"!";font-weight:600}
+.f-good{color:var(--good);border-color:var(--good)}
+.f-good::before{content:"✓"}
+.grp{margin:0;padding:12px 8px 8px;background:var(--bg);font-size:12px;line-height:18px;font-weight:600;color:var(--sub)}
+.empty{color:var(--sub);padding:32px 16px;text-align:center;margin:0;overflow-wrap:anywhere}
+.gone{padding:16px 8px;border-bottom:1px solid var(--line);color:var(--sub)}
+.gone b{text-decoration:line-through;color:var(--ink)}
+.gone p{font-size:14px;margin:4px 0}
+.evid{margin:12px 8px 0;overflow-wrap:anywhere}
+.evid .chip{display:block;margin-top:8px}
+#viewNav{display:none}
+#map{min-width:0;min-height:0;position:relative;z-index:0;background:var(--bg)}
+dialog{font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--sub);padding:0;overflow:hidden}
+dialog::backdrop{background:rgba(22,33,43,.4)}
+dialog:not([open]){display:none!important}
+#filterPanel{width:min(560px,calc(100% - 32px));height:min(860px,calc(100dvh - 32px));max-height:none;max-width:none;border-radius:8px}
+.panel-layout{height:100%;min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr) auto}
+.panel-head,.panel-actions{padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--panel)}
+.panel-head{border-bottom:1px solid var(--line)}
+.panel-head h2{font-size:18px;line-height:26px;margin:0}
+.panel-actions{border-top:1px solid var(--line);padding-bottom:max(12px,env(safe-area-inset-bottom))}
+.panel-actions button{flex:1}
+.panel-scroll{overflow:auto;overscroll-behavior:contain;min-height:0;padding:16px;scroll-padding:12px}
+.filter-group{margin:0 0 24px;scroll-margin-top:8px}
+.filter-group h3{font-size:16px;line-height:24px;margin:0 0 8px;font-weight:600}
+#criteria{padding:12px 16px}
+#criteria p,.hint{font-size:14px;line-height:21px;color:var(--sub);margin:8px 0}
+summary{padding:10px 4px;color:var(--accent);font-size:14px;line-height:24px}
+#detailPanel{grid-row:3;position:static;width:100%;height:100%;max-width:none;max-height:none;margin:0;border:0;min-height:0;min-width:0}
+.detail-body{padding:16px 20px 24px;overflow:auto;min-height:0;overscroll-behavior:contain;scroll-padding:12px}
+.detail{display:flex;flex-direction:column;gap:24px;overflow-wrap:anywhere}
+.detail-hero{display:grid;grid-template-columns:minmax(0,1fr) 64px;gap:12px;align-items:start}
+.scorecard{width:64px;min-height:76px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--accent);color:var(--panel);font-variant-numeric:tabular-nums;text-align:center}
+.scorecard b{font:400 32px/36px var(--display)}
+.scorecard span{font-size:12px;line-height:18px}
+.scorecard.no-score{background:var(--panel);border:1px solid var(--sub);color:var(--ink);font-size:14px}
+.detail>.layer>summary{font-size:18px;line-height:26px;font-weight:600}
+.detail-summary{margin:12px 0 0;font-size:16px;line-height:24px}
+.detail h3{font-size:18px;line-height:26px;font-weight:600;margin:0 0 8px;color:var(--ink)}
+.layer{border-top:1px solid var(--line);padding-top:16px}
+.note{font-size:16px;line-height:24px;margin:8px 0 0;color:var(--sub)}
+.axis{margin:0 0 16px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center}
 .axis .nm{font-weight:600}
-.axis .nm.pri::after{content:" ★";color:var(--accent)}
-.meter{height:8px;border-radius:4px;background:var(--line);overflow:hidden;align-self:center}
-.meter i{display:block;height:100%}
-.note{color:var(--sub);font-size:13px;margin:0}
-.layer{border-top:1px solid var(--line);padding-top:11px}
-.yt{margin:0 0 8px}.yt .who{font-weight:600}
-ul.plain{margin:0;padding-left:18px}ul.plain li{margin:3px 0;font-size:13.5px}
-.cnt{font-size:12px;color:var(--sub);white-space:nowrap}
-a{color:var(--accent)}
-.go{display:inline-block;border:1px solid var(--accent);border-radius:8px;padding:6px 13px;text-decoration:none;font-weight:600;font-size:14px}
-.evid{font-size:12px;color:var(--sub);margin:9px 0 0}
-.grp{font-size:12px;font-weight:600;color:var(--sub);letter-spacing:.05em;margin:8px 2px 0}
-.grp:first-child{margin-top:0}
-.pinicon.dot{font-size:11.5px}
-.pinicon.bare{width:16px;height:16px;margin:7px}
-.empty{color:var(--sub);text-align:center;padding:30px 10px}
-.gone{border:1px dashed var(--line);border-radius:10px;padding:9px 12px;color:var(--sub)}
-.gone b{font-weight:600;color:var(--ink);text-decoration:line-through;text-decoration-color:var(--sub)}
-.gone p{margin:1px 0 0;font-size:12.5px}
-.pinicon{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font:600 13px var(--body);border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.45)}
-.gsw{display:flex;align-items:center;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:3px 4px 3px 11px;font:500 12.5px var(--body);color:var(--sub);box-shadow:0 1px 4px rgba(0,0,0,.18)}
-.gsw .chip{font-size:12.5px;padding:2px 10px;border-color:transparent}
-.pinname{position:absolute;left:15px;top:33px;transform:translateX(-50%);white-space:nowrap;font:600 12px/1.2 var(--body);color:var(--ink);pointer-events:none;text-shadow:0 0 2px #fff,0 0 2px #fff,0 0 3px #fff,0 0 4px #fff}
-.pinicon.many{width:34px;height:34px;font-size:13.5px;cursor:pointer;box-shadow:3px 3px 0 -1px rgba(255,255,255,.95),3px 3px 0 0 rgba(0,0,0,.28),0 1px 5px rgba(0,0,0,.45)}
-.pinicon.on{width:38px;height:38px;font-size:15px;margin:-4px 0 0 -4px}
-.leaflet-tooltip{font-family:var(--body);font-weight:600}
+.axis .meter,.axis details,.axis>.note{grid-column:1/-1}
+.axis .meter{height:8px;background:var(--bg);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--good)}
+.axis summary{font-size:14px}
+.axis .pri{color:var(--accent)}
+ul.plain{margin:0;padding-left:20px}ul.plain li{margin:6px 0}
+.yt{margin:12px 0 6px}.who{font-weight:600}
+.go{width:100%;justify-content:center;background:var(--accent);color:var(--panel);border:1px solid var(--accent);border-radius:6px;padding:10px 12px;font-size:16px;line-height:24px;text-decoration:none}
+#preview{position:absolute;left:16px;right:16px;bottom:16px;max-height:30%;overflow:auto;background:var(--panel);border:1px solid var(--sub);padding:12px;z-index:500;display:none;gap:8px;grid-template-columns:minmax(0,1fr) auto;border-radius:6px}
+#preview strong{font:400 20px/26px var(--display);overflow-wrap:anywhere}
+#preview p{font-size:14px;line-height:21px;margin:4px 0;color:var(--sub)}
+#preview button{grid-column:1/-1}
+.leaflet-marker-icon{border-radius:4px}
+.pinicon{width:44px;height:44px;display:flex;flex-direction:column;justify-content:center;align-items:center;background:var(--good);border:2px solid var(--panel);border-radius:50%;color:var(--panel);font:600 14px/18px var(--body);box-shadow:0 1px 4px rgba(22,33,43,.3)}
+.pinicon.bg-warn,.pinicon.bg-bad{background:var(--ink)}
+.pinicon.bg-none{background:var(--sub)}
+.pinicon.on{outline:3px solid var(--accent);outline-offset:2px}
+.pinicon.many{width:72px;height:56px;border-radius:8px}
+.pinicon.many small{font-size:12px;line-height:18px}
+.pinname{position:absolute;left:22px;top:47px;transform:translateX(-50%);white-space:nowrap;font:600 12px/18px var(--body);background:var(--panel);color:var(--ink);padding:1px 4px;pointer-events:none}
+.leaflet-tooltip{font-family:var(--body)}
+.leaflet-control-zoom a{width:44px!important;height:44px!important;line-height:44px!important;display:block;padding:0;color:var(--ink)!important;background:var(--panel)!important}
+.leaflet-top.leaflet-right{max-width:calc(100% - 76px)}
+.leaflet-control-attribution{max-width:100%;color:var(--ink)!important;background:var(--panel)!important}
+.leaflet-control-attribution a{font-size:12px;line-height:18px;padding:8px 4px;min-height:44px;align-items:center}
+@media(max-width:760px){
+  body{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr) auto}
+  #side{display:contents}
+  .top{grid-row:1;padding-top:max(10px,env(safe-area-inset-top))}
+  .resultline{grid-row:2}
+  #rows{grid-column:1;grid-row:3}
+  #map{grid-column:1;grid-row:3}
+  body[data-view="list"] #map{visibility:hidden;pointer-events:none}
+  body[data-view="map"] #rows{visibility:hidden;pointer-events:none}
+  #viewNav{display:flex;grid-row:4;grid-column:1;gap:8px;padding:8px 16px max(8px,env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--panel);z-index:2}
+  #viewNav button{flex:1}
+  #detailPanel{position:fixed;inset:0;grid-row:auto;width:100%;height:100vh;height:100dvh;z-index:1000}
+  #detailPanel .panel-head{padding-top:max(8px,env(safe-area-inset-top))}
+  #filterPanel{inset:0;width:100%;height:100vh;height:100dvh;margin:0;border:0;border-radius:0}
+  #filterPanel .panel-head{padding-top:max(12px,env(safe-area-inset-top))}
+  body[data-view="map"] #preview:not([hidden]){display:grid}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 </style>
 </head>
-<body>
+<body data-view="list">
 <aside id="side">
-  <div class="top">
-    <h1>맛집 로그</h1>
-    <div class="find"><label class="lab" for="q">가게 찾기</label><input id="q" type="search" placeholder="가게 이름, 동네, 메뉴" autocomplete="off" spellcheck="false"><span id="guess" class="rowc"></span></div>
-    <div class="rowc"><span class="lab">내가 중요하게 보는 것</span><span id="axisChips" class="rowc"></span></div>
-    <div class="rowc"><span class="lab">종류</span><span id="cuisineChips" class="rowc"></span></div>
-    <div class="rowc" id="menuRow"><span class="lab">메뉴</span><span id="menuChips" class="rowc"></span></div>
-    <div class="rowc"><span class="lab">1인 가격</span><span id="priceChips" class="rowc"></span></div>
-    <div class="rowc"><span class="lab">나라</span><span id="countryChips" class="rowc"></span></div>
-    <div class="rowc" id="regionRow"><span class="lab">지역</span><span id="regionChips" class="rowc"></span></div>
-    <p class="hint" id="hint"></p>
-  </div>
-  <div id="rows"><p class="empty">가게 목록을 불러오는 중입니다.</p></div>
+  <header class="top">
+    <div class="brand"><h1>맛집 로그</h1><p class="tagline">후기를 읽고 고른 가게</p></div>
+    <div class="find"><label class="lab" for="q">가게 찾기</label><input id="q" type="search" placeholder="가게 이름, 동네, 메뉴" autocomplete="off" spellcheck="false"><div id="guess" class="rowc"></div></div>
+    <div class="toolbar"><button class="chip" id="placeFilter" aria-haspopup="dialog" aria-controls="filterPanel">나라/지역 선택</button><button class="chip" id="openFilter" aria-haspopup="dialog" aria-controls="filterPanel">필터</button></div>
+  </header>
+  <div class="resultline"><span id="resultCount" role="status" aria-live="polite" aria-atomic="true">가게 불러오는 중</span><button id="openCriteria" aria-haspopup="dialog" aria-controls="filterPanel">점수 기준</button></div>
+  <div id="rows" aria-label="가게 목록" aria-busy="true"><p class="empty">가게 목록을 불러오는 중입니다.</p></div>
+  <dialog id="detailPanel" aria-labelledby="detailName">
+    <div class="panel-layout"><div class="panel-head"><button id="closeDetail" class="chip">목록으로</button><span class="cnt">가게 상세</span></div><div id="detailBody" class="detail-body"></div><div id="detailActions" class="panel-actions"></div></div>
+  </dialog>
+  <nav id="viewNav" aria-label="화면 전환"><button id="listView" class="chip" aria-label="목록 화면" aria-pressed="true">목록</button><button id="mapView" class="chip" aria-label="지도 화면" aria-pressed="false">지도</button></nav>
 </aside>
-<div id="map" aria-label="가게 지도"></div>
+<div id="map" role="region" aria-label="가게 지도"><div id="preview" hidden></div></div>
+<dialog id="filterPanel" aria-labelledby="filterTitle" aria-modal="true">
+  <div class="panel-layout">
+    <div class="panel-head"><h2 id="filterTitle">필터</h2><button class="chip" id="closeFilter">닫기</button></div>
+    <div class="panel-scroll" id="filterScroll">
+      <section class="filter-group" id="locationGroup" tabindex="-1"><h3>나라와 지역</h3><div id="countryChips" class="rowc"></div><div id="regionRow" style="margin-top:8px"><div id="regionChips" class="rowc"></div></div></section>
+      <section class="filter-group"><h3>종류</h3><div id="cuisineChips" class="rowc"></div></section>
+      <section class="filter-group" id="menuRow"><h3>메뉴</h3><div id="menuChips" class="rowc"></div></section>
+      <section class="filter-group"><h3>1인 가격</h3><div id="priceChips" class="rowc"></div></section>
+      <section class="filter-group"><h3>중요하게 보는 것</h3><div id="axisChips" class="rowc"></div></section>
+      <section class="filter-group"><h3>묶인 점수</h3><div id="groupChips" class="rowc"></div></section>
+      <details id="criteria"><summary>점수 기준</summary><p id="hint"></p><p>기본은 맛 2배, 서비스 0.5배입니다. 카페는 분위기도 2배입니다. 다른 항목은 1배입니다.</p><p>중요한 항목을 고르면 해당 항목은 3배, 나머지는 1배입니다. 일반 계산에서 선택하지 않은 서비스는 0.5배입니다. 고른 항목이 2.5점 이하면 항목마다 8점을 뺍니다.</p><p>점수가 있는 항목만 가중 평균한 뒤 1~5점을 0~100점으로 바꾸고 반올림합니다. 대기는 점수에서 뺍니다. 중요한 항목이 없을 때 분위기용 계산은 분위기와 서비스 2배, 나머지 1배입니다.</p><p>맛은 후기 수로 보정합니다. 신뢰도는 유효 후기 100건부터 A, 30건부터 B, 그 아래는 C입니다. 수동 맛 점수의 신뢰도는 참고 표본 수입니다. 유효 평점이 없으면 기존 맛을 유지합니다.</p><p>기본 점수 70점 이하와 믿을 평점이 없는 곳은 기본 목록에서 숨깁니다. 검색은 모든 가게에서 찾습니다.</p></details>
+    </div>
+    <div class="panel-actions"><button class="chip" id="resetFilter">초기화</button><button class="chip primary" id="applyFilter">적용</button></div>
+  </div>
+</dialog>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
@@ -108,11 +189,13 @@ let query="", places=[], closed=[], pri=new Set(), country="전체", region="전
 try{ const s=JSON.parse(localStorage.getItem("jjin")||"{}"); pri=new Set(s.pri||[]); region=s.region||"전체"; country=s.country||"전체"; cuisine=s.cuisine||"전체"; menu=s.menu||"전체"; price=s.price??"전체"; }catch(e){}
 const save=()=>{ try{ localStorage.setItem("jjin",JSON.stringify({pri:[...pri],region,country,cuisine,menu,price})); }catch(e){} };
 
-const map=L.map("map",{zoomControl:true}).setView([36.3,127.8],7);
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
+const map=typeof L!=="undefined"?L.map("map",{zoomControl:true}).setView([36.3,127.8],7):null;
+if(map)L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
+
+if(map)map.attributionControl.setPosition("topright");
 
 function el(tag,attrs,...kids){ const n=document.createElement(tag); if(attrs) for(const k in attrs){ if(k==="class") n.className=attrs[k]; else if(k==="text") n.textContent=attrs[k]; else n.setAttribute(k,attrs[k]); } for(const c of kids){ if(c==null) continue; n.append(c.nodeType?c:document.createTextNode(String(c))); } return n; }
-// 1인 가격대: 다섯 구간. est는 메뉴 종류로 정한 값(화면에는 따로 표시하지 않고, 나중에 값이 확인되면 바꾼다)
+// 1인 가격대: 계산과 필터는 기존 구간을 유지하고 추정 여부는 화면에 함께 표시한다.
 const PB=["1만 원 미만","1만 원대","2~3만 원대","4~7만 원대","8만 원 이상"];
 const priceText=p=>p.price&&PB[p.price.b]?`1인 ${PB[p.price.b]}`:null;
 const safeUrl=u=>typeof u==="string"&&/^https:\/\//.test(u)?u:null;
@@ -181,169 +264,310 @@ const ranked=()=>{ if(query){ hiddenLow=0; return places.map(p=>({p,sc:score(p),
   const n={}; l.forEach(x=>{ if(ex(x)<=1){ const k=country==="전체"?co(x.p):"_"; n[k]=(n[k]||0)+1; x.rank=n[k]; } });
   return l; };
 
+if(!map)document.getElementById("map").append(el("p",{class:"empty",text:"지도를 불러오지 못했습니다. 목록에서 가게를 찾아보세요."}));
+
+const filterPanel=document.getElementById("filterPanel"), detailPanel=document.getElementById("detailPanel");
+const mobile=()=>matchMedia("(max-width:760px)").matches;
+const axisLabel=k=>({wait:"대기와 예약",mood:"분위기와 청결"}[k]||AXN[k]);
+const scoreLabel=()=>pri.size?"맞춤 점수":"기본 점수";
+const shownPrice=p=>{ const t=priceText(p); return t?t+(p.price.est?" 추정":""):null; };
+let view="list", draft=null, filterReturn=null, detailReturn=null, listScroll=0, detailVisible=false, loading=true, loadError=false;
+const filterState=()=>({pri:new Set(pri),country,region,cuisine,menu,price,groupBy});
+const focusKey=n=>n&&({id:n.id,key:n.dataset&&n.dataset.focus});
+function restoreFocus(key){ if(!key) return false; const n=key.id?document.getElementById(key.id):[...document.querySelectorAll("[data-focus]")].find(n=>n.dataset.focus===key.key); if(!n)return false;n.focus({preventScroll:true});return document.activeElement===n; }
 function renderChips(){
-  const ax=document.getElementById("axisChips"); ax.replaceChildren();
-  pri.delete("wait"); for(const [k,n] of AXES){ if(k==="wait") continue; const b=el("button",{class:"chip",type:"button","aria-pressed":String(pri.has(k)),text:n}); b.onclick=()=>{ pri.has(k)?pri.delete(k):pri.add(k); save(); render(); }; ax.append(b); }
+  if(!draft) return;
+  const active=focusKey(document.activeElement), scroll=document.getElementById("filterScroll").scrollTop;
+  const choices=(id,values,current,change)=>{ const box=document.getElementById(id);box.replaceChildren();values.forEach(([key,text])=>{ const b=el("button",{class:"chip",type:"button","aria-pressed":String(current(key)),"data-focus":id+":"+key,text}); b.onclick=()=>{change(key);renderChips();};box.append(b); }); };
+  const cs=["전체",...[...new Set(places.map(co))].sort()];
+  if(!cs.includes(draft.country)) draft.country="전체";
+  if(draft.country==="전체") draft.region="전체";
+  choices("countryChips",cs.map(c=>[c,c]),c=>draft.country===c,c=>{draft.country=c;draft.region="전체";});
+  const regs=["전체",...[...new Set(places.filter(p=>draft.country==="전체"||co(p)===draft.country).map(p=>p.region).filter(Boolean))].sort()];
+  if(!regs.includes(draft.region)) draft.region="전체";
+  document.getElementById("regionRow").hidden=draft.country==="전체";
+  choices("regionChips",regs.map(r=>[r,r]),r=>draft.region===r,r=>draft.region=r);
   const CO=["한식","일식","중식","양식","카페·디저트"];
-  const cu=document.getElementById("cuisineChips"); cu.replaceChildren();
   const cus=["전체",...[...new Set(places.map(p=>p.cuisine).filter(Boolean))].sort((a,b)=>(CO.indexOf(a)<0?9:CO.indexOf(a))-(CO.indexOf(b)<0?9:CO.indexOf(b))||a.localeCompare(b))];
-  if(!cus.includes(cuisine)) cuisine="전체";
-  for(const c of cus){ const b=el("button",{class:"chip",type:"button","aria-pressed":String(cuisine===c),text:c}); b.onclick=()=>{ cuisine=c; menu="전체"; openId=null; save(); render(); }; cu.append(b); }
-  const mr=document.getElementById("menuRow"), mc=document.getElementById("menuChips"); mc.replaceChildren();
-  mr.style.display=cuisine==="전체"?"none":"";
-  if(cuisine!=="전체"){ const cnt={}; places.filter(p=>p.cuisine===cuisine).forEach(p=>groupsOf(p).forEach(m=>cnt[m]=(cnt[m]||0)+1));
-    const ms=["전체",...Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]||a.localeCompare(b))]; if(!ms.includes(menu)) menu="전체";
-    for(const m of ms){ const b=el("button",{class:"chip",type:"button","aria-pressed":String(menu===m),text:m==="전체"?m:`${m} ${cnt[m]}`}); b.onclick=()=>{ menu=m; openId=null; save(); render(); }; mc.append(b); } }
-  const pc=document.getElementById("priceChips"); pc.replaceChildren();
-  { const cnt={}; places.filter(p=>(cuisine==="전체"||p.cuisine===cuisine)&&(country==="전체"||(p.country||"한국")===country)&&(region==="전체"||p.region===region)).forEach(p=>{ if(p.price) cnt[p.price.b]=(cnt[p.price.b]||0)+1; });
-    for(const k of ["전체",0,1,2,3,4]){ const b=el("button",{class:"chip",type:"button","aria-pressed":String(price===k),text:k==="전체"?k:`${PB[k]} ${cnt[k]||0}`}); b.onclick=()=>{ price=k; openId=null; save(); render(); }; pc.append(b); } }
-  const cg=document.getElementById("countryChips"); cg.replaceChildren();
-  const cs=["전체",...[...new Set(places.map(p=>p.country||"한국"))].sort()];
-  if(!cs.includes(country)) country="전체";
-  for(const c of cs){ const b=el("button",{class:"chip",type:"button","aria-pressed":String(country===c),text:c}); b.onclick=()=>{ country=c; region="전체"; openId=null; save(); render(); }; cg.append(b); }
-  const rg=document.getElementById("regionChips"); rg.replaceChildren();
-  document.getElementById("regionRow").style.display=country==="전체"?"none":""; if(country==="전체") region="전체";
-  const regs=["전체",...[...new Set(places.filter(p=>country==="전체"||(p.country||"한국")===country).map(p=>p.region).filter(Boolean))].sort()];
-  if(!regs.includes(region)) region="전체";
-  for(const r of regs){ const b=el("button",{class:"chip",type:"button","aria-pressed":String(region===r),text:r}); b.onclick=()=>{ region=r; openId=null; save(); render(); }; rg.append(b); }
-  document.getElementById("hint").textContent=pri.size?`${[...pri].map(k=>AXN[k]).join(", ")}에 3배 가중치. 이 항목이 약한 가게는 점수가 깎이고 경고가 붙습니다. 웨이팅은 점수에 넣지 않습니다.`:"고르지 않으면 맛을 2배로, 나머지 네 항목은 똑같이 봅니다. 웨이팅은 점수에 넣지 않고 정보로만 보여줍니다.";
-  document.getElementById("hint").textContent+=!flat()?" 지역을 고르면 그 안에서 순위가 매겨집니다.":"";
+  if(!cus.includes(draft.cuisine)) draft.cuisine="전체";
+  choices("cuisineChips",cus.map(c=>[c,c]),c=>draft.cuisine===c,c=>{draft.cuisine=c;draft.menu="전체";});
+  document.getElementById("menuRow").hidden=draft.cuisine==="전체";
+  const cnt={};places.filter(p=>p.cuisine===draft.cuisine).forEach(p=>groupsOf(p).forEach(m=>cnt[m]=(cnt[m]||0)+1));
+  const ms=["전체",...Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]||a.localeCompare(b))];if(!ms.includes(draft.menu)) draft.menu="전체";
+  choices("menuChips",ms.map(m=>[m,m==="전체"?m:`${m} ${cnt[m]}`]),m=>draft.menu===m,m=>draft.menu=m);
+  const pc={};places.filter(p=>(draft.cuisine==="전체"||p.cuisine===draft.cuisine)&&(draft.country==="전체"||co(p)===draft.country)&&(draft.region==="전체"||p.region===draft.region)).forEach(p=>{if(p.price)pc[p.price.b]=(pc[p.price.b]||0)+1;});
+  choices("priceChips",["전체",0,1,2,3,4].map(k=>[k,k==="전체"?k:`${PB[k]} ${pc[k]||0}`]),k=>draft.price===k,k=>draft.price=k);
+  choices("axisChips",AXES.filter(([k])=>k!=="wait").map(([k])=>[k,axisLabel(k)]),k=>draft.pri.has(k),k=>draft.pri.has(k)?draft.pri.delete(k):draft.pri.add(k));
+  choices("groupChips",[["avg","평균"],["top","최고"]],k=>draft.groupBy===k,k=>draft.groupBy=k);
+  document.getElementById("hint").textContent=draft.pri.size?[...draft.pri].map(axisLabel).join(", ")+"에 가중치를 둡니다.":"중요한 항목을 고르지 않으면 기본 점수입니다.";
+  document.getElementById("filterScroll").scrollTop=scroll;
+  if(filterPanel.contains(document.activeElement)||active&&active.key) restoreFocus(active);
 }
+function openFilters(section){
+  filterReturn=focusKey(document.activeElement);draft=filterState();draft.pri.delete("wait");renderChips();
+  history.pushState({...history.state,jjinPanel:"filter"},"");filterPanel.showModal();
+  document.getElementById("criteria").open=section==="criteria";
+  document.getElementById("filterScroll").scrollTop=0;
+  const target=section==="location"?document.getElementById("locationGroup"):section==="criteria"?document.querySelector("#criteria summary"):document.getElementById("closeFilter");
+  target.focus();target.scrollIntoView({block:"nearest"});
+}
+function dismissFilter(){filterPanel.close();draft=null;restoreFocus(filterReturn);}
+function closeFilters(){if(history.state&&history.state.jjinPanel==="filter")history.back();else dismissFilter();}
+function setView(next){
+  view=next;document.body.dataset.view=view;
+  document.getElementById("listView").setAttribute("aria-pressed",String(view==="list"));document.getElementById("mapView").setAttribute("aria-pressed",String(view==="map"));
+  document.getElementById("rows").inert=mobile()&&view==="map";
+  document.getElementById("map").inert=mobile()&&view==="list";
+  requestAnimationFrame(()=>{if(map){const center=map.getCenter(),zoom=map.getZoom();map.invalidateSize({pan:false});map.setView(center,zoom,{animate:false});}});
+}
+function syncDetailMode(){
+  if(!detailPanel.open)return;
+  detailPanel.setAttribute("aria-modal",String(mobile()));
+  const pos=document.getElementById("detailBody").scrollTop,active=document.activeElement;
+  detailPanel.close();if(mobile())detailPanel.showModal();else detailPanel.show();
+  document.getElementById("detailBody").scrollTop=pos;
+  document.getElementById("closeDetail").textContent=view==="map"&&mobile()?"지도로":"목록으로";
+  if(detailPanel.contains(active))active.focus({preventScroll:true});
+}
+function openPlace(id,fromMap=false){
+  if(!detailVisible){detailReturn=focusKey(document.activeElement);listScroll=document.getElementById("rows").scrollTop;}
+  if(fromMap)detailReturn={id:"pin-"+id};
+  openId=id;render();
+  if(markers[id])map.panTo(markers[id].getLatLng(),{animate:!matchMedia("(prefers-reduced-motion: reduce)").matches});
+  if(fromMap&&mobile()&&view==="map"){showPreview();return;}
+  showDetail();
+}
+function showPreview(){
+  const box=document.getElementById("preview"),p=places.find(p=>p.id===openId);box.replaceChildren();box.hidden=!p;
+  if(!p)return;const sc=score(p);
+  box.append(el("div",null,el("strong",{text:p.name}),el("p",{text:[p.area,shownPrice(p)].filter(Boolean).join(" / ")})),el("span",{class:"score",text:sc.v==null?"평점 없음":String(sc.v)}));
+  const b=el("button",{id:"previewDetail",class:"chip",text:"상세 보기","aria-controls":"detailPanel"});b.onclick=()=>{detailReturn={id:"previewDetail"};showDetail();};box.append(b);
+}
+function showDetail(){
+  const p=places.find(p=>p.id===openId);if(!p)return;
+  if(!detailVisible)history.pushState({...history.state,jjinPanel:"detail"},"");
+  detailVisible=true;document.getElementById("rows").hidden=true;fillDetail(p);detailPanel.setAttribute("aria-modal",String(mobile()));
+  if(!detailPanel.open){if(mobile())detailPanel.showModal();else detailPanel.show();}
+  document.getElementById("closeDetail").textContent=view==="map"&&mobile()?"지도로":"목록으로";
+  document.getElementById("closeDetail").focus({preventScroll:true});
+}
+function dismissDetail(){
+  detailPanel.close();detailVisible=false;document.getElementById("rows").hidden=false;
+  const keep=openId;render();document.getElementById("rows").scrollTop=listScroll;
+  if(view==="map"&&mobile())showPreview();
+  if(!restoreFocus(detailReturn))restoreFocus({id:"row-"+keep});
+}
+function closeDetail(){if(history.state&&history.state.jjinPanel==="detail")history.back();else dismissDetail();}
+window.addEventListener("popstate",e=>{if(filterPanel.open)dismissFilter();if(detailVisible&&(!e.state||e.state.jjinPanel!=="detail"))dismissDetail();});
+filterPanel.addEventListener("cancel",e=>{e.preventDefault();closeFilters();});
+detailPanel.addEventListener("cancel",e=>{e.preventDefault();closeDetail();});
+detailPanel.addEventListener("keydown",e=>{if(e.key==="Escape"&&!mobile()){e.preventDefault();closeDetail();}});
+document.getElementById("placeFilter").onclick=()=>openFilters("location");document.getElementById("openFilter").onclick=()=>openFilters();document.getElementById("openCriteria").onclick=()=>openFilters("criteria");
+document.getElementById("closeFilter").onclick=closeFilters;document.getElementById("closeDetail").onclick=closeDetail;
+document.getElementById("resetFilter").onclick=()=>{draft={pri:new Set(),country:"전체",region:"전체",cuisine:"전체",menu:"전체",price:"전체",groupBy:"avg"};renderChips();};
+document.getElementById("applyFilter").onclick=()=>{
+  ({country,region,cuisine,menu,price,groupBy}=draft);pri=new Set(draft.pri);save();try{localStorage.setItem("jjin-group",groupBy);}catch(e){}
+  render();closeFilters();
+};
+document.getElementById("listView").onclick=()=>setView("list");document.getElementById("mapView").onclick=()=>setView("map");
+matchMedia("(max-width:760px)").addEventListener("change",()=>{setView(view);syncDetailMode();});
 
 const NAME_ZOOM=14, esc=t=>String(t??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 let mapList=[], groupBy="avg";
 try{ groupBy=localStorage.getItem("jjin-group")==="top"?"top":"avg"; }catch(e){}
-const groupCtl=L.control({position:"topright"});
-groupCtl.onAdd=()=>{ const d=el("div",{class:"gsw",role:"group","aria-label":"묶인 점에 적는 점수"},el("span",{text:"묶인 점"}));
-  [["avg","평균"],["top","최고"]].forEach(([k,t])=>{ const b=el("button",{class:"chip",type:"button","aria-pressed":String(groupBy===k),text:t});
-    b.onclick=()=>{ groupBy=k; try{ localStorage.setItem("jjin-group",k); }catch(e){} d.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b))); drawPins(); }; d.append(b); });
-  L.DomEvent.disableClickPropagation(d); return d; };
-groupCtl.addTo(map);
+function namePin(marker,id,label,detailLink=false){
+  const node=marker.getElement();if(!node)return;
+  node.id=id;node.setAttribute("aria-label",label);
+  if(detailLink)node.setAttribute("aria-controls","detailPanel");
+  node.addEventListener("keydown",e=>{if(e.code==="Space"){e.preventDefault();marker.fire("click");}});
+}
 function drawPins(){
+  if(!map)return;
+  const active=focusKey(document.activeElement);
   Object.values(markers).forEach(m=>m.remove()); markers={};
-  const z=map.getZoom(), bare=country==="전체"&&!query, groups=[];
+  const z=map.getZoom(), groups=[];
   mapList.forEach(x=>{ const pt=map.project([x.p.lat,x.p.lng],z);
     const g=z<15&&openId!==x.p.id&&groups.find(g=>!g.solo&&Math.hypot(g.pt.x-pt.x,g.pt.y-pt.y)<40);
     if(g) g.items.push(x); else groups.push({pt,items:[x],solo:openId===x.p.id}); });
   const named=new Set();
-  if(z>=NAME_ZOOM){ const hit=(a,b)=>a[0]<b[2]&&b[0]<a[2]&&a[1]<b[3]&&b[1]<a[3], taken=groups.map(g=>[g.pt.x-15,g.pt.y-15,g.pt.x+15,g.pt.y+15,g]);
+  if(z>=NAME_ZOOM){ const hit=(a,b)=>a[0]<b[2]&&b[0]<a[2]&&a[1]<b[3]&&b[1]<a[3], taken=groups.map(g=>[g.pt.x-22,g.pt.y-22,g.pt.x+22,g.pt.y+22,g]);
     const ctx=drawPins.ctx||(drawPins.ctx=document.createElement("canvas").getContext("2d")); ctx.font="600 12px sans-serif";
     groups.filter(g=>g.items.length===1).sort((a,b)=>(b.solo-a.solo)||((b.items[0].sc.v??-1)-(a.items[0].sc.v??-1))).forEach(g=>{
-      const w=ctx.measureText(g.items[0].p.name||"").width/2+3, box=[g.pt.x-w,g.pt.y+17,g.pt.x+w,g.pt.y+33];
+      const w=ctx.measureText(g.items[0].p.name||"").width/2+3, box=[g.pt.x-w,g.pt.y+25,g.pt.x+w,g.pt.y+47];
       if(g.solo||!taken.some(t=>t[4]!==g&&hit(box,t))){ named.add(g); taken.push([...box,g]); } }); }
   groups.forEach((g,gi)=>{
     if(g.items.length>1){ const n=g.items.length, ll=g.items.map(x=>[x.p.lat,x.p.lng]);
       const ok=g.items.filter(x=>!x.sc.ban&&!x.sc.hid&&x.sc.v!=null).sort((a,b)=>b.sc.v-a.sc.v), top=ok[0]||g.items[0];
       const avg=ok.length?Math.round(ok.reduce((a,x)=>a+x.sc.v,0)/ok.length):null;
       const rep=groupBy==="top"||avg==null?top:ok.reduce((a,x)=>Math.abs(x.sc.v-avg)<Math.abs(a.sc.v-avg)?x:a,ok[0]);
-      const shown=groupBy==="top"?(top.sc.v??"–"):(avg??"–");
+      const shown=groupBy==="top"?(top.sc.v??"평점 없음"):(avg??"평점 없음");
       const c=[ll.reduce((a,l)=>a+l[0],0)/n, ll.reduce((a,l)=>a+l[1],0)/n];
-      const m=L.marker(c,{icon:L.divIcon({className:"",html:`<div class="pinicon many bg-${rep.sc.tier}">${shown}</div>`,iconSize:[34,34],iconAnchor:[17,17]}),title:n+"곳"}).addTo(map);
-      m.bindTooltip(groupBy==="top"?`${n}곳 · 가장 높은 곳 ${top.p.name}`:`${n}곳 평균 · 가장 높은 곳 ${top.p.name} ${top.sc.v??""}`,{direction:"top",offset:[0,-18]});
-      m.on("click",()=>map.fitBounds(ll,{padding:[60,60],maxZoom:16}));
+      const m=L.marker(c,{icon:L.divIcon({className:"",html:`<div class="pinicon many bg-${rep.sc.tier}"><span>${n}곳</span><small>${groupBy==="top"?"최고":"평균"} ${shown}</small></div>`,iconSize:[72,56],iconAnchor:[36,28]}),title:`${n}곳 ${groupBy==="top"?"최고":"평균"} ${shown}`,alt:`${n}곳 ${groupBy==="top"?"최고":"평균"} ${shown}`}).addTo(map);
+      m.bindTooltip(groupBy==="top"?`${n}곳 최고 ${shown}, 가장 높은 곳 ${top.p.name}`:`${n}곳 평균 ${shown}, 가장 높은 곳 ${top.p.name} ${top.sc.v??""}`,{direction:"top",offset:[0,-18]});
+      m.on("click",()=>map.fitBounds(ll,{padding:[60,60],maxZoom:16,animate:!matchMedia("(prefers-reduced-motion: reduce)").matches}));
+      namePin(m,"pin-group-"+gi,`${n}곳 ${groupBy==="top"?"최고":"평균"} ${shown}`);
       markers["g"+gi]=m; return; }
-    const {p,sc}=g.items[0], on=openId===p.id, near=z>=NAME_ZOOM, plain=bare&&!near;
-    const icon=L.divIcon({className:"",html:`<div class="pinicon bg-${sc.tier}${on?" on":""}${plain?" bare":" dot"}">${sc.ban?"✕":sc.hid?"?":plain?"":(sc.v??"–")}</div>${named.has(g)?`<span class="pinname">${esc(p.name)}</span>`:""}`,iconSize:[30,30],iconAnchor:[15,15]});
-    const m=L.marker([p.lat,p.lng],{icon,zIndexOffset:on?1000:0,title:p.name}).addTo(map);
+    const {p,sc}=g.items[0], on=openId===p.id;
+    const icon=L.divIcon({className:"",html:`<div class="pinicon bg-${sc.tier}${on?" on":""}">${sc.ban?"✕":sc.hid?"없음":(sc.v??"없음")}</div>${named.has(g)?`<span class="pinname">${esc(p.name)}</span>`:""}`,iconSize:[44,44],iconAnchor:[22,22]});
+    const m=L.marker([p.lat,p.lng],{icon,zIndexOffset:on?1000:0,title:`${p.name} ${sc.v==null?"평점 없음":sc.v+"점"}${sc.ban?" 가지 않음":sc.hid?" 평점 없음":""}`,alt:p.name}).addTo(map);
     m.bindTooltip(p.name,{direction:"top",offset:[0,-14]});
-    m.on("click",()=>{ openId=on?null:p.id; render(); const r=document.getElementById("row-"+p.id); r&&r.scrollIntoView({block:"nearest",behavior:"smooth"}); });
+    m.on("click",()=>openPlace(p.id,true));
+    namePin(m,"pin-"+p.id,`${p.name} ${sc.v==null?"평점 없음":sc.v+"점"}${sc.ban?" 가지 않음":sc.hid?" 평점 없음":""}`,true);
     markers[p.id]=m; });
+  if(active&&active.id&&active.id.startsWith("pin-"))restoreFocus(active);
 }
-map.on("zoomend",drawPins);
-map.on("resize",e=>{ if(!e.oldSize.x||!e.oldSize.y){ fitKey=""; renderMap(mapList.map(x=>x)); } });
+if(map)map.on("zoomend",drawPins);
+// Visibility changes must preserve the current center and zoom.
+if(map)map.on("resize",drawPins);
 function renderMap(list){
   mapList=list.filter(x=>num(x.p.lat)!=null&&num(x.p.lng)!=null&&!(x.occ&&x.p.occasionAlso));
+  if(!map)return;
   const pts=mapList.map(x=>[x.p.lat,x.p.lng]);
   const key=country+"|"+region+"|"+cuisine+"|"+menu+"|"+pts.length;
   if(pts.length&&key!==fitKey&&map.getSize().x&&map.getSize().y){ fitKey=key; map.fitBounds(pts,{padding:[50,50],maxZoom:15,animate:false}); }
   drawPins();
 }
 
-function detail(p){
-  const d=el("div",{class:"detail"});
-  const ax=el("div",null,el("h3",{text:"항목별 평가"}));
-  for(const [k,n] of AXES){ const a=(p.axes&&p.axes[k])||{}; const s=num(a.s);
-    if(k==="wait"){ ax.append(el("div",{class:"axis"},el("span",{class:"nm",text:"대기 정보"}),el("span",{class:"cnt",text:"점수 제외"}),el("span",{class:"note",text:a.n||"정보 없음"}))); continue; }
-    const m=el("div",{class:"meter"}); if(s!=null){ const i=el("i",{class:s>=4?"bg-good":s>=3?"bg-warn":"bg-bad"}); i.style.width=(s/5*100)+"%"; m.append(i); }
-    ax.append(el("div",{class:"axis"},el("span",{class:"nm"+(pri.has(k)?" pri":""),text:n}),m,el("span",{class:"note",text:s==null?(a.kwk||"근거 없음"):(a.n||"")+(a.fo?` ⚠ ${a.fo}`:"")+(a.kwk?` [${a.kwk}]`:"")+(a.kw?` [${a.kw}${a.auto?"":a.fo?"":" · 언급이 적어 점수에는 미반영"}]`:"")})));
+function warningFlags(p,sc,full=false){
+  const flags=el("div",{class:"flags"});
+  const add=(text,cls="f-bad")=>flags.append(el("span",{class:"flag "+cls,text}));
+  if(sc.ban)add("가지 않음: 식중독 주장 반복");
+  if(sc.hid)add("평점 없음: 순위 제외");
+  if(p.pest&&within1y(p.pestDate))add(p.pest);
+  if(p.caution&&/차이|평점 차/.test(p.caution))add(full?p.caution:"평점 차이 있음","f-warn");
+  if(within1y(p.foDate))add("음식 이물질 후기");
+  if(p.noKakao&&!sc.hid)add("카카오 후기 없음","f-warn");
+  if(full){
+    if(p.poison)add(p.poison);
+    if(p.healthNote)add(p.healthNote);
+    if(p.caution&&!/차이|평점 차/.test(p.caution))add(p.caution,"f-warn");
+    if(sc.weak&&sc.weak.length)add("중요한 항목이 약함: "+sc.weak.map(axisLabel).join(", "));
   }
-  if(priceText(p)) ax.append(el("p",{class:"evid",style:"margin-top:2px",text:priceText(p)+(p.price.g?" — 구글 지도에 적힌 1인당 값: "+p.price.g:p.price.t?" — 후기에 적힌 값: "+p.price.t:"")}));
-  if(p.tasteBasis) ax.append(el("p",{class:"evid",style:"margin-top:2px",text:"맛 점수 근거: "+p.tasteBasis}));
-  d.append(ax);
-  if(p.poison){ const b=el("div",{class:"layer",style:"border-top:0;padding-top:0"},el("h3",{text:"가지 않는 이유",style:"color:var(--bad)"})); b.append(el("p",{class:"note",text:p.poison})); d.prepend(b); }
-  if(p.healthNote&&!p.poison){ const b=el("div",{class:"layer",style:"border-top:0;padding-top:0"},el("h3",{text:"배탈·식중독 주장 (참고)"})); b.append(el("p",{class:"note",text:p.healthNote})); d.prepend(b); }
-  const l1=el("div",{class:"layer"},el("h3",{text:"1층 · 대중 평점"}));
-  const rs=Array.isArray(p.ratings)?p.ratings:[];
-  if(!rs.length) l1.append(el("p",{class:"note",text:"아직 조사하지 않았습니다."}));
-  for(const g of rs){ const head=(num(g.rating)!=null?`${g.src} ${g.rating}점`:`${g.src} 별점 없음`)+(g.distrust?" (리뷰 이벤트 의심 · 참고 안 함)":""); const tail=(num(g.count)!=null?` · ${g.count.toLocaleString()}개`:"")+(num(g.lowPct)!=null?` · 1~2점 ${g.lowPct}%`:""); l1.append(el("p",{class:"yt"},el("span",{class:"who",text:head}),tail)); if(g.note) l1.append(el("p",{class:"note",style:"margin:-4px 0 9px",text:g.note})); }
-  d.append(l1);
-  const l2=el("div",{class:"layer"},el("h3",{text:"2층 · 믿는 유튜버"}));
-  if(Array.isArray(p.youtubers)&&p.youtubers.length){ for(const y of p.youtubers){ const row=el("p",{class:"yt"},el("span",{class:"who",text:y.who||"유튜버"})," ",el("span",{class:"flag "+gcls(y.grade),text:y.grade||"평가"}),el("br"),"“"+(y.quote||"")+"”"); const u=safeUrl(y.url); if(u) row.append(" ",el("a",{href:u,target:"_blank",rel:"noopener",text:"영상에서 보기"})); l2.append(row); if(Array.isArray(y.points)&&y.points.length){ const ul=el("ul",{class:"plain",style:"margin-bottom:10px"}); y.points.forEach(t=>ul.append(el("li",{text:t}))); l2.append(ul); } } }
-  else l2.append(el("p",{class:"note",text:"이 가게를 다룬 영상을 아직 찾지 않았습니다."}));
-  d.append(l2);
-  const l3=el("div",{class:"layer"},el("h3",{text:"3층 · 방문자가 반복해서 말한 불만"}));
-  if(Array.isArray(p.complaints)&&p.complaints.length){ const ul=el("ul",{class:"plain"}); for(const c of p.complaints){ ul.append(el("li",null,el("b",{text:(AXN[c.axis]||"기타")+" "}),c.text||""," ",el("span",{class:"cnt",text:[c.n?`약 ${c.n}건${c.approx?"(기간 밖 포함)":""}`:null,c.when].filter(Boolean).join(" · ")}))); } l3.append(ul); }
-  else l3.append(el("p",{class:"note",text:"저평점 리뷰를 아직 읽지 않았습니다."}));
-  if(Array.isArray(p.praise)&&p.praise.length){ l3.append(el("h3",{text:"방문자가 반복해서 칭찬한 것",style:"margin-top:12px"})); const ul=el("ul",{class:"plain"}); p.praise.forEach(t=>ul.append(el("li",{text:t}))); l3.append(ul); }
-  if(p.kr){ l3.append(el("h3",{text:"한국인 입맛 기준",style:"margin-top:12px"})); l3.append(el("p",{class:"note",text:p.kr})); }
-  if(p.recent){ l3.append(el("h3",{text:"최근 분위기",style:"margin-top:12px"})); l3.append(el("p",{class:"note",text:p.recent})); }
-  d.append(l3);
-  if(Array.isArray(p.tips)&&p.tips.length){ const t=el("div",{class:"layer"},el("h3",{text:"가기 전에"})); const ul=el("ul",{class:"plain"}); p.tips.forEach(x=>ul.append(el("li",{text:x}))); t.append(ul); d.append(t); }
-  const foot=el("div",{class:"layer"}); const gm=safeUrl(p.gmaps); if(gm) foot.append(el("a",{class:"go",href:gm,target:"_blank",rel:"noopener",text:"구글 지도에서 열기"}));
-  foot.append(el("p",{class:"evid",text:`근거: ${p.evidence||"미기재"}${p.checked?` · 확인일 ${p.checked}`:""}`})); if(p.repass) foot.append(el("p",{class:"evid",style:"margin-top:2px",text:p.repass}));
-  if(p.window) foot.append(el("p",{class:"evid",style:"margin-top:2px",text:p.window}));
-  d.append(foot);
-  return d;
+  return flags;
 }
-
+function fold(title,...children){return el("details",{class:"layer"},el("summary",{text:title}),...children);}
+function confidenceNote(p,full=false){
+  const c=p.confidence,labels={A:"후기 많음",B:"후기 보통",C:"후기 적음"};
+  if(!c)return null;
+  const label=labels[c.grade]||"후기 근거 부족";
+  const evidence=labels[c.grade]?`${label} ${c.grade}등급 유효 ${c.effective_n.toLocaleString()}건`:"유효 평점 없음";
+  return el("p",{class:"confidence",text:full?evidence:label,"aria-label":evidence});
+}
+function detail(p){
+  const sc=score(p),d=el("div",{class:"detail"});
+  const head=el("div",{class:"detail-hero"},el("div",null,el("h2",{id:"detailName",class:"detail-title",text:p.name||"이름 없음"}),el("div",{class:"meta"},el("span",{text:p.area||p.region||co(p)}),el("span",{text:[p.cuisine||p.category,...(p.menus||[])].filter(Boolean).join(" / ")}))));
+  head.append(sc.v==null?el("div",{class:"scorecard no-score",text:"평점 없음"}):el("div",{class:"scorecard"},el("b",{text:String(sc.v)}),el("span",{text:scoreLabel()})));
+  const intro=el("section",null,head,confidenceNote(p,true));if(p.summary)intro.append(el("p",{class:"detail-summary",text:p.summary}));
+  if(shownPrice(p))intro.append(el("p",{class:"price",text:shownPrice(p)}));
+  if(p.price&&p.price.t)intro.append(el("p",{class:"note",text:"후기 원문 가격: "+p.price.t}));
+  if(p.price&&p.price.g)intro.append(el("p",{class:"note",text:"구글 지도 원문 가격: "+p.price.g}));
+  const warnings=warningFlags(p,sc,true);if(warnings.childNodes.length)intro.append(warnings);d.append(intro);
+  if(Array.isArray(p.tips)&&p.tips.length){const t=el("section",{class:"layer"},el("h3",{text:"가기 전에"})),ul=el("ul",{class:"plain"});p.tips.forEach(x=>ul.append(el("li",{text:x})));t.append(ul);d.append(t);}
+  const ax=el("section",{class:"layer"},el("h3",{text:"항목별 평가"}));
+  for(const [k] of AXES){const a=p.axes&&p.axes[k]||{},value=num(a.s),n=axisLabel(k);
+    const row=el("div",{class:"axis"},el("span",{class:"nm"+(pri.has(k)?" pri":""),text:k==="wait"?"대기 정보":n}),el("span",{class:"cnt",text:k==="wait"?"점수 제외":value==null?"근거 부족":`${value}/5`}));
+    if(k==="wait"){row.append(el("p",{class:"note",text:a.n||"정보 없음"}));ax.append(row);continue;}
+    const meter=el("div",{class:"meter","aria-hidden":"true"});if(value!=null){const bar=el("i");bar.style.width=(value/5*100)+"%";meter.append(bar);}row.append(meter);
+    const evidence=el("details",null,el("summary",{text:n+"의 근거 펼치기"}));
+    if(a.n)evidence.append(el("p",{class:"note",text:a.n}));
+    if(a.fo)evidence.append(el("p",{class:"note",text:a.fo}));
+    if(a.kwk)evidence.append(el("p",{class:"note",text:a.kwk}));
+    if(a.kw){evidence.append(el("p",{class:"note",text:a.kw}));if(!a.auto&&!a.fo)evidence.append(el("p",{class:"cnt",text:"언급이 적어 점수에는 미반영"}));}
+    if(!a.n&&!a.fo&&!a.kwk&&!a.kw)evidence.append(el("p",{class:"note",text:"근거 부족"}));row.append(evidence);ax.append(row);
+  }
+  if(p.tasteBasis)ax.append(el("p",{class:"evid",text:"맛 점수 근거: "+p.tasteBasis}));d.append(ax);
+  const ratings=fold("출처별 평점 펼치기"),rs=Array.isArray(p.ratings)?p.ratings:[];
+  if(!rs.length)ratings.append(el("p",{class:"note",text:"아직 조사하지 않았습니다."}));
+  for(const g of rs){const r=el("div",{class:"yt"},el("p",{class:"who",text:g.src+" "+(num(g.rating)!=null?g.rating+"점":"별점 없음")}));
+    if(g.distrust)r.append(el("p",{class:"note",text:"리뷰 이벤트 의심: 참고 안 함"}));
+    if(num(g.count)!=null)r.append(el("p",{class:"cnt",text:`후기 ${g.count.toLocaleString()}개`}));
+    if(num(g.lowPct)!=null)r.append(el("p",{class:"cnt",text:`1~2점 ${g.lowPct}%`}));
+    if(g.note)r.append(el("p",{class:"note",text:g.note}));ratings.append(r);
+  }d.append(ratings);
+  const yt=fold("믿는 유튜버 펼치기");
+  if(Array.isArray(p.youtubers)&&p.youtubers.length){for(const y of p.youtubers){const r=el("div",{class:"yt"},el("span",{class:"who",text:y.who||"유튜버"})," ",el("span",{class:"flag "+gcls(y.grade),text:y.grade||"평가"}),el("p",{class:"note",text:y.quote||""}));const u=safeUrl(y.url);if(u)r.append(el("a",{href:u,target:"_blank",rel:"noopener",text:"영상에서 보기"}));if(Array.isArray(y.points)&&y.points.length){const ul=el("ul",{class:"plain"});y.points.forEach(t=>ul.append(el("li",{text:t})));r.append(ul);}yt.append(r);}}
+  else yt.append(el("p",{class:"note",text:"이 가게를 다룬 영상을 아직 찾지 않았습니다."}));d.append(yt);
+  const reviews=fold("반복 불만과 칭찬 펼치기");
+  if(Array.isArray(p.complaints)&&p.complaints.length){const ul=el("ul",{class:"plain"});for(const c of p.complaints){const li=el("li",null,el("b",{text:(axisLabel(c.axis)||"기타")+" "}),c.text||"");if(c.n)li.append(el("p",{class:"cnt",text:`약 ${c.n}건${c.approx?" (기간 밖 포함)":""}`}));if(c.when)li.append(el("p",{class:"cnt",text:c.when}));ul.append(li);}reviews.append(ul);}
+  else reviews.append(el("p",{class:"note",text:"저평점 리뷰를 아직 읽지 않았습니다."}));
+  if(Array.isArray(p.praise)&&p.praise.length){reviews.append(el("h3",{text:"반복해서 칭찬한 것"}));const ul=el("ul",{class:"plain"});p.praise.forEach(t=>ul.append(el("li",{text:t})));reviews.append(ul);}
+  if(p.kr)reviews.append(el("h3",{text:"한국인 입맛 기준"}),el("p",{class:"note",text:p.kr}));
+  if(p.recent)reviews.append(el("h3",{text:"최근 분위기"}),el("p",{class:"note",text:p.recent}));d.append(reviews);
+  const foot=el("section",{class:"layer"},el("h3",{text:"근거와 확인일"}),el("p",{class:"evid",text:"근거: "+(p.evidence||"미기재")}));
+  for(const [key,label] of [["checked","확인일: "],["repass",""],["window",""]])if(p[key])foot.append(el("p",{class:"evid",text:label+p[key]}));d.append(foot);return d;
+}
+function fillDetail(p){
+  const body=document.getElementById("detailBody"),pos=body.scrollTop;
+  const opened=[...body.querySelectorAll("details[open]")].map(n=>n.querySelector("summary").textContent);
+  const same=body.dataset.place===String(p.id);body.replaceChildren(detail(p));body.dataset.place=p.id;
+  body.querySelectorAll("summary,a").forEach((n,i)=>n.dataset.focus="detail:"+p.id+":"+i);
+  if(same){body.querySelectorAll("details").forEach(n=>n.open=opened.includes(n.querySelector("summary").textContent));body.scrollTop=pos;}else body.scrollTop=0;
+  const actions=document.getElementById("detailActions"),gm=safeUrl(p.gmaps);actions.replaceChildren();actions.hidden=!gm;
+  if(gm)actions.append(el("a",{class:"go",href:gm,target:"_blank",rel:"noopener",text:"구글 지도에서 열기"}));
+}
+function normalizeFilters(){
+  pri.delete("wait");
+  if(!places.some(p=>p.cuisine===cuisine))cuisine="전체";
+  if(!places.some(p=>co(p)===country))country="전체";
+  if(country==="전체"||!places.some(p=>co(p)===country&&p.region===region))region="전체";
+  if(cuisine!=="전체"&&menu!=="전체"&&!places.some(p=>p.cuisine===cuisine&&groupsOf(p).includes(menu)))menu="전체";
+}
 function render(){
-  renderChips();
-  const list=ranked(); renderMap(list);
-  const rows=document.getElementById("rows"); rows.replaceChildren();
+  if(places.length)normalizeFilters();
+  const active=focusKey(document.activeElement),rows=document.getElementById("rows"),scroll=rows.scrollTop;
+  const list=ranked();renderMap(list);rows.replaceChildren();
+  const count=[country!=="전체"||region!=="전체",cuisine!=="전체",menu!=="전체",price!=="전체",pri.size>0,groupBy!=="avg"].filter(Boolean).length;
+  document.getElementById("openFilter").textContent="필터"+(count?" "+count:"");
+  document.getElementById("placeFilter").textContent=country==="전체"?"나라/지역 선택":[country,region!=="전체"?region:null].filter(Boolean).join(" / ");
+  document.getElementById("resultCount").textContent=loading?"가게 불러오는 중":loadError?"목록을 불러오지 못함":query?`검색 결과 ${list.length}곳`:`${country==="전체"?"전체":country} ${list.length}곳`;
   const gone=query?[]:closed.filter(c=>(country==="전체"||(c.country||"한국")===country)&&(region==="전체"||c.region===region)&&(cuisine==="전체"||c.cuisine===cuisine));
-  const gs=document.getElementById("guess"); gs.replaceChildren();
-  if(query){ const names=list.slice(0,5).filter(x=>squash(x.p.name)!==squash(query));
-    // 이름뿐 아니라 메뉴 묶음·메뉴·종류·지역·나라도 짐작해서 보여 준다(누르면 그 말로 찾는다)
-    const jq=jamo(query), terms={}; places.forEach(p=>[[co(p),"나라"],[p.region,"지역"],[p.cuisine,"종류"],...groupsOf(p).map(g=>[g,"메뉴"]),...(p.menus||[]).map(m=>[m,"메뉴"])].forEach(([t,k])=>{ if(!t) return; (terms[t]=terms[t]||{k,n:0,ids:new Set()}).ids.add(p.id); }));
+  const gs=document.getElementById("guess");gs.replaceChildren();
+  if(query){const names=list.slice(0,5).filter(x=>squash(x.p.name)!==squash(query));
+    const jq=jamo(query),terms={};places.forEach(p=>[[co(p),"나라"],[p.region,"지역"],[p.cuisine,"종류"],...groupsOf(p).map(g=>[g,"메뉴"]),...(p.menus||[]).map(m=>[m,"메뉴"])].forEach(([t,k])=>{if(!t)return;(terms[t]=terms[t]||{k,n:0,ids:new Set()}).ids.add(p.id);}));
     const cats=Object.entries(terms).map(([t,v])=>({t,k:v.k,n:v.ids.size,i:t.split(/[·\s]+/).findIndex(w=>jamo(w).startsWith(jq)||(/^[ㄱ-ㅎ]+$/.test(squash(query))&&chos(w).startsWith(squash(query))))})).filter(c=>c.i>=0&&squash(c.t)!==squash(query)).sort((a,b)=>(a.i-b.i)||(b.n-a.n)).slice(0,4);
-    if(names.length||cats.length) gs.append(el("span",{class:"cnt",text:"혹시"}));
-    cats.forEach(c=>{ const b=el("button",{class:"chip",type:"button",text:`${c.t} · ${c.k} ${c.n}곳`}); b.onclick=()=>{ query=c.t; document.getElementById("q").value=query; openId=null; render(); }; gs.append(b); }); names.forEach(x=>{ const b=el("button",{class:"chip",type:"button",text:x.p.name}); b.onclick=()=>{ query=x.p.name; document.getElementById("q").value=query; openId=x.p.id; render(); }; gs.append(b); }); }
-  if(!list.length) rows.append(el("p",{class:"empty",text:query?`'${query}'에 맞는 가게를 찾지 못했습니다. 이름 앞부분이나 동네, 메뉴로 찾아보세요.`:"이 조건에 맞는 가게가 아직 없습니다."}));
+    if(names.length||cats.length)gs.append(el("span",{class:"cnt",text:"혹시"}));
+    cats.forEach(c=>{const b=el("button",{class:"chip",type:"button","data-focus":"suggest:"+c.t,text:`${c.t} ${c.k} ${c.n}곳`});b.onclick=()=>{query=c.t;document.getElementById("q").value=query;clearSelection();render();document.getElementById("q").focus();};gs.append(b);});
+    names.forEach(x=>{const b=el("button",{class:"chip",type:"button","data-focus":"suggest:"+x.p.id,text:x.p.name});b.onclick=()=>{query=x.p.name;document.getElementById("q").value=query;openPlace(x.p.id);};gs.append(b);});
+  }
+  if(loading)rows.append(el("p",{class:"empty",text:"가게 목록을 불러오는 중입니다."}));
+  else if(loadError)rows.append(el("p",{class:"empty",text:"places.json을 읽지 못했습니다."}));
+  else if(!list.length)rows.append(el("p",{class:"empty",text:query?`'${query}'에 맞는 가게를 찾지 못했습니다. 이름 앞부분이나 동네, 메뉴로 찾아보세요.`:"이 조건에 맞는 가게가 아직 없습니다."}));
   let grp=null;
-  list.forEach((x,i)=>{ const {p,sc}=x; const on=openId===p.id;
-    if(query&&i===0) rows.append(el("p",{class:"grp",text:`찾은 곳 · ${list.length}곳`}));
-    if(!query&&country==="전체"&&co(p)!==grp){ grp=co(p); rows.append(el("p",{class:"grp",text:`${grp} · ${list.filter(y=>co(y.p)===grp).length}곳`})); }
-    if(!query&&x.low&&!(list[i-1]&&list[i-1].low&&co(list[i-1].p)===co(p))) rows.append(el("p",{class:"grp",text:`기본 점수 ${MIN_SCORE}점 이하 · 숨겼던 곳`}));
-    if(flat()&&x.occ&&!sc.ban&&!sc.hid&&!(list[i-1]&&list[i-1].occ)) rows.append(el("p",{class:"grp",text:"분위기용 · 분위기와 서비스를 더 크게 봄"}));
-    if(!query&&sc.ban&&!(list[i-1]&&list[i-1].sc.ban&&co(list[i-1].p)===co(p))) rows.append(el("p",{class:"grp",text:"가지 말 것 · 식중독 주장 반복"}));
-    const r=el("button",{class:"row",type:"button",id:"row-"+p.id+(x.occ&&p.occasionAlso?"-occ":""),"aria-expanded":String(on)});
-    const mid=el("div",null,el("h2",{text:p.name||"이름 없음"}),el("p",{class:"meta",text:[p.area,[p.cuisine,(p.menus||[]).join("·")].filter(Boolean).join(" › ")||p.category,priceText(p),(p.ratings||[]).filter(r=>num(r.rating)!=null).map(r=>`${r.src} ${r.rating}${r.distrust?"(의심)":""}`).join(" / ")||null].filter(Boolean).join(" · ")}));
-    if(p.summary) mid.append(el("p",{class:"sum",text:p.summary}));
-    const flags=el("div");
-    if(sc.ban) flags.append(el("span",{class:"flag f-bad",text:"✕ 가지 않음 · 식중독 주장 반복"}));
-    if(sc.hid) flags.append(el("span",{class:"flag f-bad",text:"예외 · 믿을 평점 없음 (순위 제외)"}));
-    // 표시는 꼭 봐야 하는 것만: 위생·식중독 경고와 카카오 후기 없음. 점수에 이미 들어간 것(유튜버, 5점 쏠림, 후기 적음, 강한·약한 항목, 분위기용, 배탈 언급 참고)은 상세 화면에서만 보여 줌
-    if(p.pest&&within1y(p.pestDate)) flags.append(el("span",{class:"flag f-bad",text:p.pest}));
-    if(p.caution&&/차이|평점 차/.test(p.caution)) flags.append(el("span",{class:"flag f-warn",text:"평점 차이 있음"}));
-    if(within1y(p.foDate)) flags.append(el("span",{class:"flag f-bad",text:"음식 이물질 후기"}));
-    if(p.noKakao&&!sc.hid) flags.append(el("span",{class:"flag f-warn",text:"카카오 후기 없음"}));
-    while(flags.childNodes.length>3) flags.lastChild.remove();
-    if(flags.childNodes.length) mid.append(flags);
-    r.append(el("span",{class:"rank bg-"+sc.tier,text:sc.ban?"✕":sc.hid?"?":String(x.rank??"")}),mid,el("div",{class:"score"},el("b",{text:sc.v==null?"–":String(sc.v)}),el("span",{text:"맞춤 점수"})));
-    r.onclick=()=>{ openId=on?null:p.id; render(); if(openId&&markers[p.id]) map.panTo(markers[p.id].getLatLng()); };
-    rows.append(r); if(on) rows.append(detail(p));
+  list.forEach((x,i)=>{const {p,sc}=x,on=openId===p.id;
+    if(query&&i===0)rows.append(el("p",{class:"grp",text:`찾은 곳 ${list.length}곳`}));
+    if(!query&&country==="전체"&&co(p)!==grp){grp=co(p);rows.append(el("p",{class:"grp",text:`${grp} ${list.filter(y=>co(y.p)===grp).length}곳`}));}
+    if(!query&&x.low&&!(list[i-1]&&list[i-1].low&&co(list[i-1].p)===co(p)))rows.append(el("p",{class:"grp",text:`기본 점수 ${MIN_SCORE}점 이하, 숨겼던 곳`}));
+    if(flat()&&x.occ&&!sc.ban&&!sc.hid&&!(list[i-1]&&list[i-1].occ))rows.append(el("p",{class:"grp",text:"분위기용: 분위기와 서비스 중심"}));
+    if(!query&&sc.ban&&!(list[i-1]&&list[i-1].sc.ban&&co(list[i-1].p)===co(p)))rows.append(el("p",{class:"grp",text:"가지 않음: 식중독 주장 반복"}));
+    const r=el("button",{class:"row",type:"button",id:"row-"+p.id+(x.occ&&p.occasionAlso?"-occ":""),"aria-expanded":String(on),"aria-controls":"detailPanel"});
+    const meta=el("div",{class:"meta"},el("span",{text:p.area||p.region||co(p)}),el("span",{text:[p.cuisine||p.category,...(p.menus||[])].filter(Boolean).join(" / ")}));
+    const mid=el("div",null,el("h2",{text:p.name||"이름 없음"}),meta,confidenceNote(p));if(shownPrice(p))mid.append(el("p",{class:"price",text:shownPrice(p)}));if(p.summary)mid.append(el("p",{class:"sum",text:p.summary}));
+    const flags=warningFlags(p,sc);if(flags.childNodes.length)mid.append(flags);
+    r.append(el("span",{class:"rank",text:sc.ban?"✕":sc.hid?"?":String(x.rank??"")}),mid,el("div",{class:"score"},el("b",{class:sc.v==null?"no-score":"",text:sc.v==null?"평점 없음":String(sc.v)}),el("span",{text:scoreLabel()})));
+    r.onclick=()=>{r.focus({preventScroll:true});openPlace(p.id);};rows.append(r);
   });
-  if((hiddenLow||hiddenUn)&&!query){ const b=el("button",{class:"chip",type:"button","aria-pressed":String(showLow),text:showLow?"다시 숨기기":`숨긴 ${hiddenLow+hiddenUn}곳 보기`}); b.onclick=()=>{ showLow=!showLow; openId=null; render(); };
-    rows.append(el("p",{class:"evid",text:`기본 점수가 ${MIN_SCORE}점 이하인 ${hiddenLow}곳과 믿을 평점이 없는 ${hiddenUn}곳은 ${showLow?"목록 뒤쪽에 따로 묶었습니다":"숨겼습니다"}. `},b)); }
-  // 폐업한 곳은 지도와 순위에서 지우고 이름만 남긴다 (closed.json)
-  if(gone.length){ rows.append(el("p",{class:"grp",text:`폐업 · ${gone.length}곳`}));
-    gone.forEach(c=>rows.append(el("div",{class:"gone"},el("b",{text:c.name}),el("p",{text:[c.area,c.closedOn&&c.closedOn+" 확인",c.note].filter(Boolean).join(" · ")})))); }
+  if((hiddenLow||hiddenUn)&&!query){const b=el("button",{id:"showHidden",class:"chip",type:"button","aria-pressed":String(showLow),text:showLow?"다시 숨기기":`숨긴 ${hiddenLow+hiddenUn}곳 보기`});b.onclick=()=>{showLow=!showLow;clearSelection();render();restoreFocus({id:"showHidden"});};rows.append(el("p",{class:"evid",text:`기본 점수 ${MIN_SCORE}점 이하 ${hiddenLow}곳과 믿을 평점이 없는 ${hiddenUn}곳은 ${showLow?"목록 뒤쪽에 따로 묶었습니다":"숨겼습니다"}.`},b));}
+  if(gone.length){rows.append(el("p",{class:"grp",text:`폐업 ${gone.length}곳`}));gone.forEach(c=>rows.append(el("div",{class:"gone"},el("b",{text:c.name}),...[[c.area],[c.closedOn&&c.closedOn+" 확인"],[c.note]].flat().filter(Boolean).map(text=>el("p",{text})))));}
+  rows.scrollTop=scroll;
+  if(detailVisible){const p=places.find(p=>p.id===openId);if(p)fillDetail(p);}
+  if(draft)renderChips();
+  rows.setAttribute("aria-busy",String(loading));
+  showPreview();restoreFocus(active);
 }
-
-document.getElementById("q").addEventListener("input",e=>{ query=e.target.value.trim(); openId=null; render(); });
-fetch("closed.json",{cache:"no-store"}).then(r=>r.ok?r.json():[]).then(d=>{ closed=d; if(places.length) render(); }).catch(()=>{});
-fetch("places.json",{cache:"no-store"}).then(r=>r.json()).then(d=>{ places=d; render(); })
-  .catch(()=>{ document.getElementById("rows").replaceChildren(el("p",{class:"empty",text:"places.json을 읽지 못했습니다."})); });
+function clearSelection(){
+  if(detailVisible){detailPanel.close();detailVisible=false;document.getElementById("rows").hidden=false;if(history.state&&history.state.jjinPanel==="detail")history.replaceState({...history.state,jjinPanel:null},"");}
+  openId=null;
+}
+let composing=false;
+const search=()=>{query=document.getElementById("q").value.trim();clearSelection();render();};
+document.getElementById("q").addEventListener("compositionstart",()=>composing=true);
+document.getElementById("q").addEventListener("compositionend",()=>{composing=false;search();});
+document.getElementById("q").addEventListener("input",e=>{if(!composing&&!e.isComposing)search();});
+fetch("closed.json",{cache:"no-store"}).then(r=>r.ok?r.json():[]).then(d=>{closed=d;if(places.length)render();}).catch(()=>{});
+fetch("places.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("data");return r.json();}).then(d=>{places=d;loading=false;render();})
+  .catch(()=>{loading=false;loadError=true;render();});
+setView("list");
+if(typeof L!=="undefined")L.DomEvent.disableClickPropagation(document.getElementById("preview"));
 </script>
 </body>
 </html>

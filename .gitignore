@@ -2,3 +2,7 @@
 jjinmap/
 reviews/
 .DS_Store
+docs/
+scripts/
+tests/
+places.bak*.json
